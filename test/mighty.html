@@ -1,10 +1,10 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>Mighty Module Demo</title>
+  <title>Mighty Module Test Page</title>
   <meta name="description" content="Test page for Mighty Modules.">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +13,30 @@
 
   <link rel="stylesheet" href="css/style.css">
 
+<!-- Eventually we will incorporate Boot into mighty.js -->
+<script defer src="../../Boot/src/boot.js"></script>
+
 </head>
 
 <body>
+<h1>Mighty Module Test Page</h1>
 
-<script defer="defer" src="../src/mighty.js"></script>
+<div class="content">
+
+	<h2>Source Widget #1</h2>
+	
+	<a name="mighty-module" class="source" data-width="400" href="http://www.mightymodules.com/tab/">Tab Mighty Module</a>
+	<script defer src="../src/mighty.js"></script>
+	
+	<h2>Source Widget #2</h2>
+	<a name="mighty-module" class="source" data-width="300" href="http://www.mightymodules.com/tab/">Tab Mighty Module</a>
+	<script defer src="../src/mighty.js"></script>
+	
+	<h2>Source Widget #3</h2>
+	<a name="mighty-module" class="source" data-width="200" href="http://www.mightymodules.com/tab/">Tab Mighty Module</a>
+	<script defer src="../src/mighty.js"></script>
+	
+</div>
 
 </body>
 </html>
