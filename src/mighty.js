@@ -3,41 +3,69 @@
 	
 	This script processes and initializes mighty modules on the page.
 */
-!function(window, document, undefined){
+!function(global, window, document, undefined){
 	
 		// Localize Boot functions.
 	var boot = Boot,
-		use = Boot.use,
-		factory = boot.factory,
+		use = boot.use,
+		widget = boot.widget,
+		extend = boot.extend,
 		
+		// Localize DOM objects.
 		htmlElement = document.documentElement,
-		mighty = htmlElement.mighty || ( htmlElement.mighty = {} ),
-		mightyModules = mighty.modules || ( mighty.modules = document.getElementsByName("mighty-module") ),
+		
+		mighty = htmlElement[ global ] || ( htmlElement[ global ] = {} ),
+		mightyModules = mighty.modules || ( mighty.modules = document.getElementsByName( global ) ),
 		mightyModulesCount = mighty.count || 0,
 		mightyModulesLength = mightyModules.length;
 
 	// We'll move this to Boot eventually, after 
 	// we ensure all functionality provided by 
-	// something like jQuery UI Widget Factory 
+	// something like jQuery UI Widget widget 
 	// is available.
-	if ( ! factory ) {
+	if ( ! widget ) {
+	
+/*
+		Boot.widget
 		
-		factory = boot.factory = function( elem, options ){
+		The Widget factory is a wrapper function that 
+		fetches a module that uses the widget skeleton, 
+		and initializes it on an element.
+*/
+		widget = boot.widget = function( elem, options ){
+
+			// Decide if we want to move this into widget class
+			// or outside of it.
+			var widgetName = elem.name + "." + elem.className,
+				width = Boot.attr( elem, "data-width" );
 			
-			Boot.use({ basePath: "../src/", filename: function(file){ return file.toLowerCase().replace("/", "."); }, suffix: ".js" }, "mighty/source", function( source ) {
-				// Temporarily hard coding until we 
-				// create a data attribute => object literal converter.
-				source( elem, { width: 200 } );
+			// Do our fancy DOM option extraction here.
+			options = options || {};
+			
+			// Temporary.
+			options.width = width;
+
+			use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
+
+				var instance = extend( {}, source, {
+					options: options,
+					element: elem,
+					name: elem.className,
+					namespace: elem.name
+				} );
+
+				instance._create();
+
 			});
 			
 		};
-		
-	}
 	
+	}
+
 	if ( mightyModulesCount !== mightyModulesLength ) {
-		
+	
 		for (; mightyModulesCount < mightyModulesLength; mightyModulesCount++) {
-			factory( mightyModules[ mightyModulesCount ] );
+			widget( mightyModules[ mightyModulesCount ] );
 		}
 				
 		// Update the number of processed modules.
@@ -45,4 +73,4 @@
 	}
 	
 	
-}(this, document );
+}("mighty", this, document );
