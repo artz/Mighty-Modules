@@ -52,12 +52,13 @@ h1 b:nth-of-type( 2 ) {
 	line-height: 24px;
 
 	background-color: #fff;
-	padding: 0 24px;
-	border: 3px solid hsl(80, 100%, 50%);
+	padding: 0 24px 24px;
+	border: 6px solid hsl(80, 100%, 50%);
 
      -moz-box-shadow: 0px 0px 10px #fff; 
-  -webkit-box-shadow: 0px 0px 10px #fff; 
-          box-shadow: 0px 0px 10px #fff; 
+  -webkit-box-shadow: 0px 0px 10px #fff;
+          box-shadow: 0px 0px 10px #fff,
+        inset 0 0 1em hsl( 0, 0%, 50% );;
 
      -moz-border-radius: 24px; 
   -webkit-border-radius: 24px; 
@@ -65,14 +66,15 @@ h1 b:nth-of-type( 2 ) {
                     
   -moz-background-clip: padding; -webkit-background-clip: padding-box; background-clip: padding-box; 
 
-    -webkit-transition: border 1s;
-       -moz-transition: border 1s;
-            transition: border 1s;
+    -webkit-transition: border 1s, background-color 1s;
+       -moz-transition: border 1s, background-color 1s;
+            transition: border 1s, background-color 1s;
 
 }
 
 h1:hover + .content {
-	border: 3px solid hsl(180, 100%, 50%);
+    background-color: #ccc;
+	border: 6px solid hsl(180, 100%, 50%);
 }
 
 .source {
