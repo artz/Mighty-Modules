@@ -42,8 +42,8 @@
 			// Do our fancy DOM option extraction here.
 			options = options || {};
 			
-			// Temporary.
-			options.width = width;
+			// Temporary.  Needs to work with extend function.
+			options.width = width || 300;  
 
 			use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
 
@@ -52,7 +52,7 @@
 					element: elem,
 					name: elem.className,
 					namespace: elem.name
-				} );
+				});
 
 				instance._create();
 

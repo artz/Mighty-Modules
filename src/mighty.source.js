@@ -13,8 +13,10 @@ Boot.define({
 			element = self.element,
 			width = options.width;
 
+		Boot.getCSS("../src/mighty.source.css");
+
 		Boot.attr( element, "style", "width: " + width + "px" );
-		
+
 	},
 
 	// Use the _setOption method to respond to changes to options
@@ -27,13 +29,13 @@ Boot.define({
 		}
 		
 		// In jQuery UI 1.9 and above, you use the _super method instead
-		this._super("_setOption", key, value);
+		// this._super("_setOption", key, value);
 	},
 
 	// Use the destroy method to clean up any modifications your widget has made to the DOM
-	destroy: function () {
-		
-	}
+//	destroy: function () {
+//		
+//	}
 });
 
 /*
