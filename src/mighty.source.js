@@ -10,14 +10,24 @@ Boot.define({
 			width = options.width;
 
 		Boot.getCSS("../src/mighty.source.css");
-
+		
+		element.innerHTML = "<pre>source</pre>";
+		
 		Boot.attr( element, "style", "width: " + width + "px" );
 
 	},
-
+	
+	_html: "<h1>{title}</h1><div></div>",
+	
+	_css: "",
+	
 	// These options will be used as defaults
 	options: {
-		width: 300
+		width: 300,
+		html: "<div></div>",
+		template: {
+			"title": "My Heading"
+		}
 	},
 
 	// Use the _setOption method to respond to changes to options
