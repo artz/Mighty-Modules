@@ -5,9 +5,8 @@
 */
 !function(global, window, document, undefined){
 	
-		// Localize Boot functions.
+		// Localize Boot functions we use more than once.
 	var boot = Boot,
-		use = boot.use,
 		widget = boot.widget,
 		extend = boot.extend,
 		
@@ -31,30 +30,26 @@
 		The Widget factory is a wrapper function that 
 		fetches a module that uses the widget skeleton, 
 		and initializes it on an element.
+		
+		Note: This is a work in progress!
 */
 		widget = boot.widget = function( elem, options ){
 
 			// Decide if we want to move this into widget class
 			// or outside of it.
-			var widgetName = elem.name + "." + elem.className,
-				width = Boot.attr( elem, "data-width" );
+			var widgetName = elem.name + "." + elem.className;
 			
 			// Do our fancy DOM option extraction here.
-			options = options || {};
+			options = extend( options || {}, boot.data( elem ) );
 			
-			// Temporary.  Needs to work with extend function.
-			options.width = width || 300;  
+			boot.use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
 
-			use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
-
-				var instance = extend( {}, source, {
-					options: options,
+				extend( {}, source, {
 					element: elem,
 					name: elem.className,
-					namespace: elem.name
-				});
-
-				instance._create();
+					namespace: elem.name,
+					options: options
+				})._create();
 
 			});
 			

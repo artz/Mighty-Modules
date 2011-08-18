@@ -1,9 +1,4 @@
 Boot.define({
-	
-	// These options will be used as defaults
-	options: {
-		width: 300
-	},
 
 	// Set up the widget
 	_create: function () {
@@ -11,12 +6,18 @@ Boot.define({
 		var self = this,
 			options = self.options,
 			element = self.element,
+			
 			width = options.width;
 
 		Boot.getCSS("../src/mighty.source.css");
 
 		Boot.attr( element, "style", "width: " + width + "px" );
 
+	},
+
+	// These options will be used as defaults
+	options: {
+		width: 300
 	},
 
 	// Use the _setOption method to respond to changes to options
