@@ -37,10 +37,25 @@
 
 			// Decide if we want to move this into widget class
 			// or outside of it.
-			var widgetName = elem.name + "." + elem.className;
+			var widgetName = elem.className.replace("-", "."),
+				elemParent = elem.parentNode,
+				div;
 			
 			// Do our fancy DOM option extraction here.
 			options = extend( options || {}, boot.data( elem ) );
+			
+			// If we have an anchor link placeholder, replace 
+			// it with a <div> so we have a valid container.
+			if ( elem.nodeName === "A" ) {
+				
+				div = document.createElement("div");
+				div.className = elem.className;
+				
+				elemParent.insertBefore( div, elem );
+				elemParent.removeChild( elem );
+				elem = div;
+				
+			}
 			
 			boot.use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
 
