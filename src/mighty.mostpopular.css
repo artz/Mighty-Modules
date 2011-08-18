@@ -1,0 +1,264 @@
+.mostpopular {
+	border: 5px solid #ccc;
+	display: block;
+	padding: 20px;
+	border-radius: 5px;
+}
+
+/* HuffPost AOL Social News: Most Popular */
+
+.aol-most-popular-social {
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    position: relative;
+    width: 300px;
+}
+
+.aol-most-popular-social h4 {
+    font-family: Arial, sans-serif;
+    line-height: 1;
+    margin: 0 0 10px;
+
+    /* Gradient Foo */
+    background-color: #010101;
+    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,startColorstr=#45494d, endColorstr=#010101);
+    background-image:
+        -moz-linear-gradient(bottom, #010101 0%, #45494d 100%);
+
+    background-image:
+        linear-gradient(bottom, #010101 0%, #45494d 100%);
+
+    background-image: 
+        -webkit-gradient(linear, left bottom, left top, color-stop(0%,#010101), color-stop( 100%, #45494d ));
+}
+
+.aol-most-popular-social h4 b {
+    background-image: url( http://o.aolcdn.com/os/aol/assets/aolmostpopular.gif );
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    color: #fff;
+    display: block;
+    height: 32px;
+    text-indent: -99999px;
+}
+
+.aol-most-popular-social span.pane-nav {
+    border-top: 1px solid #fff;
+    color: #fff;
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    margin: 1px 0 0;
+    padding: 8px 11px;
+    position: relative;
+    text-transform: uppercase;
+    width: 278px;
+
+    /* Gradient Foo */
+    background-color: #206994;
+    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,startColorstr=#2372a1, endColorstr=#206994);
+    background-image:
+        -moz-linear-gradient(bottom, #206994 0%, #2372a1 100%);
+
+    background-image:
+        linear-gradient(bottom, #206994 0%, #2372a1 100%);
+
+    background-image: 
+        -webkit-gradient(linear, left bottom, left top, color-stop(0%,#206994), color-stop( 100%, #2372a1));
+}
+
+/* IE7 only */
+*:first-child+html .aol-most-popular-social span.pane-nav {
+}
+
+.aol-most-popular-social span.pane-nav:after {
+    border-bottom: transparent solid 10px;
+    border-right: #71a3c1 solid 20px;
+    bottom: -10px;
+    content: '';
+    display: block;
+    height: 0;
+    left: 0;
+    position: absolute;
+}
+
+.aol-most-popular-social .articles {
+    margin-left: 20px;
+    overflow: hidden;
+    position: relative;
+    width: 280px;
+}
+
+.aol-most-popular-social ul {
+    float: left;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 280px;
+}
+
+.aol-most-popular-social ul li {
+    border-top: 1px dotted #ccc;
+    float: left; /* Set a float to contain a float */
+    line-height: 1.2;
+    margin: 0;
+    padding: 7px 0 7px 94px;
+    width: 186px;
+}
+
+.aol-most-popular-social ul li .facebook {
+    margin: 10px 0;
+}
+
+.aol-faux-facebook-like p {
+    margin-left: 0;
+    position: relative;
+}
+
+/*
+.aol-faux-facebook-like-init a {
+    display: block !important;
+    left: -99em;
+    margin: 0;
+    position: absolute;
+}
+
+.aol-faux-facebook-like-init p {
+    display: block !important;
+    left: -99em;
+    margin: 0;
+    position: absolute;
+}
+*/
+
+.aol-most-popular-social ul li:first-child {
+    border-top: none;
+}
+
+.aol-most-popular-social ul li span.vertical {
+    background-color: transparent;
+    color: #206994;
+    float: none;
+    text-transform: uppercase;
+    overflow: auto;
+    padding: 0;
+    width: auto;
+}
+
+.aol-most-popular-social ul li img {
+    border: 1px solid #ccc;
+    display: inline;
+    float: left;
+    height: 64px;
+    margin-left: -94px;
+    padding: 2px;
+    width: 80px;
+}
+
+.aol-most-popular-social ul li a {
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.aol-most-popular-social ul li .aol-faux-facebook-like a {
+    color: #3B5998;
+    font: normal 11px/14px "lucida grande",tahoma,verdana,arial,sans-serif;
+}
+
+.aol-most-popular-social ul li a:hover {
+}
+
+.aol-most-popular-social .footer {
+    border-top: 1px solid #ccc;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 300px;
+}
+
+.aol-most-popular-social .footer a {
+    color: #206994;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.aol-most-popular-social .footer a:hover {
+    text-decoration: underline;
+}
+
+.footer .report-corrections, .footer .send-tip {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+.footer .report-corrections {
+    float: left;
+}
+
+.footer .send-tip {
+    float: right;
+}
+
+.aol-most-popular-social .nav {
+    float: right;
+    margin: 0 -4px 0 0;
+    zoom: 1;
+}
+
+.aol-most-popular-social .nav .info {
+    float: left;
+    text-transform: lowercase;
+}
+
+.aol-most-popular-social .nav .back, .aol-most-popular-social .nav .forward {
+    cursor: pointer;
+    padding: 9px 10px 5px;
+    position: relative;
+}
+
+.aol-most-popular-social .nav .back {
+    float: left;
+    margin: -9px 0 -8px -8px;
+    padding-right: 6px;
+}
+
+.aol-most-popular-social .nav .back span, .aol-most-popular-social .nav .forward span {
+    border-bottom: #216b96 solid 6px;
+    border-left: #216b96 solid 6px;
+    border-right: #216b96 solid 6px;
+    border-top: #216b96 solid 6px;
+    cursor: pointer;
+    display: block;
+    height: 0;
+    line-height: 0;
+    text-indent: -99em;
+    width: 0;
+}
+
+.aol-most-popular-social .nav .back span {
+    border-left-width: 0;
+    border-right-color: #fff;
+}
+
+.aol-most-popular-social .nav .forward {
+    float: left;
+    margin: -9px -8px -8px 0;
+    padding-left: 6px;
+}
+
+.aol-most-popular-social .nav .forward span {
+    border-left-color: #fff;
+    border-right-width: 0;
+}
+
+.aol-most-popular-social .nav .back:hover span {
+    border-right-color: #bae3ff;
+}
+
+.aol-most-popular-social .nav .forward:hover span {
+    border-left-color: #bae3ff;
+}
