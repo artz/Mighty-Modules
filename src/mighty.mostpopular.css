@@ -98,6 +98,10 @@
     width: 280px;
 }
 
+.aol-most-popular-social ul.current {
+    background-color: red;
+}
+
 .aol-most-popular-social ul li {
     border-top: 1px dotted #ccc;
     float: left; /* Set a float to contain a float */

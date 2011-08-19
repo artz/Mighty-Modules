@@ -31,8 +31,9 @@ Boot.define({
         var i, pane,
             options = this.options,
             length = json.response.length,
-            ui = this.ui = {},
-            panes = Math.ceil( length / options.perpane );
+            ui = this.ui = {};
+
+        ui.numPanes = Math.ceil( length / options.perpane );
 
         ui.mostPopular = document.createElement( 'div' );
         ui.mostPopular.className = 'aol-most-popular-social';
@@ -63,7 +64,7 @@ Boot.define({
 
         ui.total = document.createElement( 'span' );
         ui.total.className = 'total';
-        ui.total.innerHTML = panes;
+        ui.total.innerHTML = ui.numPanes;
 
         // Forward arrow
         ui.forward = document.createElement( 'a' );
@@ -88,7 +89,7 @@ Boot.define({
 
         // Generate enough panes to hold entire list with N items per pane
         ui.list = [];
-        for ( i = panes; i > 0; i -= 1 ) {
+        for ( i = ui.numPanes; i > 0; i -= 1 ) {
             pane = document.createElement( 'ul' );
             ui.list.push( pane );
             ui.articles.appendChild( pane );
@@ -106,12 +107,12 @@ Boot.define({
                 elem = document.createElement( 'li' ),
                 link = document.createElement( 'a' ),
                 thumb = document.createElement( 'img' ),
+                // Current pane is the current number divided by the number of items per pane, rounded up
+                // initial +1 is to adjust to starts-from-one counting
+                // final -1 is to adjust back to starts-from-zero counting
                 pane = ( Math.ceil( ( i + 1 ) / this.options.perpane ) - 1 );
 
-            console.log( pane );
-
             // Create link
-
             link.href = item.entry_url;
             // Include the full title as the title attribute for the link
             link.title = item.entry_title;
@@ -131,6 +132,55 @@ Boot.define({
             // Prepend (since we're iterating backwards) the item to the list
             ui.list[pane].insertBefore( elem, ui.list[pane].firstChild );
         }
+
+        ui.numCurrent = options.initial;
+        ui.currentPane = ui.list[ui.numCurrent - 1];
+        Boot.addClass( ui.currentPane, 'current' );
+
+        this._bindEvents();
+    },
+
+    _bindEvents: function() {
+        var self = this,
+            ui = self.ui;
+
+        console.log( 'Time to bind some events', this.ui );
+
+        Boot.bind( ui.back, 'click', function( event ) {
+            Boot.emit( 'change', { direction: -1 } );
+            event.preventDefault();
+        });
+
+        Boot.bind( ui.forward, 'click', function( event ) {
+            Boot.emit( 'change', { direction: 1 } );
+            event.preventDefault();
+        });
+
+        // Doing some tricky stuff to juggle scope here - note for possible Boot dev
+        Boot.on( self, 'change', (function( event ) { self.change.apply( self, [ event ] ); }));
+    },
+
+    change: function( event ) {
+        // backward = -1
+        // forward = 1
+        var ui = this.ui,
+            dir = event.direction,
+            current = ui.numCurrent,
+            next = current + dir;
+
+        if ( next < 1 ) {
+            next = ui.numPanes;
+        }
+
+        if ( next > ui.numPanes ) {
+            next = 1;
+        }
+
+        // console.log( 'current', current, 'next', next );
+        Boot.removeClass( ui.list[current - 1], 'current' );
+        Boot.addClass( ui.list[next - 1], 'current' );
+
+        ui.numCurrent = next;
     },
 
 	// Use the _setOption method to respond to changes to options
