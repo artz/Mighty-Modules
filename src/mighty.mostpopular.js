@@ -144,8 +144,6 @@ Boot.define({
         var self = this,
             ui = self.ui;
 
-        console.log( 'Time to bind some events', this.ui );
-
         Boot.bind( ui.back, 'click', function( event ) {
             Boot.emit( 'change', { direction: -1 } );
             event.preventDefault();
@@ -163,7 +161,8 @@ Boot.define({
     change: function( event ) {
         // backward = -1
         // forward = 1
-        var ui = this.ui,
+        var classIn, classOut,
+            ui = this.ui,
             dir = event.direction,
             current = ui.numCurrent,
             next = current + dir;
@@ -176,11 +175,15 @@ Boot.define({
             next = 1;
         }
 
-        // console.log( 'current', current, 'next', next );
-        Boot.removeClass( ui.list[current - 1], 'current' );
-        Boot.addClass( ui.list[next - 1], 'current' );
+        currentPane = ui.list[current - 1];
+        nextPane = ui.list[next - 1];
+
+        Boot.removeClass( currentPane, 'current' );
+        Boot.addClass( nextPane, 'current' );
 
         ui.numCurrent = next;
+
+        ui.active.innerHTML = ui.numCurrent;
     },
 
 	// Use the _setOption method to respond to changes to options
