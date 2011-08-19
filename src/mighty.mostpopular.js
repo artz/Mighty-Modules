@@ -16,7 +16,7 @@ Boot.define({
 		Boot.getCSS("../src/mighty.mostpopular.css");
 
         // Use our local AJAX proxy to get some JSONP till we have a proper API
-        Boot.getJSONP( '../api/ajaxproxy.php?url=' + encodeURIComponent( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' ), function( json ) {
+        Boot.getJSONP( '../api/?url=' + encodeURIComponent( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' ), function( json ) {
             // Output our markup
             self._build( json );
         });
