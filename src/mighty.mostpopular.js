@@ -24,12 +24,13 @@ Boot.define({
 	},
 
     _build: function( json ) {
-        console.log( json.response );
+        // console.log( json.response );
         var i,
             length = json.response.length,
             ui = this.ui = {};
 
         ui.mostPopular = document.createElement( 'div' );
+        ui.mostPopular.className = 'aol-most-popular-social';
         ui.header = document.createElement( 'h4' );
         ui.header.innerHTML = '<b>HuffpostAOL Social News</b>';
 
@@ -48,10 +49,29 @@ Boot.define({
         i = length;
         while( i-- ) {
             var item = json.response[i],
-                elem = document.createElement( 'li' );
+                elem = document.createElement( 'li' ),
+                link = document.createElement( 'a' ),
+                thumb = document.createElement( 'img' );
 
-            elem.innerHTML = ( item.entry_front_page_title ) ? item.entry_front_page_title : item.entry_title;
+            // Create link
 
+            link.href = item.entry_url;
+            // Include the full title as the title attribute for the link
+            link.title = item.entry_title;
+            // But use the front page title (shorter), if it's available, for the link's text
+            link.innerHTML = ( item.entry_front_page_title ) ? item.entry_front_page_title : item.entry_title;
+
+            // Create thumb
+            thumb.src = item.entry_image;
+            thumb.alt = '';
+
+            // Insert thumb to beginning of link
+            link.insertBefore( thumb, link.firstChild );
+
+            // Add link to list item
+            elem.appendChild( link );
+
+            // Prepend (since we're iterating backwards) the item to the list
             ui.list.insertBefore( elem, ui.list.firstChild );
         }
     },
