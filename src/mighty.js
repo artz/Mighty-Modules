@@ -13,10 +13,8 @@
 		// Localize DOM objects.
 		htmlElement = document.documentElement,
 		
-		mighty = htmlElement[ global ] || ( htmlElement[ global ] = {} ),
-		mightyModules = mighty.modules || ( mighty.modules = document.getElementsByName( global ) ),
-		mightyModulesCount = mighty.count || 0,
-		mightyModulesLength = mightyModules.length;
+		mightyModule,
+		mightyModules = document.getElementsByName( global );
 
 	// We'll move this to Boot eventually, after 
 	// we ensure all functionality provided by 
@@ -72,15 +70,8 @@
 	
 	}
 
-	if ( mightyModulesCount !== mightyModulesLength ) {
-	
-		for (; mightyModulesCount < mightyModulesLength; mightyModulesCount++) {
-			widget( mightyModules[ mightyModulesCount ] );
-		}
-				
-		// Update the number of processed modules.
-		mighty.count = mightyModulesCount;	
+	while ( mightyModule = mightyModules[ 0 ] ) {
+		widget( mightyModule );
 	}
-	
 	
 }("mighty", this, document );
