@@ -2,7 +2,10 @@ Boot.define({
 	
 	// These options will be used as defaults
 	options: {
-		width: 300
+        // Maximum of items to allow on each pane
+        perpane: 7,
+        // What pane should be visible initially
+        initial: 1
 	},
 
 	// Set up the widget
@@ -25,22 +28,73 @@ Boot.define({
 
     _build: function( json ) {
         // console.log( json.response );
-        var i,
+        var i, pane,
+            options = this.options,
             length = json.response.length,
-            ui = this.ui = {};
+            ui = this.ui = {},
+            panes = Math.ceil( length / options.perpane );
 
         ui.mostPopular = document.createElement( 'div' );
         ui.mostPopular.className = 'aol-most-popular-social';
         ui.header = document.createElement( 'h4' );
         ui.header.innerHTML = '<b>HuffpostAOL Social News</b>';
 
+        // create navigation
+        ui.paneNav = document.createElement( 'span' );
+        ui.paneNav.className = 'pane-nav';
+        ui.paneNav.innerHTML = 'Most Popular';
+
+        ui.nav = document.createElement( 'span' );
+        ui.nav.className = 'nav';
+
+        // Back arrow
+        ui.back = document.createElement( 'a' );
+        ui.back.className = 'back';
+        ui.back.innerHTML = '<span>Back</span>';
+
+        // Pane info section, ex: ( 1 of 4 )
+        ui.info = document.createElement( 'span' );
+        ui.info.className = 'info';
+        ui.info.innerHTML = ' of ';
+
+        ui.active = document.createElement( 'span' );
+        ui.active.className = 'active';
+        ui.active.innerHTML = options.initial;
+
+        ui.total = document.createElement( 'span' );
+        ui.total.className = 'total';
+        ui.total.innerHTML = panes;
+
+        // Forward arrow
+        ui.forward = document.createElement( 'a' );
+        ui.forward.className = 'forward';
+        ui.forward.innerHTML = '<span>Forward</span>';
+
+        // Attach info elements to info span
+        ui.info.insertBefore( ui.active, ui.info.firstChild );
+        ui.info.appendChild( ui.total );
+
+        // Attach info and arrows to nav
+        ui.nav.appendChild( ui.back );
+        ui.nav.appendChild( ui.info );
+        ui.nav.appendChild( ui.forward );
+
+        ui.paneNav.appendChild( ui.nav );
+
+        ui.header.appendChild( ui.paneNav );
+
         ui.articles = document.createElement( 'div' );
         ui.articles.className = 'articles';
 
-        ui.list = document.createElement( 'ul' );
-        ui.articles.appendChild( ui.list );
+        // Generate enough panes to hold entire list with N items per pane
+        ui.list = [];
+        for ( i = panes; i > 0; i -= 1 ) {
+            pane = document.createElement( 'ul' );
+            ui.list.push( pane );
+            ui.articles.appendChild( pane );
+        }
 
-        ui.mostPopular.appendChild( ui.header )
+        ui.mostPopular.appendChild( ui.header );
         ui.mostPopular.appendChild( ui.articles );
 
         this.element.appendChild( ui.mostPopular );
@@ -51,7 +105,10 @@ Boot.define({
             var item = json.response[i],
                 elem = document.createElement( 'li' ),
                 link = document.createElement( 'a' ),
-                thumb = document.createElement( 'img' );
+                thumb = document.createElement( 'img' ),
+                pane = ( Math.ceil( ( i + 1 ) / this.options.perpane ) - 1 );
+
+            console.log( pane );
 
             // Create link
 
@@ -72,7 +129,7 @@ Boot.define({
             elem.appendChild( link );
 
             // Prepend (since we're iterating backwards) the item to the list
-            ui.list.insertBefore( elem, ui.list.firstChild );
+            ui.list[pane].insertBefore( elem, ui.list[pane].firstChild );
         }
     },
 
@@ -91,7 +148,7 @@ Boot.define({
 
 	// Use the destroy method to clean up any modifications your widget has made to the DOM
 	destroy: function () {
-		
+        this.element.removeChild( this.ui.mostPopular );
 	}
 });
 
