@@ -10,11 +10,18 @@
 		widget = boot.widget,
 		extend = boot.extend,
 		
-		// Localize DOM objects.
-		htmlElement = document.documentElement,
+		toArray = function( collection ) { 
+			var array = [],
+				l = collection.length;
+			while ( l-- ) {
+				array[l] = collection[l];
+			}
+			return array;
+		},
 		
-		mightyModule,
-		mightyModules = document.getElementsByName( global );
+		mightyModules = toArray( document.getElementsByName( global ) ),
+		i = 0, 
+		l = mightyModules.length;
 
 	// We'll move this to Boot eventually, after 
 	// we ensure all functionality provided by 
@@ -31,47 +38,64 @@
 		
 		Note: This is a work in progress!
 */
-		widget = boot.widget = function( elem, options ){
-
-			// Decide if we want to move this into widget class
-			// or outside of it.
-			var widgetName = elem.className.replace("-", "."),
-				elemParent = elem.parentNode,
-				div;
+		widget = boot.widget = function( elem, options ) {
 			
-			// Do our fancy DOM option extraction here.
-			options = extend( options || {}, boot.data( elem ) );
-			
-			// If we have an anchor link placeholder, replace 
-			// it with a <div> so we have a valid container.
-			if ( elem.nodeName === "A" ) {
+			// We need to do this so IE6/7 execute things in
+			// the correct order.  Very, very bizarre.
+			boot.defer(function(){
 				
-				div = document.createElement("div");
-				div.className = elem.className;
-				
-				elemParent.insertBefore( div, elem );
-				elemParent.removeChild( elem );
-				elem = div;
-				
-			}
-			
-			boot.use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
+				// This 'elem' check is just a safe guard.
+				if ( elem && ! elem.widget ) {
 
-				extend( {}, source, {
-					element: elem,
-					name: elem.className,
-					namespace: elem.name,
-					options: options
-				})._create();
-
-			});
-			
-		};
+					elem.widget = 1;
+						
+					// Decide if we want to move this into widget class
+					// or outside of it.
+					var widgetName = elem.className.replace("-", "."),
+						elemParent = elem.parentNode,
+						div;
 	
+					// Do our fancy DOM option extraction here.
+					options = extend( options || {}, boot.data( elem ) );
+				
+					// If we have an anchor link placeholder, replace 
+					// it with a <div> so we have a valid container.
+					if ( elem.nodeName === "A" ) {
+	
+						div = document.createElement("div");
+	
+						div.className = elem.className;
+						
+						// These log checks were F'ed up without the
+						// boot.defer wrapper above in IE6/7.
+					//	Boot.log( "My name: " + widgetName );							
+					//	Boot.log( "Setting className: " + div.className );
+	
+						elemParent.insertBefore( div, elem );
+						elemParent.removeChild( elem );				
+						
+						elem = div;
+						
+					}
+
+					boot.use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
+	
+						extend( {}, source, {
+							element: elem,
+							name: elem.className,
+							namespace: elem.name,
+							options: options
+						})._create();
+		
+					});
+				}
+				
+			});
+		};
 	}
 
-	while ( mightyModule = mightyModules[ 0 ] ) {
-		widget( mightyModule );
+	for (; i < l; i++) { 
+		widget( mightyModules[i] );
 	}
 	
 }("mighty", this, document );

@@ -1,4 +1,4 @@
-//Boot.log("mighty.source.js: Executing.");
+//Boot.log("mighty.source2.js: Executing.");
 Boot.define({
 
 	// Set up the widget
@@ -13,7 +13,7 @@ Boot.define({
 		Boot.getCSS("../src/mighty.source.css");
 		
 		element.innerHTML = "<pre>source</pre>";
-	//	Boot.log( "Need to set this thing to width: " + width );
+	//	Boot.log( "Setting source2 to width: " + width );
 		Boot.attr( element, "style", "width: " + width + "px" );
 
 	},
@@ -49,7 +49,7 @@ Boot.define({
 //		
 //	}
 });
-//Boot.log("mighty.source.js: Done.");
+//Boot.log("mighty.source2.js: Done.");
 
 /*
 

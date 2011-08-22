@@ -21,12 +21,19 @@
 
 <body>
 <h1><b>Mighty</b><b>Module</b> Test Page</h1>
+<pre id="log" style="font-size:12px;"></pre>
+<script>
+var logElem = document.getElementById("log");
 
+Boot.log.init({
+	elem: logElem
+});
+</script>
 <div class="content">
 
 	<h2>Source Widget #1</h2>
 
-	<a name="mighty" class="mighty-source" data-width="400" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
+	<a name="mighty" class="mighty-source" data-width="500" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
 	<script defer src="../src/mighty.js"></script>
 
 	<h2>Source Widget #2</h2>
@@ -34,7 +41,7 @@
 	<script defer src="../src/mighty.js"></script>
 
 	<h2>Source Widget #3</h2>
-	<a name="mighty" class="mighty-source" data-width="200" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
+	<a name="mighty" class="mighty-source2" data-width="200" href="http://www.mightymodules.com/source2/"><b>Source</b> Mighty Module</a>
 	<script defer src="../src/mighty.js"></script>
 
 	<h2>Most Popular Widget</h2>
