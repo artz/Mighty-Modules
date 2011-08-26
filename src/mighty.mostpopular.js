@@ -144,6 +144,12 @@ Boot.define({
             ui.list[pane].insertBefore( elem, ui.list[pane].firstChild );
         }
 
+        // Hack.
+        // There's a bug if you go left the very first time you use the arrows that causes
+        // the last item to come in from the right instead of the left, since it doesn't
+        // get its computed style for the left property set... for some reason
+        Boot.addClass( ui.list[ui.list.length - 1], 'left' );
+
         ui.numCurrent = options.initial;
         ui.currentPane = ui.list[ui.numCurrent - 1];
         Boot.addClass( ui.currentPane, 'current' );
