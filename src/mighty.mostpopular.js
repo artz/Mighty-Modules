@@ -20,19 +20,19 @@ Boot.define({
 
         // Use our local AJAX proxy to get some JSONP till we have a proper API
 
-        // Use local data since internet's being hurricaned today
+        /*
+        // Use local data
         Boot.getJSONP( '../api/?file=mostpopular.json', function( json ) {
             // Output our markup
             self._build( json );
         });
+        */
 
-        /*
         // Actual live API call
         Boot.getJSONP( '../api/?url=' + encodeURIComponent( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' ), function( json ) {
             // Output our markup
             self._build( json );
         });
-        */
 		
 	},
 
@@ -215,17 +215,9 @@ Boot.define({
             Boot.addClass( item, nextDir );
         }
 
-        // console.log( ui.list );
-        console.log( nextPane.className );
-
-        console.log( 'nextDir:', nextDir, 'prevDir:', prevDir );
-
         Boot.removeClass( currentPane, 'left right no-transition' );
 
         Boot.removeClass( nextPane, 'no-transition' );
-
-        console.log( Boot.getStyle( nextPane, 'left' ) );
-        console.log( nextPane.className );
 
         Boot.removeClass( currentPane, 'current' );
         // We want to send the current pane in the OPPOSITE direction of the incoming one
