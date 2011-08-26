@@ -84,27 +84,49 @@
 }
 
 .aol-most-popular-social .articles {
-    height: 800px; /* TEMPORARY! */
     margin-left: 20px;
     overflow: hidden;
     position: relative;
     width: 280px;
+
+    -webkit-transition: height 0.2s;
+       -moz-transition: height 0.2s;
+         -o-transition: height 0.2s;
+            transition: height 0.2s;
 }
 
 .aol-most-popular-social ul {
-    float: left;
+    xfloat: left;
     left: 280px;
     list-style-type: none;
     margin: 0;
     padding: 0;
     position: absolute; 
     width: 280px;
-    
+
     -webkit-transition: left 0.2s;
+       -moz-transition: left 0.2s;
+         -o-transition: left 0.2s;
+            transition: left 0.2s;
 }
 
-.aol-most-popular-social ul.current {
-    left: 0;
+.aol-most-popular-social .left {
+    left: -280px;
+}
+
+.aol-most-popular-social .current {
+    left: 0 !important;
+}
+
+.aol-most-popular-social .right {
+    left: 280px;
+}
+
+.aol-most-popular-social .no-transition {
+    -webkit-transition: none;
+       -moz-transition: none;
+         -o-transition: none;
+            transition: none;
 }
 
 .aol-most-popular-social ul li {

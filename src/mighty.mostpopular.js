@@ -19,10 +19,20 @@ Boot.define({
 		Boot.getCSS("../src/mighty.mostpopular.css");
 
         // Use our local AJAX proxy to get some JSONP till we have a proper API
+
+        // Use local data since internet's being hurricaned today
+        Boot.getJSONP( '../api/?file=mostpopular.json', function( json ) {
+            // Output our markup
+            self._build( json );
+        });
+
+        /*
+        // Actual live API call
         Boot.getJSONP( '../api/?url=' + encodeURIComponent( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' ), function( json ) {
             // Output our markup
             self._build( json );
         });
+        */
 		
 	},
 
@@ -96,6 +106,7 @@ Boot.define({
         }
 
         ui.mostPopular.appendChild( ui.header );
+
         ui.mostPopular.appendChild( ui.articles );
 
         this.element.appendChild( ui.mostPopular );
@@ -137,6 +148,16 @@ Boot.define({
         ui.currentPane = ui.list[ui.numCurrent - 1];
         Boot.addClass( ui.currentPane, 'current' );
 
+        // Disable double-click text selection on our pane nav elements
+        // (must be done after elements are actually added to the DOM)
+        Boot.disableTextSelect( ui.paneNav );
+        Boot.disableTextSelect( ui.back );
+        Boot.disableTextSelect( ui.forward );
+        Boot.disableTextSelect( ui.info );
+
+        // Set height of container to height of current pane
+        ui.articles.style.height = Boot.getStyle( ui.currentPane, 'height' );
+
         this._bindEvents();
     },
 
@@ -161,11 +182,12 @@ Boot.define({
     change: function( event ) {
         // backward = -1
         // forward = 1
-        var classIn, classOut,
-            ui = this.ui,
+        var ui = this.ui,
             dir = event.direction,
             current = ui.numCurrent,
-            next = current + dir;
+            next = current + dir,
+            nextDir = ( dir === 1 ) ? 'right' : 'left',
+            prevDir = ( dir === 1 ) ? 'left' : 'right';
 
         if ( next < 1 ) {
             next = ui.numPanes;
@@ -178,12 +200,41 @@ Boot.define({
         currentPane = ui.list[current - 1];
         nextPane = ui.list[next - 1];
 
+        // Set all panes to the right or left (depending on direction) without animation
+        for ( var i = ui.numPanes; i > 0; i -= 1 ) {
+            var item = ui.list[i - 1];
+            // console.log( item );
+            Boot.addClass( item, 'no-transition' );
+            Boot.removeClass( item, prevDir );
+            Boot.addClass( item, nextDir );
+        }
+
+        // console.log( ui.list );
+        console.log( nextPane.className );
+
+        console.log( 'nextDir:', nextDir, 'prevDir:', prevDir );
+
+        Boot.removeClass( currentPane, 'left right no-transition' );
+
+        Boot.removeClass( nextPane, 'no-transition' );
+
+        console.log( Boot.getStyle( nextPane, 'left' ) );
+        console.log( nextPane.className );
+
         Boot.removeClass( currentPane, 'current' );
+        // We want to send the current pane in the OPPOSITE direction of the incoming one
+        Boot.addClass( currentPane, prevDir );
+
         Boot.addClass( nextPane, 'current' );
+        Boot.removeClass( nextPane, 'left right' );
 
         ui.numCurrent = next;
 
+        // Set the active pane number in the navigation
         ui.active.innerHTML = ui.numCurrent;
+
+        // Set height of articles (container) to height of new pane
+        ui.articles.style.height = Boot.getStyle( nextPane, 'height' );
     },
 
 	// Use the _setOption method to respond to changes to options
