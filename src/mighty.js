@@ -38,64 +38,72 @@
 		
 		Note: This is a work in progress!
 */
-		widget = boot.widget = function( elem, options ) {
-			
+		widget = boot.widget = function( widgetName, elem, options ) {
+			var source = boot.modules[ widgetName ],
+				instance = extend( {}, source, {
+					element: elem,
+					name: elem.className,
+					namespace: elem.name,
+					options: options
+				});
+			instance._create();
+			return instance;
+		};
+	}
+
+	for (; i < l; i++) {
+		
+		// Closure to isolate vars.
+		!function( elem ){ 
+		
 			// We need to do this so IE6/7 execute things in
 			// the correct order.  Very, very bizarre.
 			boot.defer(function(){
-				
-				// This 'elem' check is just a safe guard.
-				if ( elem && ! elem.widget ) {
-
+			
+				if ( elem && elem.nodeName === "A" && ! elem.widget ) {
+					
+					// Remember we turned this into a widget already.
 					elem.widget = 1;
 						
 					// Decide if we want to move this into widget class
 					// or outside of it.
 					var widgetName = elem.className.replace("-", "."),
 						elemParent = elem.parentNode,
-						div;
-	
-					// Do our fancy DOM option extraction here.
-					options = extend( options || {}, boot.data( elem ) );
+						div,
+							
+						// Do our fancy DOM option extraction here.
+						options = extend( options || {}, boot.data( elem ) );
 				
 					// If we have an anchor link placeholder, replace 
 					// it with a <div> so we have a valid container.
 					if ( elem.nodeName === "A" ) {
-	
+		
 						div = document.createElement("div");
-	
+		
 						div.className = elem.className;
 						
 						// These log checks were F'ed up without the
 						// boot.defer wrapper above in IE6/7.
 					//	Boot.log( "My name: " + widgetName );							
 					//	Boot.log( "Setting className: " + div.className );
-	
+		
 						elemParent.insertBefore( div, elem );
 						elemParent.removeChild( elem );				
 						
 						elem = div;
 						
 					}
-
+					
+					// Bring in the modules we need.
 					boot.use({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
-	
-						extend( {}, source, {
-							element: elem,
-							name: elem.className,
-							namespace: elem.name,
-							options: options
-						})._create();
-		
+						
+						// Make this guy a widget.
+						var myWidget = widget( widgetName, elem, options );
+						
 					});
 				}
-				
 			});
-		};
-	}
-
-	for (; i < l; i++) { 
-		widget( mightyModules[i] );
+		}( mightyModules[i] );
 	}
 	
 }("mighty", this, document );
