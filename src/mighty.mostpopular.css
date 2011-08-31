@@ -96,7 +96,7 @@
 }
 
 .aol-most-popular-social ul {
-    xfloat: left;
+    float: left;
     left: 280px;
     list-style-type: none;
     margin: 0;
@@ -115,7 +115,7 @@
 }
 
 .aol-most-popular-social .current {
-    left: 0 !important;
+    left: 0;
 }
 
 .aol-most-popular-social .right {
@@ -135,7 +135,7 @@
     line-height: 1.2;
     margin: 0;
     padding: 7px 0 7px 94px;
-    width: 186px;
+    width: 180px;
 }
 
 .aol-most-popular-social ul li .facebook {
@@ -179,7 +179,7 @@
 
 .aol-most-popular-social ul li img {
     border: 1px solid #ccc;
-    display: inline;
+    display: inline-block;
     float: left;
     height: 64px;
     margin-left: -94px;
@@ -189,6 +189,7 @@
 
 .aol-most-popular-social ul li a {
     color: #000;
+    display: block;
     font-size: 13px;
     font-weight: bold;
     text-decoration: none;
