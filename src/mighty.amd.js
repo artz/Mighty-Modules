@@ -1326,7 +1326,7 @@
 		
 		each: each,
 		extend: extend,
-
+		
 	//	options: options, // Meh?
 		
 		getScript: getScript,
@@ -1352,6 +1352,8 @@
 		create: create,
 		
 		disableTextSelect: disableTextSelect,
+		
+		defer: defer,
 		
 		poll: poll,
 		
