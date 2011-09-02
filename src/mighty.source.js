@@ -1,70 +1,42 @@
-//Boot.log("mighty.source.js: Executing.");
-Boot.define({
+Mighty.define(["mighty.core"], function( core ){
 
-	// Set up the widget
-	_create: function () {
-		
-		var self = this,
-			options = self.options,
-			element = self.element,
+	return {
+		// Set up the widget
+		_create: function () {
 			
-			width = options.width;
+			var self = this,
+				options = self.options,
+				element = self.element,
+				
+				width = options.width;
+	
+			core.getCSS("../src/mighty.source.css");
+			
+			element.innerHTML = "<pre>source</pre>";
 
-		Boot.getCSS("../src/mighty.source.css");
+			core.attr( element, "style", "width: " + width + "px" );
+	
+		},
 		
-		element.innerHTML = "<pre>source</pre>";
-	//	Boot.log( "Need to set this thing to width: " + width );
-		Boot.attr( element, "style", "width: " + width + "px" );
-
-	},
-	
-	_html: "<h1>{title}</h1><div></div>",
-	
-	_css: "",
-	
-	// These options will be used as defaults
-	options: {
-		width: 400,
-		html: "<div></div>",
-		template: {
-			"title": "My Heading"
+		_html: "<h1>{title}</h1><div></div>",
+		
+		_css: "",
+		
+		// These options will be used as defaults
+		options: {
+			width: 400,
+			html: "<div></div>",
+			template: {
+				"title": "My Heading"
+			}
 		}
-	},
-
-	// Use the _setOption method to respond to changes to options
-	_setOption: function (key, value) {
-		
-		switch (key) {
-		case "clear":
-			// handle changes to clear option  
-			break;
-		}
-		
-		// In jQuery UI 1.9 and above, you use the _super method instead
-		// this._super("_setOption", key, value);
-	}
-
-	// Use the destroy method to clean up any modifications your widget has made to the DOM
-//	destroy: function () {
-//		
-//	}
+	
+		// Use the destroy method to clean up any modifications your widget has made to the DOM
+	//	destroy: function () {
+	//		
+	//	}
+	};
 });
-//Boot.log("mighty.source.js: Done.");
-
-/*
-
-function(){
-	
-	return function( elem, options ) {
-		
-		var width = options.width;
-		Boot.attr( elem, "style", "width: " + width + "px" );
-		
-	}
-
-}
-
-*/
 
 /*
 

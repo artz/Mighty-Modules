@@ -1,9 +1,17 @@
+// Bypass this is Mighty is already defined.
+
 /*
 	Figuring out how small we can make an AMD loader.
 */
 !function( namespace, window, undefined ) {
 	
-	var global = window[ namespace ] || ( window[ namespace ] = {} ),
+	// Return if Mighty is already defined.
+	if ( window[ namespace ] ) {
+		return;
+	}
+	
+//		var global = window[ namespace ] || ( window[ namespace ] = {} ),
+	var global = window[ namespace ] = {},
 	
 		// String compression optimizations for the library.
 		strLoad = "load",
@@ -147,7 +155,7 @@
 	Parameters
 	
 		target -  An object that will receive the new properties if additional 
-		          objects are passed in [or that will extend the Boot namespace 
+				  objects are passed in [or that will extend the Boot namespace 
 				  if it is the sole argument].
 		object1 - An object containing additional properties to merge in.
 		objectN - Additional objects containing properties to merge in.
@@ -161,7 +169,12 @@
 			source,
 			i = 1, // Source pointer.
 			l = args.length;
-
+		
+		// If it's a string, we should grab the 
+		// object from our modules.
+		if ( isString( target ) ) {
+			target = modules[ target ];
+		}
 	/*
 		// If the length is 1, extend Boot, and 
 		// set the source to thefirst argument.
@@ -194,7 +207,7 @@
 /*
 	Boot.options
 */
-/*	var bootOptions = {};
+	var bootOptions = {};
 	function options( customOptions, value ) {
 		if ( isString( customOptions ) ) {
 			extend( bootOptions[ customOptions ], value );
@@ -202,7 +215,7 @@
 			extend( bootOptions, customOptions );
 		}
 	}
-	global.options = options;
+//	global.options = options;
 
 /*
 	Function: Boot.log
@@ -284,12 +297,8 @@
 					script[ strReadyState ] === "loaded" || script[ strReadyState ] === strComplete) ) {
 
 				done = 1;
-				
-				// Emit an event indicating this script has finished.
-			//	emit( src );
-			//	setTimeout(function(){
+
 				callback && callback( src ); 
-			//	}, 0 );
 				
 				// Handle memory leak in IE
 				script[ strOnLoad ] = script[ strOnReadyStateChange ] = null;
@@ -307,7 +316,7 @@
 		firstScriptParent.insertBefore( script, firstScript );
 
 	}
-	global.getScript = getScript;
+//	global.getScript = getScript;
 	
 
 
@@ -323,7 +332,7 @@
 	callback
 */
 	var events = {};
-	function on( object, event, callback ){
+	function subscribe( object, event, callback ){
 	
 		if ( isString( object ) ) {
 			callback = event;
@@ -336,10 +345,10 @@
 		eventQueue.push( [ object, callback ] );
 		
 	}
-	global.on = on;
+	global.subscribe = subscribe;
 
 /*
-	Function: Boot.emit
+	Function: Boot.publish
 	
 	Publishes an event, passing an optional object of data.
 	Triggers any events attached to the event.
@@ -354,7 +363,7 @@
 	Boot
 
 */
-	function emit( object, event, data ){
+	function publish( object, event, data ){
 		
 		// Support for associating events with DOM nodes.
 		if ( isString( object ) ) {
@@ -393,7 +402,7 @@
 			});
 		}
 	}
-	global.emit = emit;
+	global.publish = publish;
 
 /*
 	Boot.resolve
@@ -421,7 +430,7 @@
 	var modules = {},
 		moduleDefinitions = {},
 		definedModules = [];
-	
+
 	function define( moduleName, moduleDependencies, moduleDefinition ) {
 		
 //		Boot.log("Defining a module!");
@@ -445,7 +454,7 @@
 			moduleDefinition.d = moduleDependencies;
 
 		}
-		
+
 		if ( moduleName ) {
 			moduleDefinitions[ moduleName ] = moduleDefinition;
 		} else {
@@ -460,10 +469,10 @@
 	global.define = define;
 	
 	// Expose modules externally.
-	global.modules = modules;
+	// global.modules = modules;
 
 /*
-	Boot.use
+	Boot.require
 	Based on YUI's use() function and RequireJS.
 */	
 	// Resolves an object.
@@ -480,8 +489,8 @@
 		return obj;
 	}
 	
-	bootOptions.use = {};
-	function use( customOptions, moduleNames, callback ) {
+	bootOptions.require = {};
+	function require( customOptions, moduleNames, callback ) {
 		
 		// Normalize parameters.
 		if ( isArray( customOptions ) || isString( customOptions ) ) {
@@ -492,7 +501,7 @@
 		// Make moduleNames an array.
 		moduleNames = isString( moduleNames ) ? [ moduleNames ] : moduleNames;
 		
-		var options = extend( {}, bootOptions.use, customOptions || {} ),
+		var options = extend( {}, bootOptions.require, customOptions || {} ),
 			callbackArgs = [],
 			moduleCount = 0;
 			
@@ -512,21 +521,54 @@
 			}
 			
 			if ( module ) {
-				emit( moduleName );
+				publish( moduleName );
 			}
 		}
 
 		each( moduleNames, function( moduleName, i ) {
 
-			var module,
-				moduleDependencies,
-				moduleDefinition;
+			function defineModule(){
+				
+//				Boot.log("Done loading script for <b>" + moduleName + "</b>.");
+// 				Boot.log( "Defined modules: " + definedModules.length );
+// 				If a module was defined after our download.
+//				Boot.log( "Finished: " + src );
 
-//			Boot.log( "Inside use, using " + moduleName );
+				var module,
+					moduleDependencies,
+					moduleDefinition;
+
+				if ( moduleDefinition = moduleDefinitions[ moduleName ] || definedModules.shift() ) {
+
+					if ( moduleDependencies = moduleDefinition.d ) {
+
+//						Boot.log("<b>" + moduleName + "</b> has a dependency: " + moduleDefinition.d.join(", ") );
+
+						require( moduleDependencies, function(){
+//							Boot.log( "Dependencies loaded (" + moduleDefinition.d.join(", ") + "). <b>" + moduleName + "</b> is ready." );
+							module = isFunction( moduleDefinition ) ? moduleDefinition.apply( global, arguments ) : moduleDefinition;
+							moduleReady( i, moduleName, module );
+						});
+
+					} else {
+
+						module = isFunction( moduleDefinition ) ? moduleDefinition() : moduleDefinition;
+						moduleReady( i, moduleName, module );
+
+//						Boot.log("<b>" + moduleName + "</b> loaded! " + !!module);
+					}
+
+				// Otherwise see if we can snag the module by name (old skool).	
+				} else {
+					moduleReady( i, moduleName, getLibrary( moduleName )  );
+				}
+				
+			}	
+			
+//			Boot.log( "Inside require, using " + moduleName );
 
 			// If this module has already been defined, use it.
 			if ( moduleName in modules ) {
-				
 				// Check for the object.
 				if ( modules[ moduleName ] ){
 //					Boot.log("Module <b>" + moduleName + "</b> is already defined.");
@@ -534,7 +576,7 @@
 				// It's undefined, so wait a little bit.
 				} else {
 //					Boot.log("Module <b>" + moduleName + "</b> is in the process of being defined. Queue time!");
-					on( moduleName, function(){
+					subscribe( moduleName, function(){
 //						Boot.log("Module <b>" + moduleName + "</b> is now defined! Assigning to callback argument.");
 						moduleReady( i, moduleName );
 					});
@@ -548,49 +590,800 @@
 				// module requests wait until the event is emmitted.
 				modules[ moduleName ] = undefined;
 //				Boot.log("Calling getScript: " + moduleName );
-				getScript( resolve( options, moduleName ), function( src ) {
 
-//					Boot.log("Done loading script for <b>" + moduleName + "</b>.");
-					// Boot.log( "Defined modules: " + definedModules.length );
-					// If a module was defined after our download.
-//					Boot.log( "Finished: " + src );
-
-					var module,
-						moduleDependencies,
-						moduleDefinition;
-					
-					// If a module was defined after our download.
-					if ( moduleDefinition = moduleDefinitions[ moduleName ] || definedModules.shift() ) {
-					
-						if ( moduleDependencies = moduleDefinition.d ) {
-
-//							Boot.log("<b>" + moduleName + "</b> has a dependency: " + moduleDefinition.d.join(", ") );
-
-							use( moduleDependencies, function(){
-//								Boot.log( "Dependencies loaded (" + moduleDefinition.d.join(", ") + "). <b>" + moduleName + "</b> is ready." );
-								module = isFunction( moduleDefinition ) ? moduleDefinition.apply( global, arguments ) : moduleDefinition;
-								moduleReady( i, moduleName, module );
-							});
-
-						} else {
-							
-							module = isFunction( moduleDefinition ) ? moduleDefinition() : moduleDefinition;
-							moduleReady( i, moduleName, module );
-
-//							Boot.log("<b>" + moduleName + "</b> loaded! " + !!module);
-						}
-
-					// Otherwise see if we can snag the module by name (old skool).	
-					} else {
-						moduleReady( i, moduleName, getLibrary( moduleName )  );
-					}
-					
-				});
+				// If the module was defined by some other script
+				if ( moduleDefinitions[ moduleName ] ) {
+					defineModule();
+				// Otherwise fetch the script based on the module name
+				} else {
+					getScript( resolve( options, moduleName ), defineModule );
+				}
 			}
 			
 		});
 		
 	}
-	global.use = use;
+	global.require = require;
 	
-}("Boot", this);
+/*
+	Boot.widget
+	
+	The Widget factory is a wrapper function that 
+	binds an element to a module using a defined
+	object specification.
+	
+	Note: This is a work in progress!
+*/
+	function widget( widgetName, elem, options ) {
+
+		var source = modules[ widgetName ],
+			instance = extend( {}, source, {
+				element: elem,
+				name: elem.className,
+				namespace: elem.name,
+				option: function( key, value ) {
+					
+				},
+				options: options
+			});
+			
+		instance._create();
+		
+		return instance;
+
+	}
+//	global.widget = widget;
+
+/*
+	Function: Boot.attr
+	
+	Shorthand for setting and retrieving an attribute from an element.
+	Note this is not currently used by Boot, but used by Easync and ModuleT
+	
+	Parameters:
+	
+		elem - The object with the attribute to fetch.
+		attribute - The attribute to fetch.
+		value - The value to set.
+	
+	Returns:
+	
+	Attribute value (getting) or Boot (setting)
+*/
+	var styleNode = document.createElement("style");
+
+	function attr( elem, attribute, value ){
+
+		if ( value !== undefined ) {
+			if ( value === null ) {
+				elem.removeAttribute( attribute );
+			} else {
+				if ( attribute === "style" ) {
+					// For IE.
+					elem.style.cssText = value;
+				}
+				elem.setAttribute( attribute, value );
+			}	
+
+		} else {
+			return elem.getAttribute( attribute );
+		}
+		
+	}
+//	global.attr = attr;
+
+/*
+	Boot.data
+	
+	Function for extracting data attributes and storing 
+	arbitrary data on elements.
+*/
+	function data( elem, key, value ) {
+		// Return an object of all data attributes.
+		var strData = "data-",
+		
+			attribute,
+			attributeName,
+			attributes = elem.attributes,
+			attributesLength = attributes.length,
+			attributesObject = {},
+			
+			ret;
+			
+		if ( value !== undefined ) {
+			attr( elem, strData + key, value );
+		} else if ( key !== undefined ) {
+			ret = attr( strData + key );
+		} else {
+			while( attributesLength-- ) {
+				attribute = attributes[ attributesLength ];
+				attributeName = attribute.nodeName;
+				if ( contains( attributeName, strData ) ) {
+					attributesObject[ attributeName.replace( strData, "" ) ] = attribute.nodeValue;
+				}
+			}
+			ret = attributesObject;
+		}
+		return ret;
+	}
+//	global.data = data;
+	
+
+/*
+	Simple add/remove classname functions.
+	Valuable as Boot.removeClass / Boot.addClass or jQuery's job?
+*/
+	function addClass( object, className ) {
+		var space;
+
+		// If the class is already present, we do not need to add it again
+		if ( object.className.indexOf( className ) === -1 ) {
+			space = ( object.className.length ) ? " " : ""; 
+			object.className += space + className;
+		}
+	}
+//	global.addClass = addClass;
+
+/*
+	function removeClass( object, className ) {
+	   var reg = new RegExp("(\\s|^)" + className + "(\\s|$)", "g");
+	   object.className = object.className.replace(reg, strSpace );
+	}
+*/	
+	function removeClass( object, className ) {
+		var i,
+			className = className || '',
+			classes = className.split( ' ' ),
+			length = classes.length,
+			edgeSpaces = new RegExp( "^\\s|\\s$" ),
+			multipleSpaces = new RegExp( "(\\s)+" );
+		
+		i = length;
+
+		while ( i-- ) {
+			// Match classname that is the beginning and ending of its word
+			// (prevent matches in the interior of other classnames)
+			// along with optional whitespace to either side
+			// className = new RegExp( "(\\s)?\\b" + classes[i] + "\\b(\\s)?" );
+			className = new RegExp( "\\b" + classes[i] + "\\b" );
+			object.className = object.className.replace( className, "" );
+			object.className = object.className.replace( edgeSpaces, "" );
+			object.className = object.className.replace( multipleSpaces, " " );
+
+
+		}
+	}
+//	global.removeClass = removeClass;
+
+/*
+	Function: Boot.getStyle
+
+	Cross-browser method for getting the computed styles of elements
+
+	Parameters:
+
+		element - The element to find the computed style for.
+		property - The property we're asking for.
+
+	Returns:
+
+		The computed style value
+
+	Usage:
+	
+		var height = Boot.getStyle( myDiv, "height" );
+
+*/
+	// Largely taken from the example at
+	// http://robertnyman.com/2006/04/24/get-the-rendered-style-of-an-element/
+	function getStyle( element, property ) {
+		var value;
+
+		if ( document.defaultView && document.defaultView.getComputedStyle ) {
+			// The lovely way of retrieving computed style
+			value = document.defaultView.getComputedStyle( element, "" ).getPropertyValue( property );
+		} else {
+			// The... other (read: Microsoft) way
+			property = property.replace(/\-(\w)/g, function( match, prop ) {
+				return prop.toUpperCase();
+			});
+
+			value = element.currentStyle[property];
+		}
+
+		return value;
+	}
+
+//    global.getStyle = getStyle;
+
+
+/*
+	Boot.inlineCSS
+	
+	Thanks Stoyan!
+*/
+	function inlineCSS( css ){
+
+		var style = styleNode.cloneNode(0),
+			styleSheet = style.styleSheet,
+			textNode;
+
+		// IE
+		if ( styleSheet ) { 
+			styleSheet.cssText = css;
+		// The World
+		} else { 
+			textNode = document.createTextNode( css );
+			style.appendChild( textNode );
+		}
+		
+		firstScriptParent.insertBefore( style, firstScript );
+	}
+//	global.inlineCSS = inlineCSS;
+
+	
+/*
+	Function: Boot.getCSS
+	
+	Fetches a CSS file and appends it to the DOM.
+*/
+	var cssLoading = {};
+	function getCSS( src ) {
+		if ( ! cssLoading[ src ] ) {
+			cssLoading[ src ] = 1;
+			var styleSheet = document.createElement("link");
+			styleSheet.rel = "stylesheet";
+			styleSheet.href = src;
+			firstScriptParent.insertBefore( styleSheet, firstScript );
+		}
+	}
+//	global.getCSS = getCSS;
+
+
+/*
+	Boot.create
+	
+	Research: http://domscripting.com/blog/display/99
+*/
+	function create( html ) {	
+		var div = document.createElement("c");
+		div.innerHTML = html;
+		return div.firstChild;
+	}
+//	global.create = create;
+
+
+/*
+	Function: Boot.disableTextSelect
+
+	Cross-browser method for disabling text selection - particularly an issue on ui elements that
+	may be clicked quickly enough to trigger the default action of selecting text.
+
+	Parameters:
+	
+		element - The element to disable text selection on.
+
+	Returns:
+		
+		The element
+
+	Usage:
+
+		Boot.disableTextSelect( myElement );
+*/
+
+	// The actual cross-browserness of this has NOT been tested
+	// This is an initial pass based on a stackoverflow example
+	// http://stackoverflow.com/questions/826782/css-rule-to-disable-text-selection-highlighting
+	function disableTextSelect( element ) {
+		if ( getStyle( element, "-khtml-user-select" ) ) {
+			// Set style for older webkit
+			element.style["-khtml-user-select"] = "none";
+		} else if ( getStyle( element, "-webkit-user-select" ) ) {
+			// Set style for webkit
+			element.style["-webkit-user-select"] = "none";
+		} else if ( getStyle( element, "-moz-user-select" ) ) {
+			// Set style for mozilla
+			element.style["-moz-user-select"] = "-moz-none";
+		} else if ( getStyle( element, "user-select" ) ) {
+			// Set style for mozilla
+			element.style["user-select"] = "none";
+		} else {
+			// Set property for IE & Opera
+			element.unselectable = true;
+		}
+
+		return element;
+	}
+
+//    global.disableTextSelect = disableTextSelect;
+
+/*
+	Boot.poll
+	
+	Function useful for checking/polling something
+	and then executing a callback once it's true.
+*/
+	var timers = {},
+		timerId = 0;
+
+	function poll( check, callback, pollDelay, timeout ){
+
+		var name = timerId++,
+			start = now(),
+			time,
+			isTimeout = false;
+		
+		timers[ name ] = setInterval(function(){
+			
+			time = now() - start;
+			
+			if ( check() || ( timeout && ( isTimeout = time > timeout )) ) {
+				callback.call( window, isTimeout, time );
+				clearInterval( timers[ name ] );
+			}
+			
+		}, pollDelay );
+		 
+	}
+//	global.poll = poll;
+
+
+/*
+	Function: Boot.ready
+	
+	Cross-browser DOMContentLoaded event binder.
+	
+	Parameters:
+	
+		callback - The function to execute after the document is ready.
+	
+	Returns:
+	
+	Boot
+	
+	See Also:
+	
+	<Boot.load>
+
+	Usage:
+	
+	Boot.ready( function(){ ... } );
+	
+	Research:
+	
+	* http://dean.edwards.name/web// log/2005/09/busted/
+	  Probably the first experiment; cannot use because of document.write.
+	
+	* http://www.thefutureoftheweb.com/b// log/adddomloadevent
+	  Uses our approach but for some reason didn't make Safari's 
+	  detection the same as IE.  My testing showed readyState to 
+	  be reliable acrosss IE browsers.
+	  /test/readyState.php
+	
+	* http://javascript.nwbox.com/IEContentLoaded/
+	  This one is included in jQuery. The doScroll event is 
+	  much less efficient than checking readyState. 
+	  /test/regex-vs-indexof.html
+	
+	* http://www.dustindiaz.com/smallest-domready-ever
+	  This was interesting but upon closer inspection, doesn't work.
+*/
+	var isReady = 0,
+		isReadyBound = 0,
+		readyQueue = [],
+		
+		checkReady = function(){
+			// Browsers go through 3 readyStates:
+			// 1 - loading
+			// 2 - loaded (Safari) or interactive (everyone else)
+			// 3 - complete
+			// This check looks for #2, the equivalent of DOM ready.
+			// Needs to be "interactive" or "loaded" (Safari) or "complete" (catch all)
+			// "e" fits the bill nicely.
+			// indexOf is much faster than regex or doScroll hack in Safari and IE (see /test/regex-vs-indexof.html)
+			return contains( document.readyState, "e" );
+		},
+/*
+	Replaced this with Boot.poll. So far so good!
+		pollReadyState = function(){
+			if ( checkReady() ) {
+				execReady();
+			} else {
+				SetTimeout( pollReadyState, 50 );
+			}
+		},
+*/
+		execReady = function(){
+			
+			isReady = 1;
+			
+			each( readyQueue, function( callback ){
+				defer( callback );
+			});
+
+			// Clear the queue.
+			readyQueue = [];
+		},
+		
+		// Internal reference.
+		ready = function( callback ){
+		
+			if ( isReady ) {
+				
+				// Execute callback immediately in the next UI thread.	
+			//	console.log("Executing in the next cycle.");
+				defer( callback );	
+						
+			} else {
+	
+				if ( isReadyBound ) {
+				//	log("Pushing ready callback.");
+					// Push function into the queue.
+					readyQueue.push( callback );
+					
+				} else {
+				//	log("Binding ready.");
+					isReadyBound = 1;
+					
+					// Add this callback to our queue to
+					// be executed when ready.
+					readyQueue = [ callback ];
+					
+					if ( checkReady() ) {
+					//	log("Already ready.");
+						// It is ready right now, execute ready.
+						execReady();
+					} else {	
+						// Good browsers.
+						if ( document.addEventListener ) {
+				//			console.log("Binding DOMContentLoaded.");
+							document.addEventListener( "DOMContentLoaded", execReady, false ); 
+						// IE.
+						} else {
+							poll( checkReady, execReady, 50 );
+						}
+					}
+				}
+			}
+			
+			
+		};
+	
+	// Public reference.
+//	global.ready = ready;
+
+/*
+	Function: Boot.bind
+	
+	Cross browser method for binding events.
+	
+	Parameters:
+	
+		object - The object to bind the method to.
+		event - The event to bind the method to.
+		callback - The method to fire on the event.
+	 
+	Returns:
+	
+	Boot
+*/
+	// Patch function to normalize IE events to standard.
+	function patchIEEvent( event ) {
+		
+		event.preventDefault = function(){
+			event.returnValue = false;
+		};
+		event.target = event.srcElement;
+		
+		return event;
+	}
+	
+	function bind( object, event, callback ) {
+		
+		if (object.attachEvent) {
+			object.attachEvent("on" + event, function(){ callback( patchIEEvent( window.event ) ); } );
+		} else if (object.addEventListener) {
+			object.addEventListener(event, callback, false);
+		}
+	}
+//	global.bind = bind;
+
+/*
+	Function: Boot.load
+	
+	Cross-browser window load event binder.
+	Includes a convenient check for if 
+	the window has already loaded and 
+	executes the function immediately if it is.
+	Also ensures any events bound to ready fire 
+	first, which can be a problem in normal event bindings.
+	
+	Parameters:
+	
+		callback - The function to execute after the window has loaded.
+	
+	Returns:
+	
+	Boot
+	
+	See Also:
+	
+	<Boot.load>
+*/
+	var isLoaded = 0;
+	function load( callback ) {
+
+		// When loaded, set the internal flag and do the callback.
+		function loaded(){
+			
+			// Ensure we process our ready queue before stuff 
+			// bound to window.load.
+			execReady();
+			
+			isLoaded = 1;
+			
+			defer( callback );
+		}
+		
+		// Browsers go through 3 readyStates:
+		// 1 - loading
+		// 2 - loaded (Safari) or interactive (everyone else)
+		// 3 - complete
+		// This check looks for #3, the equivalent of window.onload.
+		// "m" fits the bill nicely.
+		// indexOf is much faster than regex in Safari and IE (see /test/regex-vs-indexof-vs-doscroll.html)
+		if ( contains( document.readyState, "m" ) ) {
+			loaded();
+		} else {
+			bind( window, strLoad, loaded );
+		}
+		
+	}
+//	global.load = load;
+
+
+/*
+	Function: Boot.trim
+	
+	Trims whitespace before and after a string.
+	
+	Parameters
+	
+		str - The string to trim leading whitespace.
+	
+	Returns
+	
+	String - The trimmed string.
+*/
+	function trim( str ) {
+		return str.replace(/^\s+/, "").replace(/\s+$/, "");
+	}
+//	global.trim = trim;
+	
+/* 
+	Function: Boot.parseJSON
+	
+	Parses a valid JSON string into a JavaScript object. Thanks, jQuery!
+	
+	Parameters
+	
+		data - The string of data to parse.
+	 
+	Returns:
+	
+	Object - Parsed JSON object.
+*/
+/*
+	Removing because it's too heavy and developers need to be smart.
+	var rvalidchars = /^[\],:{}\s]*$/,
+		rvalidescape = /\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g,
+		rvalidtokens = /"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g,
+		rvalidbraces = /(?:^|:|,)(?:\s*\[)+/g;
+*/
+	function parseJSON( data ) {
+		try {
+			// Make sure leading/trailing whitespace is removed (IE can't handle it)
+			data = trim( data );
+					
+			// Attempt to parse using the native JSON parser first
+			if ( JSON && JSON.parse ) {
+				return JSON.parse( data );
+			}
+	
+			// Make sure the incoming data is actual JSON
+			// // logic borrowed from http://json.org/json2.js
+			// *Removing this to decrease weight of the library.
+		//	if ( rvalidchars.test( 
+		//			data.replace( rvalidescape, "@" )
+		//				.replace( rvalidtokens, "]" )
+		//				.replace( rvalidbraces, "") ) ) {
+		
+			return (new Function( "return " + data ))();
+	
+		//	}
+		} catch (e) {
+			// This function may raise eyebrows so be sure to 
+			// inform developers why it failed.
+			if ( window.console ) {
+				console.log( "Bad JSON: " + data );
+			}
+		}
+	}
+//	global.parseJSON = parseJSON;
+	
+
+/*
+	Boot.getJSONP
+	Simple function for returning JSONP data.
+*/	
+	var jsonpId = 0;
+	function getJSONP( url, callback ) {
+		
+		var callbackId = "JSONP_" + jsonpId++;
+		
+		url += "&callback=" + namespace + "." + callbackId;
+
+		getScript( url );
+
+		global[ callbackId ] = function( data ) {
+
+			// Pass data to the callback.
+			callback && callback.call( window, data );
+			
+			// Cleanup function reference.
+			delete global[ callbackId ];
+		};
+			
+	}
+//	global.getJSONP = getJSONP;
+	
+	// Expose our internal utilities through a module definition.
+	define( namespace.toLowerCase() + ".core", {
+		
+		contains: contains,
+		
+		is: is,
+		isArray: isArray,
+		isObject: isObject,
+		isString: isString,
+		isBoolean: isBoolean,
+		isFunction: isFunction,
+		isNumber: isNumber,
+		
+		each: each,
+		extend: extend,
+
+	//	options: options, // Meh?
+		
+		getScript: getScript,
+		
+		subscribe: subscribe,
+		publish: publish,
+		events: events,
+		
+		define: define,
+		require: require,
+		modules: modules,
+		widget: widget,
+		
+		attr: attr,
+		data: data,
+		
+		addClass: addClass,
+		removeClass: removeClass,
+		getStyle: getStyle,
+		inlineCSS: inlineCSS,
+		getCSS: getCSS,
+		
+		create: create,
+		
+		disableTextSelect: disableTextSelect,
+		
+		poll: poll,
+		
+		ready: ready,
+		bind: bind,
+		load: load,
+		
+		trim: trim,
+		parseJSON: parseJSON,
+		getJSONP: getJSONP
+		
+	});
+	
+}("Mighty", this);
+
+
+/*
+	Mighty Module Framework
+	
+	This script processes and initializes mighty modules on the page.
+*/
+!function( Mighty, window, document){
+
+Mighty.require("mighty.core", function( core ){
+	
+		// Localize core functions we use more than once.
+	var extend = core.extend,
+		
+		toArray = function( collection ) { 
+			var array = [],
+				l = collection.length;
+			while ( l-- ) {
+				array[l] = collection[l];
+			}
+			return array;
+		};
+	
+	if ( ! Mighty.init ) {
+
+		// The mighty init function scans the DOM for anchor 
+		// links that contain the "mighty" global namespace,
+		// and then initializes its widget's source.
+		Mighty.init = function(){
+		
+			var mightyModules = toArray( document.getElementsByName( "mighty" ) ),
+				i = 0, 
+				l = mightyModules.length;
+				
+			for (; i < l; i++) {
+				
+				// Closure to isolate vars.
+				!function( elem ){ 
+				
+					// We need to do this so IE6/7 execute things in
+					// the correct order.  Very, very bizarre.
+					setTimeout(function(){
+					
+						if ( elem && elem.nodeName === "A" && ! elem.widget ) {
+							
+							// Remember we turned this into a widget already.
+							elem.widget = 1;
+								
+							// Decide if we want to move this into widget class
+							// or outside of it.
+							var widgetName = elem.className.replace("-", "."),
+								elemParent = elem.parentNode,
+								div,
+									
+								// Do our fancy DOM option extraction here.
+								options = extend( options || {}, core.data( elem ) );
+						
+							// If we have an anchor link placeholder, replace 
+							// it with a <div> so we have a valid container.
+							if ( elem.nodeName === "A" ) {
+				
+								div = document.createElement("div");
+				
+								div.className = elem.className;
+								
+								// These log checks were F'ed up without the
+								// boot.defer wrapper above in IE6/7.
+							//	Boot.log( "My name: " + widgetName );							
+							//	Boot.log( "Setting className: " + div.className );
+				
+								elemParent.insertBefore( div, elem );
+								elemParent.removeChild( elem );				
+								
+								elem = div;
+								
+							}
+							
+							// Bring in the modules we need.
+							core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
+								// Make this guy into a widget.
+								core.widget( widgetName, elem, options );
+							});
+						}
+					}, 0); // end setTimeout
+				}( mightyModules[i] );
+			}
+		};
+	}
+	
+	// Initialize Mighty!
+	Mighty.init();
+});
+	
+}(Mighty, this, document);

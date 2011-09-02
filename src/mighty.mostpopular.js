@@ -1,273 +1,249 @@
-Boot.define({
+Mighty.define(["mighty.core"], function( core ){
 	
-	// These options will be used as defaults
-	options: {
-        // Maximum of items to allow on each pane
-        perpane: 7,
-        // What pane should be visible initially
-        initial: 1
-	},
-
-	// Set up the widget
-	_create: function () {
+	return {
 		
-		var self = this,
-			options = self.options,
-			element = self.element,
-			width = options.width;
-
-		Boot.getCSS("../src/mighty.mostpopular.css");
-
-        // Use our local AJAX proxy to get some JSONP till we have a proper API
-
-        /*
-        // Use local data
-        Boot.getJSONP( '../api/?file=mostpopular.json', function( json ) {
-            // Output our markup
-            self._build( json );
-        });
-        */
-
-        // Actual live API call
-        Boot.getJSONP( '../api/?url=' + encodeURIComponent( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' ), function( json ) {
-            // Output our markup
-            self._build( json );
-        });
-		
-	},
-
-    _build: function( json ) {
-        // console.log( json.response );
-        var i, pane,
-            options = this.options,
-            length = json.response.length,
-            ui = this.ui = {};
-
-        ui.numPanes = Math.ceil( length / options.perpane );
-
-        ui.mostPopular = document.createElement( 'div' );
-        ui.mostPopular.className = 'aol-most-popular-social';
-        ui.header = document.createElement( 'h4' );
-        ui.header.innerHTML = '<b>HuffpostAOL Social News</b>';
-
-        // create navigation
-        ui.paneNav = document.createElement( 'span' );
-        ui.paneNav.className = 'pane-nav';
-        ui.paneNav.innerHTML = 'Most Popular';
-
-        ui.nav = document.createElement( 'span' );
-        ui.nav.className = 'nav';
-
-        // Back arrow
-        ui.back = document.createElement( 'a' );
-        ui.back.className = 'back';
-        ui.back.innerHTML = '<span>Back</span>';
-
-        // Pane info section, ex: ( 1 of 4 )
-        ui.info = document.createElement( 'span' );
-        ui.info.className = 'info';
-        ui.info.innerHTML = ' of ';
-
-        ui.active = document.createElement( 'span' );
-        ui.active.className = 'active';
-        ui.active.innerHTML = options.initial;
-
-        ui.total = document.createElement( 'span' );
-        ui.total.className = 'total';
-        ui.total.innerHTML = ui.numPanes;
-
-        // Forward arrow
-        ui.forward = document.createElement( 'a' );
-        ui.forward.className = 'forward';
-        ui.forward.innerHTML = '<span>Forward</span>';
-
-        // Attach info elements to info span
-        ui.info.insertBefore( ui.active, ui.info.firstChild );
-        ui.info.appendChild( ui.total );
-
-        // Attach info and arrows to nav
-        ui.nav.appendChild( ui.back );
-        ui.nav.appendChild( ui.info );
-        ui.nav.appendChild( ui.forward );
-
-        ui.paneNav.appendChild( ui.nav );
-
-        ui.header.appendChild( ui.paneNav );
-
-        ui.articles = document.createElement( 'div' );
-        ui.articles.className = 'articles';
-
-        // Generate enough panes to hold entire list with N items per pane
-        ui.list = [];
-        for ( i = ui.numPanes; i > 0; i -= 1 ) {
-            pane = document.createElement( 'ul' );
-            ui.list.push( pane );
-            ui.articles.appendChild( pane );
-        }
-
-        ui.mostPopular.appendChild( ui.header );
-
-        ui.mostPopular.appendChild( ui.articles );
-
-        this.element.appendChild( ui.mostPopular );
-
-        // Create our most popular items
-        i = length;
-        while( i-- ) {
-            var item = json.response[i],
-                elem = document.createElement( 'li' ),
-                link = document.createElement( 'a' ),
-                thumb = document.createElement( 'img' ),
-                // Current pane is the current number divided by the number of items per pane, rounded up
-                // initial +1 is to adjust to starts-from-one counting
-                // final -1 is to adjust back to starts-from-zero counting
-                pane = ( Math.ceil( ( i + 1 ) / this.options.perpane ) - 1 );
-
-            // Create link
-            link.href = item.entry_url;
-            // Include the full title as the title attribute for the link
-            link.title = item.entry_title;
-            // But use the front page title (shorter), if it's available, for the link's text
-            link.innerHTML = ( item.entry_front_page_title ) ? item.entry_front_page_title : item.entry_title;
-
-            // Create thumb
-            thumb.src = item.entry_image;
-            thumb.alt = '';
-
-            // Insert thumb to beginning of link
-            link.insertBefore( thumb, link.firstChild );
-
-            // Add link to list item
-            elem.appendChild( link );
-
-            // Prepend (since we're iterating backwards) the item to the list
-            ui.list[pane].insertBefore( elem, ui.list[pane].firstChild );
-        }
-
-        // Hack.
-        // There's a bug if you go left the very first time you use the arrows that causes
-        // the last item to come in from the right instead of the left, since it doesn't
-        // get its computed style for the left property set... for some reason
-        Boot.addClass( ui.list[ui.list.length - 1], 'left' );
-
-        ui.numCurrent = options.initial;
-        ui.currentPane = ui.list[ui.numCurrent - 1];
-        Boot.addClass( ui.currentPane, 'current' );
-
-        // Disable double-click text selection on our pane nav elements
-        // (must be done after elements are actually added to the DOM)
-        Boot.disableTextSelect( ui.paneNav );
-        Boot.disableTextSelect( ui.back );
-        Boot.disableTextSelect( ui.forward );
-        Boot.disableTextSelect( ui.info );
-
-        // Set height of container to height of current pane
-        ui.articles.style.height = Boot.getStyle( ui.currentPane, 'height' );
-
-        this._bindEvents();
-    },
-
-    _bindEvents: function() {
-        var self = this,
-            ui = self.ui;
-
-        Boot.bind( ui.back, 'click', function( event ) {
-            Boot.emit( 'change', { direction: -1 } );
-            event.preventDefault();
-        });
-
-        Boot.bind( ui.forward, 'click', function( event ) {
-            Boot.emit( 'change', { direction: 1 } );
-            event.preventDefault();
-        });
-
-        // Doing some tricky stuff to juggle scope here - note for possible Boot dev
-        Boot.on( self, 'change', (function( event ) { self.change.apply( self, [ event ] ); }));
-    },
-
-    change: function( event ) {
-        // backward = -1
-        // forward = 1
-        var ui = this.ui,
-            dir = event.direction,
-            current = ui.numCurrent,
-            next = current + dir,
-            nextDir = ( dir === 1 ) ? 'right' : 'left',
-            prevDir = ( dir === 1 ) ? 'left' : 'right';
-
-        if ( next < 1 ) {
-            next = ui.numPanes;
-        }
-
-        if ( next > ui.numPanes ) {
-            next = 1;
-        }
-
-        currentPane = ui.list[current - 1];
-        nextPane = ui.list[next - 1];
-
-        // Set all panes to the right or left (depending on direction) without animation
-        for ( var i = ui.numPanes; i > 0; i -= 1 ) {
-            var item = ui.list[i - 1];
-            // console.log( item );
-            Boot.addClass( item, 'no-transition' );
-            Boot.removeClass( item, prevDir );
-            Boot.addClass( item, nextDir );
-        }
-
-        Boot.removeClass( currentPane, 'left right no-transition' );
-
-        Boot.removeClass( nextPane, 'no-transition' );
-
-        Boot.removeClass( currentPane, 'current' );
-        // We want to send the current pane in the OPPOSITE direction of the incoming one
-        Boot.addClass( currentPane, prevDir );
-
-        Boot.addClass( nextPane, 'current' );
-        Boot.removeClass( nextPane, 'left right' );
-
-        ui.numCurrent = next;
-
-        // Set the active pane number in the navigation
-        ui.active.innerHTML = ui.numCurrent;
-
-        // Set height of articles (container) to height of new pane
-        ui.articles.style.height = Boot.getStyle( nextPane, 'height' );
-    },
-
-	// Use the _setOption method to respond to changes to options
-	_setOption: function (key, value) {
-		
-		switch (key) {
-		case "clear":
-			// handle changes to clear option  
-			break;
+		// These options will be used as defaults
+		options: {
+			// Maximum of items to allow on each pane
+			perpane: 7,
+			// What pane should be visible initially
+			initial: 1
+		},
+	
+		// Set up the widget
+		_create: function () {
+			
+			var self = this,
+				options = self.options,
+				element = self.element,
+				width = options.width;
+	
+			core.getCSS("../src/mighty.mostpopular.css");
+	
+			// Use our local AJAX proxy to get some JSONP till we have a proper API
+	
+			/*
+			// Use local data
+			core.getJSONP( '../api/?file=mostpopular.json', function( json ) {
+				// Output our markup
+				self._build( json );
+			});
+			*/
+	
+			// Actual live API call
+			core.getJSONP( '../api/?url=' + encodeURIComponent( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' ), function( json ) {
+				// Output our markup
+				self._build( json );
+			});
+			
+		},
+	
+		_build: function( json ) {
+			// console.log( json.response );
+			var i, pane,
+				options = this.options,
+				length = json.response.length,
+				ui = this.ui = {};
+	
+			ui.numPanes = Math.ceil( length / options.perpane );
+	
+			ui.mostPopular = document.createElement( 'div' );
+			ui.mostPopular.className = 'aol-most-popular-social';
+			ui.header = document.createElement( 'h4' );
+			ui.header.innerHTML = '<b>HuffpostAOL Social News</b>';
+	
+			// create navigation
+			ui.paneNav = document.createElement( 'span' );
+			ui.paneNav.className = 'pane-nav';
+			ui.paneNav.innerHTML = 'Most Popular';
+	
+			ui.nav = document.createElement( 'span' );
+			ui.nav.className = 'nav';
+	
+			// Back arrow
+			ui.back = document.createElement( 'a' );
+			ui.back.className = 'back';
+			ui.back.innerHTML = '<span>Back</span>';
+	
+			// Pane info section, ex: ( 1 of 4 )
+			ui.info = document.createElement( 'span' );
+			ui.info.className = 'info';
+			ui.info.innerHTML = ' of ';
+	
+			ui.active = document.createElement( 'span' );
+			ui.active.className = 'active';
+			ui.active.innerHTML = options.initial;
+	
+			ui.total = document.createElement( 'span' );
+			ui.total.className = 'total';
+			ui.total.innerHTML = ui.numPanes;
+	
+			// Forward arrow
+			ui.forward = document.createElement( 'a' );
+			ui.forward.className = 'forward';
+			ui.forward.innerHTML = '<span>Forward</span>';
+	
+			// Attach info elements to info span
+			ui.info.insertBefore( ui.active, ui.info.firstChild );
+			ui.info.appendChild( ui.total );
+	
+			// Attach info and arrows to nav
+			ui.nav.appendChild( ui.back );
+			ui.nav.appendChild( ui.info );
+			ui.nav.appendChild( ui.forward );
+	
+			ui.paneNav.appendChild( ui.nav );
+	
+			ui.header.appendChild( ui.paneNav );
+	
+			ui.articles = document.createElement( 'div' );
+			ui.articles.className = 'articles';
+	
+			// Generate enough panes to hold entire list with N items per pane
+			ui.list = [];
+			for ( i = ui.numPanes; i > 0; i -= 1 ) {
+				pane = document.createElement( 'ul' );
+				ui.list.push( pane );
+				ui.articles.appendChild( pane );
+			}
+	
+			ui.mostPopular.appendChild( ui.header );
+	
+			ui.mostPopular.appendChild( ui.articles );
+	
+			this.element.appendChild( ui.mostPopular );
+	
+			// Create our most popular items
+			i = length;
+			while( i-- ) {
+				var item = json.response[i],
+					elem = document.createElement( 'li' ),
+					link = document.createElement( 'a' ),
+					thumb = document.createElement( 'img' ),
+					// Current pane is the current number divided by the number of items per pane, rounded up
+					// initial +1 is to adjust to starts-from-one counting
+					// final -1 is to adjust back to starts-from-zero counting
+					pane = ( Math.ceil( ( i + 1 ) / this.options.perpane ) - 1 );
+	
+				// Create link
+				link.href = item.entry_url;
+				// Include the full title as the title attribute for the link
+				link.title = item.entry_title;
+				// But use the front page title (shorter), if it's available, for the link's text
+				link.innerHTML = ( item.entry_front_page_title ) ? item.entry_front_page_title : item.entry_title;
+	
+				// Create thumb
+				thumb.src = item.entry_image;
+				thumb.alt = '';
+	
+				// Insert thumb to beginning of link
+				link.insertBefore( thumb, link.firstChild );
+	
+				// Add link to list item
+				elem.appendChild( link );
+	
+				// Prepend (since we're iterating backwards) the item to the list
+				ui.list[pane].insertBefore( elem, ui.list[pane].firstChild );
+			}
+	
+			// Hack.
+			// There's a bug if you go left the very first time you use the arrows that causes
+			// the last item to come in from the right instead of the left, since it doesn't
+			// get its computed style for the left property set... for some reason
+			core.addClass( ui.list[ui.list.length - 1], 'left' );
+	
+			ui.numCurrent = options.initial;
+			ui.currentPane = ui.list[ui.numCurrent - 1];
+			core.addClass( ui.currentPane, 'current' );
+	
+			// Disable double-click text selection on our pane nav elements
+			// (must be done after elements are actually added to the DOM)
+			core.disableTextSelect( ui.paneNav );
+			core.disableTextSelect( ui.back );
+			core.disableTextSelect( ui.forward );
+			core.disableTextSelect( ui.info );
+	
+			// Set height of container to height of current pane
+			ui.articles.style.height = core.getStyle( ui.currentPane, 'height' );
+	
+			this._bindEvents();
+		},
+	
+		_bindEvents: function() {
+			var self = this,
+				ui = self.ui;
+	
+			core.bind( ui.back, 'click', function( event ) {
+				core.publish( 'change', { direction: -1 } );
+				event.preventDefault();
+			});
+	
+			core.bind( ui.forward, 'click', function( event ) {
+				core.publish( 'change', { direction: 1 } );
+				event.preventDefault();
+			});
+	
+			// Doing some tricky stuff to juggle scope here - note for possible Boot dev
+			core.subscribe( self, 'change', (function( event ) { self.change.apply( self, [ event ] ); }));
+		},
+	
+		change: function( event ) {
+			// backward = -1
+			// forward = 1
+			var ui = this.ui,
+				dir = event.direction,
+				current = ui.numCurrent,
+				next = current + dir,
+				nextDir = ( dir === 1 ) ? 'right' : 'left',
+				prevDir = ( dir === 1 ) ? 'left' : 'right';
+	
+			if ( next < 1 ) {
+				next = ui.numPanes;
+			}
+	
+			if ( next > ui.numPanes ) {
+				next = 1;
+			}
+	
+			currentPane = ui.list[current - 1];
+			nextPane = ui.list[next - 1];
+	
+			// Set all panes to the right or left (depending on direction) without animation
+			for ( var i = ui.numPanes; i > 0; i -= 1 ) {
+				var item = ui.list[i - 1];
+				// console.log( item );
+				core.addClass( item, 'no-transition' );
+				core.removeClass( item, prevDir );
+				core.addClass( item, nextDir );
+			}
+	
+			core.removeClass( currentPane, 'left right no-transition' );
+	
+			core.removeClass( nextPane, 'no-transition' );
+	
+			core.removeClass( currentPane, 'current' );
+			// We want to send the current pane in the OPPOSITE direction of the incoming one
+			core.addClass( currentPane, prevDir );
+	
+			core.addClass( nextPane, 'current' );
+			core.removeClass( nextPane, 'left right' );
+	
+			ui.numCurrent = next;
+	
+			// Set the active pane number in the navigation
+			ui.active.innerHTML = ui.numCurrent;
+	
+			// Set height of articles (container) to height of new pane
+			ui.articles.style.height = core.getStyle( nextPane, 'height' );
 		}
-		
-		// In jQuery UI 1.9 and above, you use the _super method instead
-		this._super("_setOption", key, value);
-	},
-
-	// Use the destroy method to clean up any modifications your widget has made to the DOM
-	destroy: function () {
-        this.element.removeChild( this.ui.mostPopular );
-	}
-});
-
-/*
-
-function(){
 	
-	return function( elem, options ) {
-		
-		var width = options.width;
-		Boot.attr( elem, "style", "width: " + width + "px" );
-		
-	}
-
-}
-
-*/
+		// Use the destroy method to clean up any modifications your widget has made to the DOM
+	//	destroy: function () {
+	//		this.element.removeChild( this.ui.mostPopular );
+	//	}
+	};
+	
+});
 
 /*
 
