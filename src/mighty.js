@@ -30,7 +30,9 @@
 		strReadyState = "readyState",
 		strOnReadyStateChange = "onreadystatechange",
 		strOnLoad = "onload",
-		strComplete = "complete";
+		strComplete = "complete",
+		
+		strSpace = " ";
 			
 //		eventNamespace = namespace.toLowerCase() + ".";
 
@@ -977,55 +979,56 @@
 		return ret;
 	}
 //	global.data = data;
-	
+
 
 /*
 	Simple add/remove classname functions.
 	Valuable as Boot.removeClass / Boot.addClass or jQuery's job?
+	Supports multiple class additions.
 */
-	function addClass( object, className ) {
-		var space;
-
-		// If the class is already present, we do not need to add it again
-		if ( object.className.indexOf( className ) === -1 ) {
-			space = ( object.className.length ) ? " " : ""; 
-			object.className += space + className;
+	function addClass( elem, classNames ) {
+		// Adding the class name greedily won't 
+		// hurt and keeps things small. 
+		classNames = classNames.split( strSpace );
+		
+		var elemClassName = elem.className,
+			className,
+			l = classNames.length,
+			reg;
+			
+		while ( l-- ) {
+			className = classNames[l];
+			reg = new RegExp("(\\s|^)" + className + "(\\s|$)");	
+			if ( ! reg.test( elem.className ) ) {
+				elemClassName += strSpace + className;
+			}	
 		}
+		
+		elem.className = elemClassName;
+		
 	}
 //	global.addClass = addClass;
 
-/*
-	function removeClass( object, className ) {
-	   var reg = new RegExp("(\\s|^)" + className + "(\\s|$)", "g");
-	   object.className = object.className.replace(reg, strSpace );
-	}
-*/	
-	function removeClass( object, className ) {
+	// Supports multiple class removals.
+	function removeClass( elem, classNames ) {
 		
-		className = className || '';
+		classNames = classNames.split( strSpace );
 		
-		var i,
-			classes = className.split( ' ' ),
-			length = classes.length,
-			edgeSpaces = new RegExp( "^\\s|\\s$" ),
-			multipleSpaces = new RegExp( "(\\s)+" );
-		
-		i = length;
-
-		while ( i-- ) {
-			// Match classname that is the beginning and ending of its word
-			// (prevent matches in the interior of other classnames)
-			// along with optional whitespace to either side
-			// className = new RegExp( "(\\s)?\\b" + classes[i] + "\\b(\\s)?" );
-			className = new RegExp( "\\b" + classes[i] + "\\b" );
-			object.className = object.className.replace( className, "" );
-			object.className = object.className.replace( edgeSpaces, "" );
-			object.className = object.className.replace( multipleSpaces, " " );
-
-
+		var elemClassName = elem.className,
+			className,
+			l = classNames.length,
+			reg;
+			
+		while ( l-- ) {
+			className = classNames[l];
+			reg = new RegExp("(\\s|^)" + className + "(\\s|$)", "g");	
+			elemClassName = elemClassName.replace( reg, strSpace );
 		}
+		
+		elem.className = trim( elemClassName );
 	}
 //	global.removeClass = removeClass;
+
 
 /*
 	Function: Boot.getStyle
