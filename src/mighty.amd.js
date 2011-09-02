@@ -36,9 +36,9 @@
 	
 	Timestamp
 */
-//	function now() {
-//		return new Date().getTime();
-//	}
+	function now() {
+		return new Date().getTime();
+	}
 
 
 /*
@@ -170,11 +170,13 @@
 			i = 1, // Source pointer.
 			l = args.length;
 		
+		// Feature to consider:
 		// If it's a string, we should grab the 
 		// object from our modules.
-		if ( isString( target ) ) {
-			target = modules[ target ];
-		}
+//		if ( isString( target ) ) {
+//			target = modules[ target ];
+//		}
+		
 	/*
 		// If the length is 1, extend Boot, and 
 		// set the source to thefirst argument.
@@ -258,7 +260,7 @@
 	
 	global.log = log;
 	
-	
+*/
 /*
 	Loads a script node into the DOM. Note this is different than Boot.getJS, which
 	has full functionality for dealing with script dependencies and preserving
@@ -271,8 +273,8 @@
  
 */
 		
-	var // Script collection on the page.
-		scripts = document.getElementsByTagName( strScript ),
+		// Script collection on the page.
+	var scripts = document.getElementsByTagName( strScript ),
 
 		// The first script on the page.
 		firstScript = scripts[0],
@@ -376,7 +378,7 @@
 		
 		if ( eventQueue ) {
 			
-			each( eventQueue, function( on, i ){
+			each( eventQueue, function( on ){
 				
 				var onObject = on[0],
 					onCallback = on[1];
@@ -530,8 +532,8 @@
 			function defineModule(){
 				
 //				Boot.log("Done loading script for <b>" + moduleName + "</b>.");
-// 				Boot.log( "Defined modules: " + definedModules.length );
-// 				If a module was defined after our download.
+//				Boot.log( "Defined modules: " + definedModules.length );
+//				If a module was defined after our download.
 //				Boot.log( "Finished: " + src );
 
 				var module,
@@ -731,8 +733,10 @@
 	}
 */	
 	function removeClass( object, className ) {
+		
+		className = className || '';
+		
 		var i,
-			className = className || '',
 			classes = className.split( ' ' ),
 			length = classes.length,
 			edgeSpaces = new RegExp( "^\\s|\\s$" ),
@@ -784,7 +788,7 @@
 			value = document.defaultView.getComputedStyle( element, "" ).getPropertyValue( property );
 		} else {
 			// The... other (read: Microsoft) way
-			property = property.replace(/\-(\w)/g, function( match, prop ) {
+			property = property.replace(/\-(\w)/g, function( match, prop ) { // Artz: match var is unused
 				return prop.toUpperCase();
 			});
 
@@ -897,6 +901,75 @@
 	}
 
 //    global.disableTextSelect = disableTextSelect;
+
+
+/*
+	UNDERSCORE UTILITIES
+	Helper utilities based on Underscore Library.
+	http://documentcloud.github.com/underscore/underscore.js
+*/
+  // Return the results of applying the iterator to each element.
+  // Delegates to **ECMAScript 5**'s native `map` if available.
+/*	function map( obj, iterator, context ) {
+		var results = [];
+		each( obj, function( value, index, list ) {
+			results[ results.length ] = iterator.call( context, value, index, list );
+		});
+		return results;
+	}
+  */
+	// Delays a function for the given number of milliseconds, and then calls
+	// it with the arguments supplied.
+/*	function delay( func, wait ) {
+		var args = slice.call( arguments, 2 );
+		return setTimeout( function(){ return func.apply(func, args); }, wait );
+	}
+	*/
+	// Defers a function, scheduling it to run after the current call stack has
+	// cleared.
+	function defer( func ) {
+		//return delay.apply({}, [func, 1].concat( Array.prototype.slice.call(arguments, 1) ));
+		setTimeout( func, 0 );
+	}
+//	global.defer = defer;
+	
+	// Internal function used to implement throttle() and debounce()
+/*	function limit( func, wait, debounce ) {
+		
+		var timeout;
+		
+		return function() {
+			
+			function throttler() {
+				timeout = undefined;
+				func.call( this );
+			}
+				
+			if ( debounce ) {
+				clearTimeout( timeout );
+			}
+			
+			if ( debounce || ! timeout ) {
+				timeout = SetTimeout( throttler, wait );
+			}
+		};
+	}
+	
+	// Returns a function, that, when invoked, will only be triggered at most once
+	// during a given window of time.
+	function throttle( func, wait ) {
+		return limit( func, wait, false );
+	}
+//	global.throttle = throttle;
+	
+	// Returns a function, that, as long as it continues to be invoked, will not
+	// be triggered. The function will be called after it stops being called for
+	// N milliseconds.
+	function debounce( func, wait ) {
+		return limit( func, wait, true );
+	}
+//	global.debounce = debounce;
+*/
 
 /*
 	Boot.poll
@@ -1300,7 +1373,7 @@
 	
 	This script processes and initializes mighty modules on the page.
 */
-!function( Mighty, window, document){
+!function( Mighty, document){
 
 Mighty.require("mighty.core", function( core ){
 	
@@ -1334,7 +1407,7 @@ Mighty.require("mighty.core", function( core ){
 				
 					// We need to do this so IE6/7 execute things in
 					// the correct order.  Very, very bizarre.
-					setTimeout(function(){
+					core.defer(function(){
 					
 						if ( elem && elem.nodeName === "A" && ! elem.widget ) {
 							
@@ -1371,12 +1444,12 @@ Mighty.require("mighty.core", function( core ){
 							}
 							
 							// Bring in the modules we need.
-							core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function( source ) {
+							core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){
 								// Make this guy into a widget.
 								core.widget( widgetName, elem, options );
 							});
 						}
-					}, 0); // end setTimeout
+					}); // end setTimeout
 				}( mightyModules[i] );
 			}
 		};
@@ -1386,4 +1459,4 @@ Mighty.require("mighty.core", function( core ){
 	Mighty.init();
 });
 	
-}(Mighty, this, document);
+}(Mighty, document);
