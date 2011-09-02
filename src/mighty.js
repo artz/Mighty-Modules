@@ -1347,6 +1347,7 @@
 		inlineCSS: inlineCSS,
 		getCSS: getCSS,
 		
+		// - Rename to createHTML
 		create: create,
 		
 		disableTextSelect: disableTextSelect,
@@ -1376,82 +1377,76 @@
 !function( Mighty, document ){
 
 Mighty.require("mighty.core", function( core ){
-	
-		// Localize core functions we use more than once.
-	var extend = core.extend,
-		
-		toArray = function( collection ) { 
-			var array = [],
-				l = collection.length;
-			while ( l-- ) {
-				array[l] = collection[l];
-			}
-			return array;
-		};
-	
+
 	if ( ! Mighty.init ) {
 
 		// The mighty init function scans the DOM for anchor 
 		// links that contain the "mighty" global namespace,
 		// and then initializes its widget's source.
 		Mighty.init = function(){
-		
-			var mightyModules = toArray( document.getElementsByName( "mighty" ) ),
-				i = 0, 
-				l = mightyModules.length;
+			
+				// Localize core functions we use more than once.
+			var extend = core.extend,
 				
-			for (; i < l; i++) {
+				collectionToArray = function( collection ) { 
+					var array = [],
+						l = collection.length;
+					while ( l-- ) {
+						array[l] = collection[l];
+					}
+					return array;
+				},
 				
-				// Closure to isolate vars.
-				!function( elem ){ 
-				
-					// We need to do this so IE6/7 execute things in
-					// the correct order.  Very, very bizarre.
-					core.defer(function(){
-					
-						if ( elem && elem.nodeName === "A" && ! elem.widget ) {
-							
-							// Remember we turned this into a widget already.
-							elem.widget = 1;
-								
-							// Decide if we want to move this into widget class
-							// or outside of it.
-							var widgetName = elem.className.replace("-", "."),
-								elemParent = elem.parentNode,
-								div,
-									
-								// Do our fancy DOM option extraction here.
-								options = extend( options || {}, core.data( elem ) );
+				mightyModules = collectionToArray( document.getElementsByName( "mighty" ) );
+			
+			core.each( mightyModules, function( elem ) {
 						
-							// If we have an anchor link placeholder, replace 
-							// it with a <div> so we have a valid container.
-							if ( elem.nodeName === "A" ) {
+				// We need to do this so IE6/7 execute things in
+				// the correct order.  Very, very bizarre.
+				core.defer(function(){
 				
-								div = document.createElement("div");
-				
-								div.className = elem.className;
-								
-								// These log checks were F'ed up without the
-								// boot.defer wrapper above in IE6/7.
-							//	Boot.log( "My name: " + widgetName );							
-							//	Boot.log( "Setting className: " + div.className );
-				
-								elemParent.insertBefore( div, elem );
-								elemParent.removeChild( elem );				
-								
-								elem = div;
-								
-							}
+					if ( elem && elem.nodeName === "A" && ! elem.widget ) {
+						
+						// Remember we turned this into a widget already.
+						elem.widget = 1;
+	
+						// Decide if we want to move this into widget class
+						// or outside of it.
+						var widgetName = elem.className.replace("-", "."),
+							elemParent = elem.parentNode,
+							div,
+	
+							// Do our fancy DOM option extraction here.
+							options = extend( options || {}, core.data( elem ) );
+
+						// If we have an anchor link placeholder, replace 
+						// it with a <div> so we have a valid container.
+						if ( elem.nodeName === "A" ) {
+
+							div = document.createElement("div");
+
+							div.className = elem.className;
+
+							// These log checks were F'ed up without the
+							// boot.defer wrapper above in IE6/7.
+						//	Boot.log( "My name: " + widgetName );							
+						//	Boot.log( "Setting className: " + div.className );
+
+							elemParent.insertBefore( div, elem );
+							elemParent.removeChild( elem );				
 							
-							// Bring in the modules we need.
-							core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){
-								// Make this guy into a widget.
-								core.widget( widgetName, elem, options );
-							});
+							elem = div;
+							
 						}
-					}); // end setTimeout
-				}( mightyModules[i] );
-			}
+						
+						// Bring in the modules we need.
+						core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){
+							// Make this guy into a widget.
+							core.widget( widgetName, elem, options );
+						});
+					}
+				}); // end core.defer
+			}); // end core.each
 		};
 	}
 	
