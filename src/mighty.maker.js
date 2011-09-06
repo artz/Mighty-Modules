@@ -3,10 +3,44 @@ Mighty.define(["mighty.core"], function( core ){
 	return {
 		
 		// These options will be used as defaults
+        /*
 		options: {
             // TODO: using the value null as a default causes an error
             blueprint: '' // the name of the module to make
 		},
+        */
+
+        maker: [
+            {
+                option: "perpane",
+                name: "Items per pane",
+                description: "Maximum number of items to display on each pane",
+                type: "integer",
+                default: 7,
+                minimum: 1,
+                maximum: null
+            },
+
+            {
+                option: "initial",
+                name: "Initial pane",
+                description: "What pane should be visible initially",
+                type: "integer",
+                default: 1,
+                minimum: 1,
+                maximum: null
+            },
+
+            {
+                option: "foo",
+                name: "Foo",
+                description: "Please input value of foo",
+                type: "text",
+                default: "bar",
+                minlength: null,
+                maxlength: null 
+            }
+        ],
 	
 		// Set up the widget
 		_create: function () {
