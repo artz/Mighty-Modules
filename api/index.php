@@ -7,18 +7,24 @@
 
     header( 'content-type: application/javascript; charset=utf-8' );
 
-    if ( isset( $_GET['file'] ) && file_exists( $_GET['file'] ) ) {
+    if ( isset( $_GET['file'] ) ) {
 		
-        // Retrieve dummy JSON data stored as a file in this directory
-        $data = file_get_contents( './' . $_GET['file'] ); 
-		
-		// If the file type requested is HTML, convert it to a JSON escaped string.
-		if ( strstr( $_GET['file'], ".html" ) ) {
-			$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
+		if ( file_exists( $_GET['file'] ) ) {
+			
+			// Retrieve dummy JSON data stored as a file in this directory
+			$data = file_get_contents( './' . $_GET['file'] ); 
+			
+			// If the file type requested is HTML, convert it to a JSON escaped string.
+			if ( strstr( $_GET['file'], ".html" ) ) {
+				$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
+			}
+	
+			// Simulate asynchronicity delay so nobody accidentally assumes synchronicity
+			sleep( ( isset( $_GET['delay'] ) ) ? $_GET['delay'] : 1 );
+		} else {
+			// Return an empty object
+			$data = '{ "error" : "Specified file (' . $_GET['file'] . ') not found." }';	
 		}
-
-        // Simulate asynchronicity delay so nobody accidentally assumes synchronicity
-        sleep( ( isset( $_GET['delay'] ) ) ? $_GET['delay'] : 1 );
 
     } elseif ( isset( $_GET['url'] ) ) {
 		
@@ -34,7 +40,7 @@
     } else {
 
         // Return an empty object
-        $data = '{ "error" : "No file or url specified" }';
+        $data = '{ "error" : "No file or url specified." }';
 
     }
 
