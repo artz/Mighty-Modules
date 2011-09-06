@@ -1567,7 +1567,9 @@ Mighty.require("mighty.core", function( core ){
 							
 							// Ajax in the module's content.
 							// Make this configurable, or a function of the module eventually.
-							core.getJSONP("../api/?file=../src/mighty.source.html", function( data ){
+							core.getJSONP("../api/?file=../src/" + widgetName + ".html", function( data ){
+								console.log("Injecting markup.");
+								console.log( mightyModule );
 								mightyModule.innerHTML = data;
 								
 								isHTMLReady = 1;
