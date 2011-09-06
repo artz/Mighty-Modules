@@ -7,10 +7,9 @@ Mighty.define(["mighty.core"], function( core ){
 			// Maximum of items to allow on each pane
 			perpane: 7,
 			// What pane should be visible initially
-			initial: 1,
-            foo: 'bar'
+			initial: 1
 		},
-
+	
 		// Set up the widget
 		_create: function () {
 			
@@ -18,8 +17,6 @@ Mighty.define(["mighty.core"], function( core ){
 				options = self.options,
 				element = self.element,
 				width = options.width;
-
-            console.log( 'this is MOST POPULAR', options );
 	
 			core.getCSS("../src/mighty.mostpopular.css");
 	
