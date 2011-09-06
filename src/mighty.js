@@ -513,11 +513,15 @@
 	}
 //	global.load = load;
 
+
 /*
 	Function: Boot.subscribe
 	
 	Subscribes to an event, fires a callback once it is emitted.
 	http://en.wikipedia.org/wiki/Publish/subscribe
+	
+	* Consider adding support for synchronous subscriptions,
+	  i.e. if an event already fired, execute callback now.
 	
 	Parameters:
 	
@@ -539,6 +543,7 @@
 		
 	}
 	global.subscribe = subscribe;
+
 
 /*
 	Function: Boot.publish
@@ -1512,52 +1517,80 @@ Mighty.require("mighty.core", function( core ){
 					return array;
 				},
 				
-				mightyModules = collectionToArray( document.getElementsByName( "mighty" ) );
+				mightyAnchors = collectionToArray( document.getElementsByName( "mighty" ) );
 			
-			core.each( mightyModules, function( elem ) {
+			core.each( mightyAnchors, function( mightyAnchor ) {
 						
 				// We need to do this so IE6/7 execute things in
 				// the correct order.  Very, very bizarre.
 				core.defer(function(){
 				
-					if ( elem && elem.nodeName === "A" && ! elem.widget ) {
+					if ( mightyAnchor && mightyAnchor.nodeName === "A" && ! mightyAnchor.widget ) {
 						
-						// Remember we turned this into a widget already.
-						elem.widget = 1;
+						// Remember we initialized this widget already.
+						mightyAnchor.widget = 1;
 	
-						// Decide if we want to move this into widget class
-						// or outside of it.
-						var widgetName = elem.className.replace("-", "."),
-							elemParent = elem.parentNode,
-							div,
+						var className = mightyAnchor.className,
+							widgetName = className.replace("-", "."),
+							mightyAnchorParent = mightyAnchor.parentNode,
+							mightyModule,
+							isHTMLReady = 0,
 	
 							// Do our fancy DOM option extraction here.
-							options = extend( options || {}, core.data( elem ) );
+							options = extend( options || {}, core.data( mightyAnchor ) );
 
-						// If we have an anchor link placeholder, replace 
-						// it with a <div> so we have a valid container.
-						if ( elem.nodeName === "A" ) {
+						// If the element's parent has the same class name
+						// as the Mighty Anchor, we already have the HTML and
+						// do not need to swap in the <div>.
+						if ( className === mightyAnchorParent.className  ) {
+							
+							// Set the elem to the parent.
+							mightyModule = mightyAnchorParent;
+							
+							isHTMLReady = 1;
 
-							div = document.createElement("div");
+						// Create a new <div> with the same class name
+						// and replace the Mighty Anchor.
+						} else {
 
-							div.className = elem.className;
+							mightyModule = document.createElement("div");
+
+							// Assign the same class name as the anchor.
+							mightyModule.className = mightyAnchor.className;
 
 							// These log checks were F'ed up without the
 							// boot.defer wrapper above in IE6/7.
 						//	Boot.log( "My name: " + widgetName );							
 						//	Boot.log( "Setting className: " + div.className );
 
-							elemParent.insertBefore( div, elem );
-							elemParent.removeChild( elem );				
+							mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
 							
-							elem = div;
-							
+							// Ajax in the module's content.
+							// Make this configurable, or a function of the module eventually.
+							core.getJSONP("../api/?file=../src/mighty.source.html", function( data ){
+								mightyModule.innerHTML = data;
+								
+								isHTMLReady = 1;
+								core.publish( mightyModule, widgetName + "-ready" );
+							});
 						}
 						
+						// Remove the Mighty Anchor, it's no longer needed.
+						// Consider hiding this if one day we believe it
+						// is valuable, perhaps debugging, validation, etc.
+						mightyAnchorParent.removeChild( mightyAnchor );
+						
 						// Bring in the modules we need.
-						core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){
-							// Make this guy into a widget.
-							core.widget( widgetName, elem, options );
+						core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){						
+
+							if ( isHTMLReady ) {
+								core.widget( widgetName, mightyModule, options );
+							} else {
+								core.subscribe( mightyModule, widgetName + "-ready", function(){
+									// Make this guy into a widget.
+									core.widget( widgetName, mightyModule, options );
+								});		
+							}
 						});
 					}
 				}); // end core.defer

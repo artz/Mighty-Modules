@@ -11,10 +11,10 @@ Mighty.define(["mighty.core"], function( core ){
 				width = options.width;
 	
 			core.getCSS("../src/mighty.source.css");
-			
-			element.innerHTML = "<pre>source</pre>";
 
 			core.attr( element, "style", "width: " + width + "px" );
+			
+			core.addClass( element, "mighty-tabs" );
 	
 		},
 		

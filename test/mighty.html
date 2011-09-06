@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-  <title>Mighty Module Test Page</title>
-  <meta name="description" content="Test page for Mighty Modules.">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Mighty Module Test Page</title>
+<meta name="description" content="Test page for Mighty Modules.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="/favicon.ico">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
 
 <!-- Eventually we will incorporate Boot into mighty.js -->
 <!--<script src="../../Boot/src/boot.js"></script>-->
@@ -23,25 +20,44 @@
 <h1><b>Mighty</b><b>Module</b> Test Page</h1>
 <pre id="log" style="font-size:12px;"></pre>
 <div class="content">
-
 	<h2>Source Widget #1</h2>
-
-	<a name="mighty" class="mighty-source" data-width="500" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
-	<script defer src="../src/mighty.js"></script>
+	<div class="mighty-source">
+		<a name="mighty" class="mighty-source" data-width="500" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
+		<h2>Mighty Source</h2>
+		<h3>Tab 1</h3>
+		<ul>
+			<li><a href="#">Link 1</a></li>
+			<li><a href="#">Link 2</a></li>
+			<li><a href="#">Link 3</a></li>
+		</ul>
+		<h3>Tab 2</h3>
+		<ul>
+			<li><a href="#">Link 4</a></li>
+			<li><a href="#">Link 5</a></li>
+			<li><a href="#">Link 6</a></li>
+		</ul>
+		<h3>Tab 3</h3>
+		<ul>
+			<li><a href="#">Link 7</a></li>
+			<li><a href="#">Link 8</a></li>
+			<li><a href="#">Link 9</a></li>
+		</ul>
+	</div>
+	<script defer src="../src/mighty.js"></script> 
 
 	<h2>Source Widget #2</h2>
 	<a name="mighty" class="mighty-source" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
 	<script defer src="../src/mighty.js"></script>
-
+<!--
 	<h2>Source Widget #3</h2>
 	<a name="mighty" class="mighty-source2" data-width="200" href="http://www.mightymodules.com/source2/"><b>Source</b> Mighty Module</a>
 	<script defer src="../src/mighty.js"></script>
-
+--> 
+	<!--
 	<h2>Most Popular Widget</h2>
 	<a name="mighty" class="mighty-mostpopular" href="http://www.mightymodules.com/source/">Most Popular Module</a>
 	<script defer src="../src/mighty.js"></script>
-
+--> 
 </div>
-
 </body>
 </html>

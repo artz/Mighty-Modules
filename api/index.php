@@ -11,6 +11,11 @@
 		
         // Retrieve dummy JSON data stored as a file in this directory
         $data = file_get_contents( './' . $_GET['file'] ); 
+		
+		// If the file type requested is HTML, convert it to a JSON escaped string.
+		if ( strstr( $_GET['file'], ".html" ) ) {
+			$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
+		}
 
         // Simulate asynchronicity delay so nobody accidentally assumes synchronicity
         sleep( ( isset( $_GET['delay'] ) ) ? $_GET['delay'] : 1 );
