@@ -19,7 +19,7 @@ Mighty.define(["mighty.core"], function( core ){
 				element = self.element,
 				width = options.width;
 
-            console.log( 'this is MOST POPULAR', options );
+//			console.log( 'this is MOST POPULAR', options );
 	
 			core.getCSS("../src/mighty.mostpopular.css");
 	
