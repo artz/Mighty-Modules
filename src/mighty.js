@@ -910,7 +910,7 @@
 			});
 
 		instance._create();
-		
+
 		return instance;
 
 	}
@@ -1510,24 +1510,13 @@ Mighty.require("mighty.core", function( core ){
 		// The mighty init function scans the DOM for anchor 
 		// links that contain the "mighty" global namespace,
 		// and then initializes its widget's source.
+		
+		var mightyAnchors = document.getElementsByName( "mighty" );
+		
 		Mighty.init = function(){
-			
-				// Localize core functions we use more than once.
-			var extend = core.extend,
-				
-				collectionToArray = function( collection ) { 
-					var array = [],
-						l = collection.length;
-					while ( l-- ) {
-						array[l] = collection[l];
-					}
-					return array;
-				},
-				
-				mightyAnchors = collectionToArray( document.getElementsByName( "mighty" ) );
-			
+
 			core.each( mightyAnchors, function( mightyAnchor ) {
-						
+				
 				// We need to do this so IE6/7 execute things in
 				// the correct order.  Very, very bizarre.
 				core.defer(function(){
@@ -1544,7 +1533,7 @@ Mighty.require("mighty.core", function( core ){
 							isHTMLReady = 0,
 	
 							// Do our fancy DOM option extraction here.
-							options = extend( options || {}, core.data( mightyAnchor ) );
+							options = core.extend( options || {}, core.data( mightyAnchor ) );
 
 						// If the element's parent has the same class name
 						// as the Mighty Anchor, we already have the HTML and
@@ -1577,6 +1566,7 @@ Mighty.require("mighty.core", function( core ){
 							core.getJSONP("../api/?file=../src/" + widgetName + ".html", function( data ){
 
 								mightyModule.innerHTML = data;
+								mightyModule.appendChild( mightyAnchor ); // This needs to be tested in IE.
 								
 								isHTMLReady = 1;
 								core.publish( mightyModule, widgetName + "-ready" );
@@ -1586,24 +1576,29 @@ Mighty.require("mighty.core", function( core ){
 						// Remove the Mighty Anchor, it's no longer needed.
 						// Consider hiding this if one day we believe it
 						// is valuable, perhaps debugging, validation, etc.
-						mightyAnchorParent.removeChild( mightyAnchor );
+						// mightyAnchorParent.removeChild( mightyAnchor );
+						mightyAnchor.style.display = "none";
 						
 						// Bring in the modules we need.
 						core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){						
 
 							if ( isHTMLReady ) {
-								core.widget( widgetName, mightyModule, options );
+								mightyAnchor.widget = core.widget( widgetName, mightyModule, options );
 							} else {
 								core.subscribe( mightyModule, widgetName + "-ready", function(){
 									// Make this guy into a widget.
-									core.widget( widgetName, mightyModule, options );
+									mightyAnchor.widget = core.widget( widgetName, mightyModule, options );
 								});		
 							}
 						});
 					}
+
 				}); // end core.defer
 			}); // end core.each
-		};
+		}; // end Mighty.init()
+		
+		// Run Mighty.init() on DOM Ready.
+		core.ready( Mighty.init );
 	}
 	
 	// Initialize Mighty!

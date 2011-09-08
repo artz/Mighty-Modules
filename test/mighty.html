@@ -22,7 +22,6 @@
 <div class="content">
 	<h2>Source Widget #1</h2>
 	<div class="mighty-source">
-		<a name="mighty" class="mighty-source" data-width="500" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
 		<h2>Mighty Source</h2>
 		<h3>Tab 1</h3>
 		<ul>
@@ -42,24 +41,36 @@
 			<li><a href="#">Link 8</a></li>
 			<li><a href="#">Link 9</a></li>
 		</ul>
+		<a name="mighty" class="mighty-source" data-width="500" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
 	</div>
-	<script defer src="../src/mighty.js"></script> 
+	<script async defer src="../src/mighty.js"></script> 
 
 	<h2>Source Widget #2</h2>
-	<a name="mighty" class="mighty-source" href="http://www.mightymodules.com/source/"><b>Source</b> Mighty Module</a>
-	<script defer src="../src/mighty.js"></script>
+	<a name="mighty" class="mighty-source" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
+	<script async defer src="../src/mighty.js"></script>
 <!--
 	<h2>Source Widget #3</h2>
 	<a name="mighty" class="mighty-source2" data-width="200" href="http://www.mightymodules.com/source2/"><b>Source</b> Mighty Module</a>
 	<script defer src="../src/mighty.js"></script>
 --> 
 	<h2>Most Popular Widget</h2>
-	<div class="mighty-mostpopular"><a name="mighty" class="mighty-mostpopular" href="http://www.mightymodules.com/source/">Most Popular Module</a></div>
-	<script defer src="../src/mighty.js"></script>
+	<div class="mighty-mostpopular"><a name="mighty" class="mighty-mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Most Popular Module</b></a></div>
+	<script async defer src="../src/mighty.js"></script>
 
 	<h2>Maker Module</h2>
-	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-blueprint="mostpopular" href="http://www.mightymodules.com/source/">Maker Module</a></div>
-	<script defer src="../src/mighty.js"></script>
+	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-blueprint="mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
+	<script async defer src="../src/mighty.js"></script>
+<!-- 
+	Example FB Code:
+	
+	<script>(function(d){
+	  var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+	  js = d.createElement('script'); js.id = id; js.async = true;
+	  js.src = "//connect.facebook.net/en_US/all.js#appId=231151476937456&xfbml=1";
+	  d.getElementsByTagName('head')[0].appendChild(js);
+	}(document));</script>
+	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+-->
 </div>
 </body>
 </html>
