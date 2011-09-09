@@ -908,8 +908,19 @@
 					
 				},
 				options: options
-			});
-
+			}),
+			ui = instance.ui;
+			
+		// Convert UI selectors to elements.
+		if ( ui ) {
+			for ( var x in ui ) {
+				if ( ui.hasOwnProperty( x ) ) {
+					ui[x] = query(ui[x], elem);
+				}
+			}
+		}
+		
+		// Initialize the widget.
 		instance._create();
 
 		return instance;
@@ -994,10 +1005,10 @@
 				switch( firstChar ) {
 					// ID selector :D
 					case "#":
-						nodes = [ element.getElementById( selector.replace("#", "") ) ];
+						nodes = [ element.getElementById( selector.replace(firstChar, "") ) ];
 						break;
 					case strDot: 
-						nodes = getElementsByClassName( selector.replace(strDot, ""), element );
+						nodes = getElementsByClassName( selector.replace(firstChar, ""), element );
 						break;
 					default:
 						nodes = listToArray( element.getElementsByTagName( selector ) );
@@ -1032,8 +1043,10 @@
 		// Loop through each selector segment and 
 		// find elements matching inside context.
 		for ( var x = 0, y = selector.length; x < y; x++ ) {
+			
 			context = elems;
 			elems = [];
+			
 			// Loop through each item in context
 			// and find elements.
 			for ( var i = 0, l = context.length; i < l; i++ ) {
@@ -1411,11 +1424,12 @@
 /*	function map( obj, iterator, context ) {
 		var results = [];
 		each( obj, function( value, index, list ) {
-			results[ results.length ] = iterator.call( context, value, index, list );
+			results.push( iterator.call( context, value, index, list ) );
 		});
 		return results;
-	}
-  */
+	}*/
+//	global.map = map;
+  
 	// Delays a function for the given number of milliseconds, and then calls
 	// it with the arguments supplied.
 /*	function delay( func, wait ) {
@@ -1620,6 +1634,7 @@
 
 		disableTextSelect: disableTextSelect,
 		
+		map: map,
 		defer: defer,
 	
 		trim: trim,

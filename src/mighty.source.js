@@ -1,6 +1,20 @@
 Mighty.define(["mighty.core"], function( core ){
 
 	return {
+		
+		// These options will be used as defaults
+		options: {
+			width: 400,
+			tabs: "h3"
+		},
+		
+		// These selectors will automatically run inside
+		// the module and grab the resulting elements.
+		ui: {
+			tabs: "h3",
+			panels: "div"
+		},
+		
 		// Set up the widget
 		_create: function () {
 			
@@ -15,21 +29,15 @@ Mighty.define(["mighty.core"], function( core ){
 			core.attr( element, "style", "width: " + width + "px" );
 			
 			core.addClass( element, "mighty-tabs" );
+			
+			// If I need tabs from the DOM, I just do:
+			// var tabs = this.ui.tabs
 	
 		},
 		
 		_html: "<h1>{title}</h1><div></div>",
 		
-		_css: "",
-		
-		// These options will be used as defaults
-		options: {
-			width: 400,
-			html: "<div></div>",
-			template: {
-				"title": "My Heading"
-			}
-		}
+		_css: ""
 	
 		// Use the destroy method to clean up any modifications your widget has made to the DOM
 	//	destroy: function () {
