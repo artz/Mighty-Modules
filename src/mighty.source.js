@@ -11,8 +11,8 @@ Mighty.define(["mighty.core"], function( core ){
 		// These selectors will automatically run inside
 		// the module and grab the resulting elements.
 		ui: {
-			tabs: "h3",
-			panels: "div"
+			tabs: ".tab",
+			panels: ".panel"
 		},
 		
 		// Set up the widget
@@ -23,7 +23,7 @@ Mighty.define(["mighty.core"], function( core ){
 				element = self.element,
 				
 				width = options.width;
-	
+
 			core.getCSS("../src/mighty.source.css");
 
 			core.attr( element, "style", "width: " + width + "px" );

@@ -64,7 +64,7 @@
 	
 	Boot
 */
-/*	var logList,
+	var logList,
 		body,
 		logItems = [],
 		startTime = now(),
@@ -92,7 +92,7 @@
 	
 	global.log = log;
 	
-*/
+
 /*
 	Function: Boot.contains
 	
@@ -615,15 +615,19 @@
 	
 	Fetches a CSS file and appends it to the DOM.
 */
-	var cssLoading = {};
+	var head = document.head || document.getElementsByTagName( "head" )[0] || document.documentElement,
+		cssLoading = {};
+
 	function getCSS( src ) {
-		if ( ! cssLoading[ src ] ) {
-			cssLoading[ src ] = 1;
-			var styleSheet = document.createElement("link");
-			styleSheet.rel = "stylesheet";
-			styleSheet.href = src;
-			firstScriptParent.insertBefore( styleSheet, firstScript );
-		}
+		defer(function(){
+			if ( ! cssLoading[ src ] ) {
+				cssLoading[ src ] = 1;
+				var styleSheet = document.createElement("link");
+				styleSheet.rel = "stylesheet";
+				styleSheet.href = src;
+				head.insertBefore( styleSheet, head.firstChild );
+			}
+		});
 	}
 //	global.getCSS = getCSS;
 
@@ -640,50 +644,46 @@
 		callback - The function to invoke after the script has loaded.
  
 */
-		// Script collection on the page.
-	var scripts = document.getElementsByTagName( strScript ),
-
-		// The first script on the page.
-		firstScript = scripts[0],
-		firstScriptParent = firstScript.parentNode;
-
+	
 	function getScript ( src, callback ) { 
-	
-		var	script = document.createElement( strScript ),
-			done = 0;
-	
-		// Set the source of the script.
-		script.src = src;
-		
-		// This makes good browsers behave like 
-		// bad browsers, for consistency.
-		script.async = true;
-		
-		// Attach handlers for all browsers
-		script[ strOnLoad ] = script[ strOnReadyStateChange ] = function(){
-	
-			if ( !done && (!script[ strReadyState ] || 
-					script[ strReadyState ] === "loaded" || script[ strReadyState ] === strComplete) ) {
+		defer(function(){
 
-				done = 1;
+			var	script = document.createElement( strScript ),
+				done = 0; // Probably don't need this; jQuery no longer uses it.
+		
+			// Set the source of the script.
+			script.src = src;
+	
+			// This makes good browsers behave like 
+			// bad browsers, for consistency.
+			script.async = "async";
+	
+			// Attach handlers for all browsers
+			script[ strOnLoad ] = script[ strOnReadyStateChange ] = function(){
 
-				callback && callback( src ); 
+				//if ( ! done && ! script[ strReadyState ] || /loaded|complete/.test( script[ strReadyState ] ) ) {
+				if ( ! done && ! script[ strReadyState ] || /loaded|complete/.test( script[ strReadyState ] ) ) {
+					
+					done = 1;
+					
+					// Handle memory leak in IE
+					script[ strOnLoad ] = script[ strOnReadyStateChange ] = null;
+	
+//	Needed?			head.removeChild( script );
+		
+//					global.log("Script done: " + src );
 				
-				// Handle memory leak in IE
-				script[ strOnLoad ] = script[ strOnReadyStateChange ] = null;
-			
-				// Removed for weight reasons.  Uncomment if this 
-				// causes undue harm to the DOM.
-			//	firstScriptParent.removeChild( script );
-
-			}
-		};
-		
-		// This is the safest insertion point to assume.
-		// We use a setTimeout to ensure non-blocking behavior.
-
-		firstScriptParent.insertBefore( script, firstScript );
-
+					callback && callback( src ); 
+	
+				}
+			};
+	
+			// This is the safest insertion point to assume.
+			// We use a setTimeout to ensure non-blocking behavior.
+			// We defer because IE is a shit.
+//			global.log("Script loading: " + src );
+			head.insertBefore( script, head.firstChild );
+		});
 	}
 //	global.getScript = getScript;
 
@@ -737,11 +737,13 @@
 			moduleDefinition.d = moduleDependencies;
 
 		}
-
+//		global.log( "Defining! Module name:"  + moduleName );
 		if ( moduleName ) {
 			moduleDefinitions[ moduleName ] = moduleDefinition;
 		} else {
 			definedModules.push( moduleDefinition );
+//			global.log( moduleDefinition.toString().replace(/\n/g, "").substring(0, 50) + "..." );
+//			global.log( definedModules.length );
 		}	
 	}
 	
@@ -764,7 +766,7 @@
 		var obj = window;
 
 		each( moduleName.split("."), function( name ) {
-			if ( obj.hasOwnProperty( name ) ) {
+			if ( obj && isObject(obj) && obj.hasOwnProperty( name ) ) {
 				obj = obj[ name ];
 			}
 		});
@@ -796,7 +798,7 @@
 			
 			callbackArgs[i] = modules[ moduleName ];
 			
-//			Boot.log("<b>" + moduleName + "</b> ready! " + ( i + 1 ) + " of " + moduleNames.length);
+//			global.log("<b>" + moduleName + "</b> ready! " + ( i + 1 ) + " of " + moduleNames.length);
 			if ( ++moduleCount === moduleNames.length ) {
 
 //				Boot.log("All clear! Time to fire callback.");
@@ -812,15 +814,15 @@
 
 			function defineModule(){
 				
-//				Boot.log("Done loading script for <b>" + moduleName + "</b>.");
-//				Boot.log( "Defined modules: " + definedModules.length );
+//				global.log("Done loading script for <b>" + moduleName + "</b>.");
+//				global.log( "Defined modules: " + definedModules.length );
 //				If a module was defined after our download.
 //				Boot.log( "Finished: " + src );
 
 				var module,
 					moduleDependencies,
 					moduleDefinition;
-
+				
 				if ( moduleDefinition = moduleDefinitions[ moduleName ] || definedModules.shift() ) {
 
 					if ( moduleDependencies = moduleDefinition.d ) {
@@ -858,7 +860,7 @@
 					moduleReady( i, moduleName ); // callbackArgs[i] = module;
 				// It's undefined, so wait a little bit.
 				} else {
-//					Boot.log("Module <b>" + moduleName + "</b> is in the process of being defined. Queue time!");
+//					global.log("Module <b>" + moduleName + "</b> is in the process of being defined. Queue time!");
 					subscribe( moduleName, function(){
 //						Boot.log("Module <b>" + moduleName + "</b> is now defined! Assigning to callback argument.");
 						moduleReady( i, moduleName );
@@ -876,9 +878,11 @@
 
 				// If the module was defined by some other script
 				if ( moduleDefinitions[ moduleName ] ) {
+//					global.log("Defining module immediately: " + moduleName);
 					defineModule();
 				// Otherwise fetch the script based on the module name
 				} else {
+//					global.log("Getting script for: " + moduleName);
 					getScript( resolve( options, moduleName ), defineModule );
 				}
 			}
@@ -910,7 +914,7 @@
 				options: options
 			}),
 			ui = instance.ui;
-			
+
 		// Convert UI selectors to elements.
 		if ( ui ) {
 			for ( var x in ui ) {
@@ -1162,7 +1166,10 @@
 			}	
 		}
 		
-		elem.className = elemClassName;
+		// Defer, IE is a shit.
+		defer(function(){
+			elem.className = elemClassName;
+		});
 		
 	}
 //	global.addClass = addClass;
@@ -1183,7 +1190,10 @@
 			elemClassName = elemClassName.replace( reg, strSpace );
 		}
 		
-		elem.className = trim( elemClassName );
+		// Defer, IE is a shit.
+		defer(function(){
+			elem.className = trim( elemClassName );
+		});
 	}
 //	global.removeClass = removeClass;
 
@@ -1564,8 +1574,6 @@
 		
 		url += "&callback=" + namespace + "." + callbackId;
 
-		getScript( url );
-
 		global[ callbackId ] = function( data ) {
 
 			// Pass data to the callback.
@@ -1574,7 +1582,9 @@
 			// Cleanup function reference.
 			delete global[ callbackId ];
 		};
-			
+		
+		getScript( url );
+		
 	}
 //	global.getJSONP = getJSONP;
 	
@@ -1633,8 +1643,7 @@
 //		getFont: getFont,
 
 		disableTextSelect: disableTextSelect,
-		
-		map: map,
+
 		defer: defer,
 	
 		trim: trim,
@@ -1657,12 +1666,18 @@
 Mighty.require("mighty.core", function( core ){
 
 	if ( ! Mighty.init ) {
-
+		
 		// The mighty init function scans the DOM for anchor 
 		// links that contain the "mighty" global namespace,
 		// and then initializes its widget's source.
 		
-		var mightyAnchors = document.getElementsByName( "mighty" );
+		var strMighty = "mighty",
+			mightyAnchors = document.getElementsByName( strMighty );
+		
+		// Add class to the document root for greater specificity.
+		core.addClass( document.documentElement, strMighty );
+		
+		// Inject CSS resets for our modules here?
 		
 		Mighty.init = function(){
 
@@ -1682,7 +1697,10 @@ Mighty.require("mighty.core", function( core ){
 							mightyAnchorParent = mightyAnchor.parentNode,
 							mightyModule,
 							isHTMLReady = 0,
-	
+
+							strLoading = "-loading",
+							strReady = "-ready",
+
 							// Do our fancy DOM option extraction here.
 							options = core.extend( options || {}, core.data( mightyAnchor ) );
 
@@ -1720,7 +1738,7 @@ Mighty.require("mighty.core", function( core ){
 								mightyModule.appendChild( mightyAnchor ); // This needs to be tested in IE.
 								
 								isHTMLReady = 1;
-								core.publish( mightyModule, widgetName + "-ready" );
+								core.publish( mightyModule, widgetName + strReady );
 							});
 						}
 						
@@ -1730,17 +1748,25 @@ Mighty.require("mighty.core", function( core ){
 						// mightyAnchorParent.removeChild( mightyAnchor );
 						mightyAnchor.style.display = "none";
 						
+						// Add our mighty-module class, indicating the module
+						// has been initialized.
+						core.addClass( mightyModule, strMighty + strLoading );
+						
 						// Bring in the modules we need.
 						core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){						
-
-							if ( isHTMLReady ) {
+						
+							function moduleReady(){
 								mightyAnchor.widget = core.widget( widgetName, mightyModule, options );
-							} else {
-								core.subscribe( mightyModule, widgetName + "-ready", function(){
-									// Make this guy into a widget.
-									mightyAnchor.widget = core.widget( widgetName, mightyModule, options );
-								});		
+								core.removeClass( mightyModule, strMighty + strLoading );
+								core.addClass( mightyModule, strMighty + strReady );							
 							}
+							
+							if ( isHTMLReady ) {
+								moduleReady();
+							} else {
+								core.subscribe( mightyModule, widgetName + strReady, moduleReady );		
+							}
+							
 						});
 					}
 

@@ -46,4 +46,5 @@
 
     $callback = ( isset( $_GET['callback'] ) ) ? $_GET['callback'] : 'callback';
 
+//	echo "alert(" . $callback . ");";
     echo $callback . '(' . $data . ');';

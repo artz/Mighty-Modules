@@ -16,7 +16,7 @@ Mighty.define(["mighty.core"], function( core ){
                 name: "Items per pane",
                 description: "Maximum number of items to display on each pane",
                 type: "integer",
-                default: 7,
+                value: 7,
                 minimum: 1,
                 maximum: null
             },
@@ -26,7 +26,7 @@ Mighty.define(["mighty.core"], function( core ){
                 name: "Initial pane",
                 description: "What pane should be visible initially",
                 type: "integer",
-                default: 1,
+                value: 1,
                 minimum: 1,
                 maximum: null
             },
@@ -36,7 +36,7 @@ Mighty.define(["mighty.core"], function( core ){
                 name: "Foo",
                 description: "Please input value of foo",
                 type: "text",
-                default: "bar",
+                value: "bar",
                 minlength: null,
                 maxlength: null 
             }
@@ -69,7 +69,7 @@ Mighty.define(["mighty.core"], function( core ){
             widget.className = 'mighty-' + options.blueprint;
             widget.innerHTML = options.blueprint;
 
-            console.log( json );
+//            console.log( json );
             element.innerHTML = '<b>Blueprint:</b> ' + options.blueprint;
 
             // Build UI for options
@@ -108,7 +108,7 @@ Mighty.define(["mighty.core"], function( core ){
             integer: function( options ) {
                 var newOption = document.createElement( 'div' ),
                     input = document.createElement( 'input' ),
-                    defaultValue = '' || options.default;
+                    defaultValue = '' || options.value;
 
                 newOption.innerHTML = '<label for="' + this.options.blueprint + '-option-' + options.option + '">' + options.name + ' <b class="help">' + options.description + '</b></label>';
 
@@ -125,7 +125,7 @@ Mighty.define(["mighty.core"], function( core ){
 
             text: function( options ) {
                 var input = document.createElement( 'div' ),
-                    defaultValue = '' || options.default;
+                    defaultValue = '' || options.value;
 
                 input.innerHTML = '<label for="' + this.options.blueprint + '-option-' + options.option + '">' + options.name + ' <b class="help">' + options.description + '</b></label><input type="text" id="' + this.options.blueprint + '-option-' + options.option + '" value="' + defaultValue + '">';
 
@@ -147,8 +147,8 @@ Mighty.define(["mighty.core"], function( core ){
 		},
 	
 		update: function( event ) {
-            console.log( 'this is where the magic happens', this.inputs );
-            console.log( core );
+//            console.log( 'this is where the magic happens', this.inputs );
+//            console.log( core );
             core.defer();
 		}
 	
