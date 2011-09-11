@@ -1273,7 +1273,7 @@
 			style.appendChild( textNode );
 		}
 		
-		firstScriptParent.insertBefore( style, firstScript );
+		head.insertBefore( style, head.firstChild );
 	}
 //	global.inlineCSS = inlineCSS;
 
