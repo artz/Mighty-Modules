@@ -3,15 +3,18 @@
 	Version 0.2
 */
 (function( namespace, window, undefined ) {
-	
+
 	// Return if global is already defined.
 	if ( window[ namespace ] ) {
 		return;
 	}
 	
+		// Initialize the library's namespace.
+		// This is controlled via arguments injected
+		// into the closure at the bottom of this script.
 //		var global = window[ namespace ] || ( window[ namespace ] = {} ),
 	var global = window[ namespace ] = {},
-	
+
 		// Localize global objects and functions for better compression.
 		document = window.document,
 		JSON = window.JSON,
@@ -51,8 +54,9 @@
 	}
 //	global.now = now;
 
+
 /*
-	Function: Boot.log
+	Function: global.log
 	
 	Simple method for keeping a log and outputting to the screen.
 	
@@ -117,6 +121,7 @@
 		return haystack && haystack.indexOf( needle ) !== -1;
 	}
 //	global.contains = contains;
+
 
 /*
 	Function: Boot.is...
@@ -200,6 +205,7 @@
 	}
 //	global.each = each;
 
+
 /*
 	Boot.extend
 	
@@ -224,7 +230,7 @@
 			source,
 			i = 1, // Source pointer.
 			l = args.length;
-		
+
 		// Feature to consider:
 		// If it's a string, we should grab the 
 		// object from our modules.
@@ -261,6 +267,7 @@
 		return target;
 	}
 //	global.extend = extend;
+
 
 /*
 	Boot.options
@@ -431,6 +438,7 @@
 	// Public reference.
 //	global.ready = ready;
 
+
 /*
 	Function: Boot.bind
 	
@@ -466,6 +474,7 @@
 		}
 	}
 //	global.bind = bind;
+
 
 /*
 	Function: Boot.load
@@ -631,6 +640,7 @@
 	}
 //	global.getCSS = getCSS;
 
+
 /*
 	Function: Boot.getScript
 	
@@ -644,7 +654,6 @@
 		callback - The function to invoke after the script has loaded.
  
 */
-	
 	function getScript ( src, callback ) { 
 		defer(function(){
 
@@ -687,6 +696,7 @@
 	}
 //	global.getScript = getScript;
 
+
 /*
 	Boot.resolve
 	Utility for resolving URL addresses.
@@ -705,6 +715,7 @@
 		return options.basePath + options.filename( module ) + options.suffix;
 	}
 
+
 /*
 	Boot.define
 	Define a module, based on the Asynchronous Module Definition (AMD)
@@ -716,7 +727,7 @@
 
 	function define( moduleName, moduleDependencies, moduleDefinition ) {
 		
-//		Boot.log("Defining a module!");
+//		global.log("Defining a module!");
 		if ( ! isString( moduleName ) ) {
 			moduleDefinition = moduleDependencies;
 			moduleDependencies = moduleName;
@@ -731,7 +742,7 @@
 		// Load in any dependencies, and pass them into the use callback.
 		if ( moduleDependencies ) {
 
-//			Boot.log("Loading module dependencies for <b>" + "?" + "</b>: " + moduleDependencies.join(", "));
+//			global.log("Loading module dependencies for <b>" + "?" + "</b>: " + moduleDependencies.join(", "));
 
 			// Remember that this guy has a dependency, and which one it is.
 			moduleDefinition.d = moduleDependencies;
@@ -766,7 +777,9 @@
 		var obj = window;
 
 		each( moduleName.split("."), function( name ) {
-			if ( obj && isObject(obj) && obj.hasOwnProperty( name ) ) {
+//			if ( obj && isObject(obj) && obj.hasOwnProperty( name ) ) {
+//			Cross this bridge when it comes to us.
+			if ( obj.hasOwnProperty( name ) ) {
 				obj = obj[ name ];
 			}
 		});
@@ -801,7 +814,7 @@
 //			global.log("<b>" + moduleName + "</b> ready! " + ( i + 1 ) + " of " + moduleNames.length);
 			if ( ++moduleCount === moduleNames.length ) {
 
-//				Boot.log("All clear! Time to fire callback.");
+//				global.log("All clear! Time to fire callback.");
 				callback.apply( callbackArgs, callbackArgs );
 			}
 			
@@ -817,20 +830,20 @@
 //				global.log("Done loading script for <b>" + moduleName + "</b>.");
 //				global.log( "Defined modules: " + definedModules.length );
 //				If a module was defined after our download.
-//				Boot.log( "Finished: " + src );
+//				global.log( "Finished: " + src );
 
 				var module,
 					moduleDependencies,
 					moduleDefinition;
-				
+
 				if ( moduleDefinition = moduleDefinitions[ moduleName ] || definedModules.shift() ) {
 
 					if ( moduleDependencies = moduleDefinition.d ) {
 
-//						Boot.log("<b>" + moduleName + "</b> has a dependency: " + moduleDefinition.d.join(", ") );
+//						global.log("<b>" + moduleName + "</b> has a dependency: " + moduleDefinition.d.join(", ") );
 
 						require( moduleDependencies, function(){
-//							Boot.log( "Dependencies loaded (" + moduleDefinition.d.join(", ") + "). <b>" + moduleName + "</b> is ready." );
+//							global.log( "Dependencies loaded (" + moduleDefinition.d.join(", ") + "). <b>" + moduleName + "</b> is ready." );
 							module = isFunction( moduleDefinition ) ? moduleDefinition.apply( global, arguments ) : moduleDefinition;
 							moduleReady( i, moduleName, module );
 						});
@@ -840,7 +853,7 @@
 						module = isFunction( moduleDefinition ) ? moduleDefinition() : moduleDefinition;
 						moduleReady( i, moduleName, module );
 
-//						Boot.log("<b>" + moduleName + "</b> loaded! " + !!module);
+//						global.log("<b>" + moduleName + "</b> loaded! " + !!module);
 					}
 
 				// Otherwise see if we can snag the module by name (old skool).	
@@ -850,19 +863,19 @@
 				
 			}	
 			
-//			Boot.log( "Inside require, using " + moduleName );
+//			global.log( "Inside require, using " + moduleName );
 
 			// If this module has already been defined, use it.
 			if ( moduleName in modules ) {
 				// Check for the object.
 				if ( modules[ moduleName ] ){
-//					Boot.log("Module <b>" + moduleName + "</b> is already defined.");
+//					global.log("Module <b>" + moduleName + "</b> is already defined.");
 					moduleReady( i, moduleName ); // callbackArgs[i] = module;
 				// It's undefined, so wait a little bit.
 				} else {
 //					global.log("Module <b>" + moduleName + "</b> is in the process of being defined. Queue time!");
 					subscribe( moduleName, function(){
-//						Boot.log("Module <b>" + moduleName + "</b> is now defined! Assigning to callback argument.");
+//						global.log("Module <b>" + moduleName + "</b> is now defined! Assigning to callback argument.");
 						moduleReady( i, moduleName );
 					});
 				}
@@ -874,7 +887,7 @@
 				// Temporarily give this guy something so incoming 
 				// module requests wait until the event is emmitted.
 				modules[ moduleName ] = undefined;
-//				Boot.log("Calling getScript: " + moduleName );
+//				global.log("Calling getScript: " + moduleName );
 
 				// If the module was defined by some other script
 				if ( moduleDefinitions[ moduleName ] ) {
@@ -923,7 +936,7 @@
 				}
 			}
 		}
-		
+
 		// Initialize the widget.
 		instance._create();
 
@@ -1314,10 +1327,10 @@
 		
 		function pollFontDiv( fontDiv, namespacedFontName ) {
 			poll( function( time ){
-//					Boot.log( "Test width: " + testDiv.offsetWidth + ", " + fontName + ": " + fontDiv.offsetWidth );
+//					global.log( "Test width: " + testDiv.offsetWidth + ", " + fontName + ": " + fontDiv.offsetWidth );
 				return testDiv.offsetWidth !== fontDiv.offsetWidth;
 			}, function( isTimeout, time){ 
-//					Boot.log("Different widths detected in " + time + "ms. Timeout? " + isTimeout); 
+//					global.log("Different widths detected in " + time + "ms. Timeout? " + isTimeout); 
 				if ( isTimeout ) {
 					
 					removeClass( docElem, namespacedFontName + strLoading );
@@ -1342,15 +1355,15 @@
 			
 			fontName = args[i].toLowerCase();
 			
-//			Boot.log( "Getting font: <b>" + fontName + "</b>" );
+//			global.log( "Getting font: <b>" + fontName + "</b>" );
 			
 			fontPath = options.path.replace( fontTemplate, fontName );
 			
-//			Boot.log( "Setting font URL: <b>" + fontPath + "</b>" );
+//			global.log( "Setting font URL: <b>" + fontPath + "</b>" );
 			
 			fontFace = options.fontface.replace( fontTemplate, fontName ).replace( fontPathTemplate, fontPath );
 			
-//			Boot.log( "Generating @fontface: <b>" + fontFace + "</b>");
+//			global.log( "Generating @fontface: <b>" + fontFace + "</b>");
 			
 			fontfaceCSS.push( fontFace );
 			
@@ -1378,6 +1391,7 @@
 
 	global.getFont = getFont;
 */
+
 /*
 	Function: Boot.disableTextSelect
 
@@ -1510,7 +1524,8 @@
 		return str.replace(/^\s+/, "").replace(/\s+$/, "");
 	}
 //	global.trim = trim;
-	
+
+
 /* 
 	Function: Boot.parseJSON
 	
@@ -1561,7 +1576,7 @@
 		}
 	}
 //	global.parseJSON = parseJSON;
-	
+
 
 /*
 	Boot.getJSONP
@@ -1725,8 +1740,8 @@ Mighty.require("mighty.core", function( core ){
 
 							// These log checks were F'ed up without the
 							// boot.defer wrapper above in IE6/7.
-						//	Boot.log( "My name: " + widgetName );							
-						//	Boot.log( "Setting className: " + div.className );
+						//	global.log( "My name: " + widgetName );							
+						//	global.log( "Setting className: " + div.className );
 
 							mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
 							
