@@ -25,10 +25,7 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 			
 			// Initialize tabs.
 			core.widget( "mighty.tabs", element );
-			
-			// If I need tabs from the DOM, I just do:
-			// var tabs = this.ui.tabs
-	
+
 		}
 	};
 });
