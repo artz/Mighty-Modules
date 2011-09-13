@@ -842,7 +842,7 @@
 
 //						global.log("<b>" + moduleName + "</b> has a dependency: " + moduleDefinition.d.join(", ") );
 
-						require( moduleDependencies, function(){
+						require( customOptions, moduleDependencies, function(){
 //							global.log( "Dependencies loaded (" + moduleDefinition.d.join(", ") + "). <b>" + moduleName + "</b> is ready." );
 							module = isFunction( moduleDefinition ) ? moduleDefinition.apply( global, arguments ) : moduleDefinition;
 							moduleReady( i, moduleName, module );
@@ -919,14 +919,14 @@
 		var source = modules[ widgetName ],
 			instance = extend( {}, source, {
 				element: elem,
-				name: elem.className,
-				namespace: elem.name,
+				name: widgetName.replace(strDot, "-"),
+				namespace: widgetName,
 				option: function( key, value ) {
 					
 				},
-				options: options
+				options: options || {}
 			}),
-			ui = instance.ui;
+			ui = instance.options.ui;
 
 		// Convert UI selectors to elements.
 		if ( ui ) {
@@ -936,6 +936,8 @@
 				}
 			}
 		}
+		
+		addClass( elem, instance.name );
 
 		// Initialize the widget.
 		instance._create();
