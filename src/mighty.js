@@ -924,10 +924,11 @@
 				option: function( key, value ) {
 					
 				},
+				ui: {},
 				options: options || {}
 			}),
-			ui = instance.options.ui;
-
+			ui = extend( instance.ui, instance.options.ui );
+		
 		// Convert UI selectors to elements.
 		if ( ui ) {
 			for ( var x in ui ) {
