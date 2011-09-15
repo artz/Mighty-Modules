@@ -475,6 +475,26 @@
 	}
 //	global.bind = bind;
 
+/*
+	Boot.delegate
+*/
+	function delegate( elem, selector, event, callback ) {
+		bind( elem, event, function( evt ){
+
+			var target = evt.target,
+				id = target.id || "",
+				className = target.className || "",
+				tag = target.nodeName,
+				token = tag + ( id && "#" + id ) + ( className && "." + className );
+			
+			// console.log( selector, ":", token, ":", contains( token.toLowerCase(), selector.toLowerCase() ) );
+			if ( contains( token.toLowerCase(), selector.toLowerCase() ) ) {
+				callback( evt );
+			}
+
+		});
+	}
+//	global.delegate = delegate;
 
 /*
 	Function: Boot.load
@@ -1143,7 +1163,7 @@
 		if ( value !== undefined ) {
 			attr( elem, strData + key, value );
 		} else if ( key !== undefined ) {
-			ret = attr( strData + key );
+			ret = attr( elem, strData + key );
 		} else {
 			while( attributesLength-- ) {
 				attribute = attributes[ attributesLength ];
@@ -1625,6 +1645,7 @@
 		
 		ready: ready,
 		bind: bind,
+		delegate: delegate,
 		load: load,
 
 		events: events,
@@ -1759,8 +1780,11 @@ Mighty.require("mighty.core", function( core ){
 						// mightyAnchorParent.removeChild( mightyAnchor );
 						mightyAnchor.style.display = "none";
 						
-						// Add our mighty-module class, indicating the module
-						// has been initialized.
+						// This is indeed a mighty module!
+						core.addClass( mightyModule, "mighty-module" );
+						
+						// Add our mighty-loading class, indicating the module
+						// is in the process of being initialized.
 						core.addClass( mightyModule, strMighty + strLoading );
 						
 						// Bring in the modules we need.
