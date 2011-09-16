@@ -1,16 +1,4 @@
 /*
-	Mighty Reset
-*/
-.mighty-module * {
-	border: 0;
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
-	font: 15px/24px arial;
-	text-align: left;
-}
-
-/*
 	Mighty Source Core
 */
 .mighty-source, .mighty-source2 {
@@ -37,24 +25,7 @@
 	padding-top: 12px;
 	padding-bottom: 12px;
 }
-/*
-	Mighty Tabs Core
-*/
-.mighty-tabs {
-	
-}
-.mighty-tabs > .tabs {
-	list-style-type: none;
-}
-.mighty-tabs > .tabs > li {
-	display: inline-block;
-}
-.mighty-tabs .panel {
-	display: none;
-}
-.mighty-tabs .selected {
-	display: block;
-}
+
 /*
 	Mighty Tabs Skin
 */

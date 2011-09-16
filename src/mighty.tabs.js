@@ -35,6 +35,9 @@ Mighty.define(["mighty.core"], function( core ){
 				
 				tabParent = core.createHTML("<ul class=\"tabs\"></ul>");
 			
+			// Eventually, let's protect against multiple insertions of the core styles.
+			core.inlineCSS(".mighty-tabs > .tabs > li {	display: inline-block; } .mighty-tabs .panel { display: none; } .mighty-tabs .selected { display: block; }");
+			
 			core.each( uiTabs, function( elem, i ) {
 				
 				// Save index on each tab;

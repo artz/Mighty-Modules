@@ -1708,8 +1708,9 @@ Mighty.require("mighty.core", function( core ){
 		
 		// Add class to the document root for greater specificity.
 		core.addClass( document.documentElement, strMighty );
-		
-		// Inject CSS resets for our modules here?
+
+		// Inject mighty module CSS reset.
+		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font: 15px/24px arial; text-align: left; }");
 		
 		Mighty.init = function(){
 
