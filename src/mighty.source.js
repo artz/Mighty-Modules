@@ -4,6 +4,7 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 		
 		// These options will be used as defaults
 		options: {
+			selected: 0,
 			width: 400
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.
@@ -24,7 +25,7 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 			core.attr( element, "style", "width: " + width + "px" );
 			
 			// Initialize tabs.
-			core.widget( "mighty.tabs", element );
+			core.widget( "mighty.tabs", element, { selected: options.selected } );
 
 		}
 	};
