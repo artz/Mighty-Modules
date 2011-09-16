@@ -475,6 +475,26 @@
 	}
 //	global.bind = bind;
 
+/*
+	Boot.delegate
+*/
+	function delegate( elem, selector, event, callback ) {
+		bind( elem, event, function( evt ){
+
+			var target = evt.target,
+				id = target.id || "",
+				className = target.className || "",
+				tag = target.nodeName,
+				token = tag + ( id && "#" + id ) + ( className && "." + className );
+			
+			// console.log( selector, ":", token, ":", contains( token.toLowerCase(), selector.toLowerCase() ) );
+			if ( contains( token.toLowerCase(), selector.toLowerCase() ) ) {
+				callback( evt );
+			}
+
+		});
+	}
+//	global.delegate = delegate;
 
 /*
 	Function: Boot.load
@@ -842,7 +862,7 @@
 
 //						global.log("<b>" + moduleName + "</b> has a dependency: " + moduleDefinition.d.join(", ") );
 
-						require( moduleDependencies, function(){
+						require( customOptions, moduleDependencies, function(){
 //							global.log( "Dependencies loaded (" + moduleDefinition.d.join(", ") + "). <b>" + moduleName + "</b> is ready." );
 							module = isFunction( moduleDefinition ) ? moduleDefinition.apply( global, arguments ) : moduleDefinition;
 							moduleReady( i, moduleName, module );
@@ -919,15 +939,16 @@
 		var source = modules[ widgetName ],
 			instance = extend( {}, source, {
 				element: elem,
-				name: elem.className,
-				namespace: elem.name,
+				name: widgetName.replace(strDot, "-"),
+				namespace: widgetName,
 				option: function( key, value ) {
 					
 				},
-				options: options
+				ui: {},
+				options: options || {}
 			}),
-			ui = instance.ui;
-
+			ui = extend( instance.ui, instance.options.ui );
+		
 		// Convert UI selectors to elements.
 		if ( ui ) {
 			for ( var x in ui ) {
@@ -936,6 +957,8 @@
 				}
 			}
 		}
+		
+		addClass( elem, instance.name );
 
 		// Initialize the widget.
 		instance._create();
@@ -1140,7 +1163,7 @@
 		if ( value !== undefined ) {
 			attr( elem, strData + key, value );
 		} else if ( key !== undefined ) {
-			ret = attr( strData + key );
+			ret = attr( elem, strData + key );
 		} else {
 			while( attributesLength-- ) {
 				attribute = attributes[ attributesLength ];
@@ -1622,6 +1645,7 @@
 		
 		ready: ready,
 		bind: bind,
+		delegate: delegate,
 		load: load,
 
 		events: events,
@@ -1684,8 +1708,9 @@ Mighty.require("mighty.core", function( core ){
 		
 		// Add class to the document root for greater specificity.
 		core.addClass( document.documentElement, strMighty );
-		
-		// Inject CSS resets for our modules here?
+
+		// Inject mighty module CSS reset.
+		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font: 15px/24px arial; text-align: left; }");
 		
 		Mighty.init = function(){
 
@@ -1756,8 +1781,11 @@ Mighty.require("mighty.core", function( core ){
 						// mightyAnchorParent.removeChild( mightyAnchor );
 						mightyAnchor.style.display = "none";
 						
-						// Add our mighty-module class, indicating the module
-						// has been initialized.
+						// This is indeed a mighty module!
+						core.addClass( mightyModule, "mighty-module" );
+						
+						// Add our mighty-loading class, indicating the module
+						// is in the process of being initialized.
 						core.addClass( mightyModule, strMighty + strLoading );
 						
 						// Bring in the modules we need.
