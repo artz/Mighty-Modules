@@ -30,12 +30,17 @@
 		
         // Proxy JSON from an external URL
         // (If your API serves JSONP, why are you using this, buddy?)
+        
+        /* This method causes errors in my VPS
         $proxy = curl_init( urldecode( $_GET['url'] ) );
 
         // We want to store the return as a variable, not just output it
         curl_setopt( $proxy, CURLOPT_RETURNTRANSFER, true );
 
         $data = curl_exec( $proxy );
+        */
+
+        $data = file_get_contents( $_GET['url'] );
 
     } else {
 
