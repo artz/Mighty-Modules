@@ -1710,7 +1710,7 @@ Mighty.require("mighty.core", function( core ){
 		core.addClass( document.documentElement, strMighty );
 
 		// Inject mighty module CSS reset.
-		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font: 15px/24px arial; text-align: left; }");
+		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: arial; font-size: 15px; line-height: 24px; text-align: left; }");
 		
 		Mighty.init = function(){
 
