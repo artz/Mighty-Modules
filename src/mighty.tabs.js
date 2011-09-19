@@ -36,18 +36,31 @@ Mighty.define(["mighty.core"], function( core ){
 				tabParent = core.createHTML("<ul class=\"tabs\"></ul>");
 			
 			// Eventually, let's protect against multiple insertions of the core styles.
-			core.inlineCSS(".mighty-tabs > .tabs > li {	display: inline-block; } .mighty-tabs .panel { display: none; } .mighty-tabs .selected { display: block; }");
+			core.inlineCSS(".mighty-tabs > .tabs > li {	display: inline-block; *display: inline; zoom: 1; } .mighty-tabs .panel { display: none; } .mighty-tabs .selected { display: block; }");
 			
 			core.each( uiTabs, function( elem, i ) {
 				
-				// Save index on each tab;
-				// Used in event delegation.
-				core.data( elem, strIndex, i );
-				
 				// Move the tab into the unordered list.
 				var li = document.createElement("li");
-				li.appendChild( elem );
+
+				// Set the HTML with the same HTML and 
+				// CSS class as the DOM node.
+				li.innerHTML = elem.innerHTML;
+				li.className = elem.className;
+
+				// Save index on each tab;
+				// Used in event delegation.
+				core.data( li, strIndex, i );
+				
+				// Append to the nav container.
 				tabParent.appendChild( li );
+				
+				// Remove the original tab element.
+				elem.parentNode.removeChild( elem );
+				
+				// Replace the original tab with our
+				// list item reference.
+				uiTabs[i] = li;
 				
 			});
 			
@@ -84,13 +97,10 @@ Mighty.define(["mighty.core"], function( core ){
 				
 				strSelected = "selected";
 			
-			// If there's an update to the selected tab.
-		//	if ( selected !== index ) {
-				
-				// jQuery UI reverses this, and hides panels 
-				// by default.  Selecting removes the hide class.
-				
-				// Deselect the selected tab and panel.
+			// jQuery UI reverses this, and hides panels 
+			// by default.  Selecting removes the hide class.
+			
+			// Deselect the selected tab and panel.			
 			removeClass( selectedTab, strSelected );
 			removeClass( selectedPanel, strSelected );
 			
@@ -99,7 +109,6 @@ Mighty.define(["mighty.core"], function( core ){
 			addClass( newPanel, strSelected );
 			
 			options.selected = index;
-		//	}
 		}
 	};
 });

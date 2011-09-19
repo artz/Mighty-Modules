@@ -30,19 +30,17 @@
 	Mighty Tabs Skin
 */
 .mighty-tabs {
-	
   -webkit-transition: height 0.3s ease-out;  
      -moz-transition: height 0.3s ease-out;  
       -ms-transition: height 0.3s ease-out;  
        -o-transition: height 0.3s ease-out;  
           transition: height 0.3s ease-out;  
-
 }
 .mighty-tabs > .tabs {
 	border-bottom: 2px solid #000;
 	line-height: 13px;
 }
-.mighty-tabs .tab {
+.mighty-tabs > .tabs > .tab {
 	border: 2px solid #000;
 	padding: 6px 12px;
 	cursor: pointer;
@@ -54,11 +52,11 @@
 	background-color: #f8ffec;
 	border-radius: 5px 5px 0 0;
 }
-.mighty-tabs > .tabs .selected {
+.mighty-tabs > .tabs > .selected {
 	background-color: #fff;
 	border-bottom: 2px solid #fff;
 }
-.mighty-tabs .panel {
+.mighty-tabs > .panel {
 	padding: 12px;
 	border-radius: 0 0 3px 3px;
 

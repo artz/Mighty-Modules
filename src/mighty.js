@@ -1042,18 +1042,14 @@
 				var firstChar = selector.charAt(0),
 					nodes;
 				
-				switch( firstChar ) {
-					// ID selector :D
-					case "#":
-						nodes = [ element.getElementById( selector.replace(firstChar, "") ) ];
-						break;
-					case strDot: 
-						nodes = getElementsByClassName( selector.replace(firstChar, ""), element );
-						break;
-					default:
-						nodes = listToArray( element.getElementsByTagName( selector ) );
-						break;
+				if ( firstChar === "#" ) {
+					nodes = [ element.getElementById( selector.replace(firstChar, "") ) ];
+				} else if ( firstChar === strDot ) {
+					nodes = getElementsByClassName( selector.replace(firstChar, ""), element );
+				} else {
+					nodes = listToArray( element.getElementsByTagName( selector ) );
 				}
+
 				return nodes;
 			};
 	
@@ -1120,8 +1116,6 @@
 	
 	Attribute value (getting) or Boot (setting)
 */
-	var styleNode = document.createElement("style");
-
 	function attr( elem, attribute, value ){
 
 		if ( value !== undefined ) {
@@ -1133,8 +1127,7 @@
 					elem.style.cssText = value;
 				}
 				elem.setAttribute( attribute, value );
-			}	
-
+			}
 		} else {
 			return elem.getAttribute( attribute );
 		}
@@ -1188,7 +1181,7 @@
 		// Adding the class name greedily won't 
 		// hurt and keeps things small. 
 		classNames = classNames.split( strSpace );
-		
+
 		var elemClassName = elem.className,
 			className,
 			l = classNames.length,
@@ -1201,14 +1194,14 @@
 				elemClassName += strSpace + className;
 			}	
 		}
-		
+
 		elem.className = elemClassName;
 	}
 //	global.addClass = addClass;
 
 	// Supports multiple class removals.
 	function removeClass( elem, classNames ) {
-		
+
 		classNames = classNames.split( strSpace );
 		
 		var elemClassName = elem.className,
@@ -1276,20 +1269,25 @@
 */
 	function inlineCSS( css ){
 
-		var style = styleNode.cloneNode(0),
-			styleSheet = style.styleSheet,
+		var style = document.createElement("style"),
 			textNode;
 
+		// Stoyan says this is "absolutely required",
+		// but so far has passed all our tests.
+//		style.setAttribute("type", "text/css");
+
+		// This must happen before setting CSS for IE.
+		head.insertBefore( style, head.firstChild );
+
 		// IE
-		if ( styleSheet ) { 
-			styleSheet.cssText = css;
+		if ( style.styleSheet ) {
+			style.styleSheet.cssText = css;
 		// The World
-		} else { 
+		} else {
 			textNode = document.createTextNode( css );
 			style.appendChild( textNode );
 		}
-		
-		head.insertBefore( style, head.firstChild );
+
 	}
 //	global.inlineCSS = inlineCSS;
 
