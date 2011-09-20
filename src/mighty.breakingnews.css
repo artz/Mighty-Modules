@@ -1,17 +1,64 @@
-.breaking-news {
+.mighty-breakingnews .breaking-news {
 	background-color: #F6F6F6;
 	border: 1px solid #ccc;
 	display: block;
 	padding: 5px;
 	width: 300px;	
-	}
-	
-.breaking-news .articles ul li {
+}
+.mighty-breakingnews .breaking-news h2 {
+	font-size: 18px;	
+	color: #4A4A4A;		
+}
+
+.breaking-news .articles ul.article-list li {
 	list-style-type: none;
 	border-bottom: 1px dashed #000;
 	margin-bottom: 10px;
 }
 
-.breaking-news .articles ul li h2{
+.breaking-news .articles ul.article-list li h2{
 	color: #4A4A4A;
+	font-size: 30px;
+	padding-bottom: 5px;
+}
+
+.breaking-news .articles ul.article-list li a {
+	color: #4A4A4A;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.breaking-news .articles ul.article-list li span.comments{
+	color: #4A4A4A;
+	display: block;
+	font-size: 11px;
+	margin-top: -5px;
+}
+span.comments b {
+	font-size: 11px;
+}
+
+.breaking-news img.thumb {
+	width: 300px;
+	height: 75px;
+}
+.breaking-news-footer {
+	overflow: hidden;
+}
+.breaking-news-footer .more-news {
+	color: #4A4A4A;
+	float: left;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.breaking-news-footer .refresh-news {
+	background: url("/../images/refresh.png") no-repeat scroll left center transparent;
+    cursor: pointer;
+    float: right;
+    font-size: 9px;
+    padding-left: 20px;
+    text-transform: uppercase;
 }
