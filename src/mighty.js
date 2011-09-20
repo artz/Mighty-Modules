@@ -1722,11 +1722,12 @@ Mighty.require("mighty.core", function( core ){
 		var strMighty = "mighty",
 			mightyAnchors = document.getElementsByName( strMighty );
 		
-		// Add class to the document root for greater specificity.
+		// Add class to the document root for greater specificity (if needed).
 		core.addClass( document.documentElement, strMighty );
 
 		// Inject mighty module CSS reset.
-		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: arial; font-size: 15px; line-height: 24px; text-align: left; }");
+		// Temporary fix for hiding mighty anchors.
+		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: arial; font-size: 15px; line-height: 24px; text-align: left; } a[name=mighty] { display: none; }");
 		
 		Mighty.init = function(){
 
@@ -1742,7 +1743,7 @@ Mighty.require("mighty.core", function( core ){
 						mightyAnchor.widget = 1;
 	
 						var className = mightyAnchor.className,
-							widgetName = className.replace("-", "."),
+							widgetName = className.replace(/-/g, "."),
 							mightyAnchorParent = mightyAnchor.parentNode,
 							mightyModule,
 							isHTMLReady = 0,
@@ -1770,24 +1771,35 @@ Mighty.require("mighty.core", function( core ){
 							mightyModule = document.createElement("div");
 
 							// Assign the same class name as the anchor.
-							mightyModule.className = mightyAnchor.className;
+//							mightyModule.className = mightyAnchor.className;
 
 							// These log checks were F'ed up without the
 							// boot.defer wrapper above in IE6/7.
 						//	global.log( "My name: " + widgetName );							
 						//	global.log( "Setting className: " + div.className );
 
-							mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
+//							mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
 							
 							// Ajax in the module's content.
 							// Make this configurable, or a function of the module eventually.
-							core.getJSONP("../api/?file=../src/" + widgetName + ".html", function( data ){
+							core.getJSONP("../src/api/?file=" + widgetName + "/index.php", function( data ){
 
-								mightyModule.innerHTML = data;
-								mightyModule.appendChild( mightyAnchor ); // This needs to be tested in IE.
+								mightyModule = core.createHTML( data );
+															
+								// This is indeed a mighty module!
+								core.addClass( mightyModule, "mighty-module" );
+								
+								// Add our mighty-loading class, indicating the module
+								// is in the process of being initialized.
+								core.addClass( mightyModule, strMighty + strLoading );
+
+								mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
+//								mightyModule.appendChild( mightyAnchor ); // This needs to be tested in IE.
 								
 								isHTMLReady = 1;
-								core.publish( mightyModule, widgetName + strReady );
+								
+								// Publish an event on our anchor indicating we're done.
+								core.publish( mightyAnchor, widgetName + strReady );
 							});
 						}
 						
@@ -1805,8 +1817,8 @@ Mighty.require("mighty.core", function( core ){
 						core.addClass( mightyModule, strMighty + strLoading );
 						
 						// Bring in the modules we need.
-						core.require({ basePath: "../src/", suffix: ".js" }, widgetName, function(){						
-						
+						core.require({ basePath: "../src/static/", filename: function(str){ return str.toLowerCase() + "/" + str.toLowerCase(); }, suffix: ".js" }, widgetName, function(){						
+
 							function moduleReady(){
 								mightyAnchor.widget = core.widget( widgetName, mightyModule, options );
 								core.removeClass( mightyModule, strMighty + strLoading );
@@ -1816,7 +1828,8 @@ Mighty.require("mighty.core", function( core ){
 							if ( isHTMLReady ) {
 								moduleReady();
 							} else {
-								core.subscribe( mightyModule, widgetName + strReady, moduleReady );		
+								// Let our anchor listen for an event before continuing.
+								core.subscribe( mightyAnchor, widgetName + strReady, moduleReady );		
 							}
 							
 						});

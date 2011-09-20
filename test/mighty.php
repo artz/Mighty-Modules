@@ -26,35 +26,8 @@ Mighty.log.init({ elem: document.getElementById("log") });
 </script>
 
 	<h2>Source Widget #1</h2>
-	<div id="mymodule" class="mighty-source">
-		<h2>Mighty Source</h2>
-		<h3 class="tab">Tab 1</h3>
-		<div class="panel">
-			<ul>
-				<li><a href="#">Link 1</a></li>
-				<li><a href="#">Link 2</a></li>
-				<li><a href="#">Link 3</a></li>
-			</ul>
-		</div>
-		<h3 class="tab">Tab 2</h3>
-		<div class="panel">
-			<ul>
-				<li><a href="#">Link 4</a></li>
-				<li><a href="#">Link 5</a></li>
-				<li><a href="#">Link 6</a></li>
-				<li><a href="#">Link 7</a></li>
-			</ul>
-		</div>
-		<h3 class="tab">Tab 3</h3>
-		<div class="panel">
-			<ul>
-				<li><a href="#">Link 8</a></li>
-				<li><a href="#">Link 9</a></li>
-				<li><a href="#">Link 10</a></li>
-			</ul>
-		</div>
-		<a name="mighty" class="mighty-source" data-width="500" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
-	</div>
+	<!-- Simulates an API call to our Widget Factory -->
+	<?php include( "../src/api/mighty.source/index.php" ); ?>
 	<script async defer src="../src/mighty.js"></script>
 
 	<h2>Source Widget #2</h2>
@@ -86,10 +59,11 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 -->
-
+<!--
 <h2>Breaking News Widget</h2>
 <div class="mighty-breakingnews"><a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/source/">Get the <b>Breaking News Module</b></a></div>
 <script async defer src="../src/mighty.js"></script>
+-->
 </div>
 </body>
 </html>

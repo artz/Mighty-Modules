@@ -15,7 +15,7 @@
 			$data = file_get_contents( './' . $_GET['file'] ); 
 			
 			// If the file type requested is HTML, convert it to a JSON escaped string.
-			if ( strstr( $_GET['file'], ".html" ) ) {
+			if ( strstr( $_GET['file'], ".php" ) ) {
 				$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
 			}
 	
