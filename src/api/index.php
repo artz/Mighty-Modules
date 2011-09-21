@@ -9,10 +9,14 @@
 
     if ( isset( $_GET['file'] ) ) {
 		
+		// Retrieve dummy JSON data stored as a file in this directory	
 		if ( file_exists( $_GET['file'] ) ) {
-			
-			// Retrieve dummy JSON data stored as a file in this directory
-			$data = file_get_contents( './' . $_GET['file'] ); 
+
+//			$data = file_get_contents( './' . $_GET['file'] ); 
+
+			ob_start();
+			require( './' . $_GET['file'] );
+			$data = ob_get_clean();
 			
 			// If the file type requested is HTML, convert it to a JSON escaped string.
 			if ( strstr( $_GET['file'], ".php" ) ) {

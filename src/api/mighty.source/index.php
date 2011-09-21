@@ -1,3 +1,19 @@
+<?php
+	
+/*
+	Mighty Source Module
+	
+	A reference module for how to build out modules as an API.
+
+*/
+	
+	// Set up data options.
+	$dataOptions = '';
+	
+	if ( isset( $_GET['width'] ) ) {
+		$dataOptions .= ' data-width=' . $_GET['width'];
+	}
+?>
 <div class="mighty-source">
 	<h2>Mighty Source</h2>
 	<h3 class="tab">Tab 1</h3>
@@ -25,5 +41,5 @@
 			<li><a href="#">Link 10</a></li>
 		</ul>
 	</div>
-	<a name="mighty" class="mighty-source" data-width="500" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
+	<a name="mighty" class="mighty-source"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
 </div>

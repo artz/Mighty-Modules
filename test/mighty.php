@@ -20,19 +20,21 @@
 <h1><b>Mighty</b><b>Module</b> Test Page</h1>
 <div class="content">
 <pre id="log" style="font-size:12px;"></pre>
-<script src="../src/mighty.js"></script> 
+<script src="../src/mighty/mighty.js"></script> 
 <script>
 Mighty.log.init({ elem: document.getElementById("log") });
 </script>
 
 	<h2>Source Widget #1</h2>
 	<!-- Simulates an API call to our Widget Factory -->
-	<?php include( "../src/api/mighty.source/index.php" ); ?>
-	<script async defer src="../src/mighty.js"></script>
+	<?php
+		require_once("../api/widget-api.php");
+		getWidget("mighty-source", array("width" => 500)); //include( "../src/api/mighty.source/index.php" ); ?>
+	<script async defer src="../src/mighty/mighty.js"></script>
 
 	<h2>Source Widget #2</h2>
 	<a name="mighty" class="mighty-source" data-selected="1" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
-	<script async defer src="../src/mighty.js"></script>
+	<script async defer src="../src/mighty/mighty.js"></script>
 <!--
 	<h2>Maker Module</h2>
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-blueprint="mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>

@@ -20,7 +20,7 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 				
 				width = options.width;
 
-			core.getCSS("../src/static/mighty.source/mighty.source.css");
+			core.getCSS("../src/mighty/source/mighty.source.css");
 
 			core.attr( element, "style", "width: " + width + "px" );
 			

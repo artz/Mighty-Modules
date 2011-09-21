@@ -1817,7 +1817,7 @@ Mighty.require("mighty.core", function( core ){
 						core.addClass( mightyModule, strMighty + strLoading );
 						
 						// Bring in the modules we need.
-						core.require({ basePath: "../src/static/", filename: function(str){ return str.toLowerCase() + "/" + str.toLowerCase(); }, suffix: ".js" }, widgetName, function(){						
+						core.require({ basePath: "../src/", filename: function(str){ return str.toLowerCase().replace(/\./, "/") + "/" + str.toLowerCase(); }, suffix: ".js" }, widgetName, function(){						
 
 							function moduleReady(){
 								mightyAnchor.widget = core.widget( widgetName, mightyModule, options );
