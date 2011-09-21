@@ -61,11 +61,11 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 -->
-<!--
+
 <h2>Breaking News Widget</h2>
-<div class="mighty-breakingnews"><a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/source/">Get the <b>Breaking News Module</b></a></div>
+<a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/source/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty.js"></script>
--->
+
 </div>
 </body>
 </html>

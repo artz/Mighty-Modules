@@ -1,11 +1,11 @@
-.mighty-breakingnews .breaking-news {
+.breaking-news {
 	background-color: #F6F6F6;
 	border: 1px solid #ccc;
 	display: block;
 	padding: 5px;
 	width: 300px;	
 }
-.mighty-breakingnews .breaking-news h2 {
+.breaking-news h2 {
 	font-size: 18px;	
 	color: #4A4A4A;		
 }
