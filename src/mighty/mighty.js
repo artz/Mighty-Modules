@@ -1782,7 +1782,7 @@ Mighty.require("mighty.core", function( core ){
 							
 							// Ajax in the module's content.
 							// Make this configurable, or a function of the module eventually.
-							core.getJSONP("../src/api/?file=" + widgetName + "/index.php", function( data ){
+							core.getJSONP("../src/api/?file=" + className + "/index.php", function( data ){
 
 								mightyModule = core.createHTML( data );
 															

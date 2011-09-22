@@ -1,3 +1,6 @@
+<?php
+	error_reporting(E_ALL);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,15 +29,17 @@ Mighty.log.init({ elem: document.getElementById("log") });
 </script>
 
 	<h2>Source Widget #1</h2>
-	<!-- Simulates an API call to our Widget Factory -->
-	<?php
-		require_once("../api/widget-api.php");
-		getWidget("mighty-source", array("width" => 500)); //include( "../src/api/mighty.source/index.php" ); ?>
-	<script async defer src="../src/mighty/mighty.js"></script>
+	<!-- An API call to our Widget Factory, critical for SEO. -->
+<?php
+	require_once("../src/api/widget-api.php");
+	getWidget("mighty.source", array("width" => 500)); //include( "../src/api/mighty-source/index.php" ); 
+?>
 
 	<h2>Source Widget #2</h2>
+	<!-- Our standard embed code. -->
 	<a name="mighty" class="mighty-source" data-selected="1" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
 	<script async defer src="../src/mighty/mighty.js"></script>
+
 <!--
 	<h2>Maker Module</h2>
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-blueprint="mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>

@@ -6,13 +6,16 @@
 	A reference module for how to build out modules as an API.
 
 */
-	
+
 	// Set up data options.
 	$dataOptions = '';
 	
-	if ( isset( $_GET['width'] ) ) {
-		$dataOptions .= ' data-width=' . $_GET['width'];
+	if ( isset( $options ) ) {
+		foreach ( $options as $key => $value ) {
+			$dataOptions .= ' data-' . $key . '="' . $value . '"';
+		}
 	}
+	
 ?>
 <div class="mighty-source">
 	<h2>Mighty Source</h2>
