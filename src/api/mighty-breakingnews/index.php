@@ -1,4 +1,4 @@
-<div class="breaking-news">
+<div class="breaking-news mighty-module mighty-breakingnews mighty-ready" id="breaking-news">
 	<h2>HuffPost Breaking News</h2>
 	<div class="articles">
 		<ul class="article-list">
@@ -29,10 +29,5 @@
 				<a href="http://www.huffingtonpost.com/robert-creamer/obama-isnt-trying-to-star_b_971617.html" title="Robert Creamer: Obama Isn't Trying to Start 'Class Warfare' -- He Wants to End the Republican War on the Middle Class">Robert Creamer: Obama Isn't Trying to Start 'Class Warfare' -- He Wants to End the Republican War on the Middle Class</a>
 			</li>
 		</ul>
-	</div>
-	<div class="breaking-news-footer">
-		<a class="more-news" href="http://www.huffingtonpost.com" title="Click here for More Breaking News">MORE NEWS</a>
-
-		<a class="refresh-news" id="refresh-news">Refresh</a>
 	</div>
 </div>

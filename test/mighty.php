@@ -32,7 +32,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	<!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.source", array("width" => 500)); //include( "../src/api/mighty-source/index.php" ); 
+	getWidget("mighty.source", array("width" => 500));
 ?>
 
 	<h2>Source Widget #2</h2>
@@ -66,11 +66,16 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 -->
+<h2>Breaking News Widget  - 1</h2>
 
-<h2>Breaking News Widget</h2>
+<?php
+	require_once("../src/api/widget-api.php");
+	getWidget("mighty.breakingnews");
+?>
+
+<h2>Breaking News Widget - 2</h2>
 <a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/source/">Get the <b>Breaking News Module</b></a>
-<script async defer src="../src/mighty.js"></script>
-
+<script async defer src="../src/mighty/mighty.js"></script>
 </div>
 </body>
 </html>
