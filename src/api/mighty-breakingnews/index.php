@@ -1,4 +1,4 @@
-<div class="breaking-news mighty-module mighty-breakingnews mighty-ready" id="breaking-news">
+<div class="mighty-breakingnews">
 	<h2>HuffPost Breaking News</h2>
 	<div class="articles">
 		<ul class="article-list">
