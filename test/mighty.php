@@ -32,12 +32,12 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	<!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.source", array("width" => 500)); //include( "../src/api/mighty-source/index.php" ); 
+	getWidget("mighty.source", array("width" => 500));
 ?>
 
 	<h2>Source Widget #2</h2>
 	<!-- Our standard embed code. -->
-	<a name="mighty" class="mighty-source" data-selected="1" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
+	<a name="mighty" class="mighty-source" data-selected="2" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
 	<script async defer src="../src/mighty/mighty.js"></script>
 
 <!--
