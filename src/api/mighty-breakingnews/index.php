@@ -30,4 +30,5 @@
 			</li>
 		</ul>
 	</div>
+	<a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/source/">Get the <b>Breaking News Module</b></a>
 </div>
