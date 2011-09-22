@@ -9,7 +9,8 @@ Mighty.define(["mighty.core"], function( core ){
             blueprint: '' // the name of the module to make
 		},
         */
-
+		
+		// Artz: Can we remove this, since we decided to make the module manifest external?
         maker: [
             {
                 option: "perpane",
@@ -51,7 +52,11 @@ Mighty.define(["mighty.core"], function( core ){
 				width = options.width;
 	
 		// 	core.getCSS("../src/mighty.mostpopular.css");
-
+			
+			// Artz: Can we make this more dynamic? I.e. it should be a data option on the 
+			// maker anchor.  data-mighty-module="mostpopular"  
+			// or is this what blueprint should be used for?
+			// Feel also like this might belong in the mighty core somehow.
             core.getJSONP( '../api/?file=../src/mighty.mostpopular.options.json', function( json ) {
                 self._build( json );    
             });
@@ -64,19 +69,22 @@ Mighty.define(["mighty.core"], function( core ){
                 options = self.options,
                 ui = self.ui = {},
                 widget = ui.widget = document.createElement( 'a' );
-
+			
+			
+			
             widget.name = 'mighty';
             widget.className = 'mighty-' + options.blueprint;
             widget.innerHTML = options.blueprint;
 
 //            console.log( json );
+			// Artz: Why do we set this only to reset it later?
             element.innerHTML = '<b>Blueprint:</b> ' + options.blueprint;
 
             // Build UI for options
             if ( core.isArray( json ) ) {
                 var i,
                     length = json.length;
-
+				
                 element.innerHTML = '<h3>Options:</h3>';
 
                 self.inputs = {};
@@ -88,6 +96,10 @@ Mighty.define(["mighty.core"], function( core ){
                     var type = json[i].type || null;
 
                     if ( type ) {
+						// Artz: I get a little confused with the use of "option", since
+						// mighty modules (like the maker module) have options as well. 
+						// self.option() will eventually work too, like jQuery UI.
+						// Maybe use the word config? Or settings?
                         self.inputs[json[i].option] = this.make[type].call( this, json[i] );
                     }
                 }
@@ -106,6 +118,7 @@ Mighty.define(["mighty.core"], function( core ){
 
         make: {
             integer: function( options ) {
+
                 var newOption = document.createElement( 'div' ),
                     input = document.createElement( 'input' ),
                     defaultValue = '' || options.value;
@@ -127,6 +140,7 @@ Mighty.define(["mighty.core"], function( core ){
             },
 
             text: function( options ) {
+
                 var newOption = document.createElement( 'div' ),
                     input = document.createElement( 'input' ),
                     defaultValue = '' || options.value;
@@ -134,6 +148,9 @@ Mighty.define(["mighty.core"], function( core ){
                 newOption.innerHTML = '<label for="' + this.options.blueprint + '-option-' + options.option + '">' + options.name + ' <b class="help">' + options.description + '</b></label>';
 
                 core.attr( input, 'type', 'text' );
+				
+				// Artz: Should be able to use core.data instead. 
+				// core.data( input, "option", options.option );
                 core.attr( input, 'data-option', options.option );
                 
                 defaultValue && core.attr( input, 'value', defaultValue );
