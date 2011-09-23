@@ -9,39 +9,6 @@ Mighty.define(["mighty.core"], function( core ){
             blueprint: '' // the name of the module to make
 		},
         */
-		
-		// Artz: Can we remove this, since we decided to make the module manifest external?
-        maker: [
-            {
-                option: "perpane",
-                name: "Items per pane",
-                description: "Maximum number of items to display on each pane",
-                type: "integer",
-                value: 7,
-                minimum: 1,
-                maximum: null
-            },
-
-            {
-                option: "initial",
-                name: "Initial pane",
-                description: "What pane should be visible initially",
-                type: "integer",
-                value: 1,
-                minimum: 1,
-                maximum: null
-            },
-
-            {
-                option: "foo",
-                name: "Foo",
-                description: "Please input value of foo",
-                type: "text",
-                value: "bar",
-                minlength: null,
-                maxlength: null 
-            }
-        ],
 	
 		// Set up the widget
 		_create: function () {
@@ -49,6 +16,7 @@ Mighty.define(["mighty.core"], function( core ){
 			var self = this,
 				options = self.options,
 				element = self.element,
+				blueprint = options.blueprint,
 				width = options.width;
 	
 		// 	core.getCSS("../src/mighty.mostpopular.css");
@@ -56,11 +24,16 @@ Mighty.define(["mighty.core"], function( core ){
 			// Artz: Can we make this more dynamic? I.e. it should be a data option on the 
 			// maker anchor.  data-mighty-module="mostpopular"  
 			// or is this what blueprint should be used for?
-			// Feel also like this might belong in the mighty core somehow.
-            core.getJSONP( '../api/?file=../src/mighty.mostpopular.options.json', function( json ) {
-                self._build( json );    
-            });
-	
+			// Feel also like this might belong in the mighty core somehow.		
+//            core.getJSONP( '../api/?file=../src/mighty.mostpopular.options.json', function( json ) {
+//                self._build( json );    
+//            });
+			if ( blueprint ) {
+				core.require({ basePath: "../src/mighty/" + blueprint + "/", suffix: ".js" }, "mighty." + blueprint + ".blueprint", function( blueprint ){
+					self._build( blueprint );
+				});
+			}
+			
 		},
 	
 		_build: function( json ) {
@@ -69,14 +42,11 @@ Mighty.define(["mighty.core"], function( core ){
                 options = self.options,
                 ui = self.ui = {},
                 widget = ui.widget = document.createElement( 'a' );
-			
-			
-			
+
             widget.name = 'mighty';
             widget.className = 'mighty-' + options.blueprint;
             widget.innerHTML = options.blueprint;
 
-//            console.log( json );
 			// Artz: Why do we set this only to reset it later?
             element.innerHTML = '<b>Blueprint:</b> ' + options.blueprint;
 
@@ -108,7 +78,6 @@ Mighty.define(["mighty.core"], function( core ){
                 ui.update.innerHTML = 'Update';
 
                 element.appendChild( ui.update );
-
             }
 
             element.appendChild( widget );
@@ -184,10 +153,6 @@ Mighty.define(["mighty.core"], function( core ){
                 core.attr( widget, 'data-' + option, inputs[option].value );
             }
 
-            console.log( 'widget yo', widget );
-
-            // console.log( 'this is where the magic happens', this.inputs );
-//            console.log( core );
             Mighty.init();
             // core.defer();
 		}

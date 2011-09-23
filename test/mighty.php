@@ -40,10 +40,10 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	<a name="mighty" class="mighty-source" data-selected="2" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
 	<script async defer src="../src/mighty/mighty.js"></script>
 
-<!--
+
 	<h2>Maker Module</h2>
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-blueprint="mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
-	<script async defer src="../src/mighty.js"></script>
+	<script async defer src="../src/mighty/mighty.js"></script>
 
 <!--
 	<h2>Source Widget #3</h2>
@@ -66,6 +66,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 -->
+
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
@@ -75,6 +76,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Breaking News Widget (Embed)</h2>
 <a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
+
 </div>
 </body>
 </html>
