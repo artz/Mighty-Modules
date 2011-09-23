@@ -17,7 +17,7 @@ Mighty.define(["mighty.core"], function( core ){
 				ui = this.ui = {};
 				
 				ui.breakingNewsFooter = document.createElement( 'div' );
-				ui.breakingNewsFooter.className = 'breaking-news-footer';
+				ui.breakingNewsFooter.className = 'mighty-breakingnews-footer';
 				ui.breakingNewsFooter.innerHTML = '<a class="more-news" href="http://www.huffingtonpost.com" title="Click here for More Breaking News">MORE NEWS</a><a class="refresh-news" id="refresh-news">Refresh</a>';
 	
 				element.appendChild( ui.breakingNewsFooter );
@@ -30,7 +30,7 @@ Mighty.define(["mighty.core"], function( core ){
 			
 			var self = this,
 				refreshID = document.getElementById('refresh-news');
-				breakingNewsID = document.getElementById('breaking-news');
+				breakingNewsID = document.getElementById('mighty-breakingnews');
 				console.log(breakingNewsID);				
 				console.log(refreshID);
 							
@@ -38,7 +38,7 @@ Mighty.define(["mighty.core"], function( core ){
 				breakingNewsID.innerHTML = "loading...";			
 				console.log("Refreshed");		
 				
-				core.getJSONP("../src/api/?file=mighty.breakingnews/index.php", function( data ){
+				core.getJSONP("../src/api/?file=mighty-breakingnews/index.php", function( data ){
 												mightyModule = core.createHTML( data );
 												breakingNewsID.innerHTML = mightyModule.innerHTML;
 												console.log(breakingNewsID);
