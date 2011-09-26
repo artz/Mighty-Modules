@@ -70,11 +70,11 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.breakingnews");
+	getWidget("mighty.breakingnews", array("count" => 8));
 ?>
 
 <h2>Breaking News Widget (Embed)</h2>
-<a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
+<a name="mighty" class="mighty-breakingnews" data-count="5" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
 
 </div>
