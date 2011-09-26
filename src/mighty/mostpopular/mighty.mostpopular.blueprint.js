@@ -1,6 +1,3 @@
-// TODO: I don't like having this as a separate file
-// Nor do I like that it essentially repeats parts in the widget's options
-// Talk to Dave about how to incorporate these into widgets themselves  
 Mighty.define(function(){ 
 	return [
 	{
