@@ -1,303 +1,137 @@
-.mostpopular {
-	border: 5px solid #ccc;
-	display: block;
-	padding: 20px;
-	border-radius: 5px;
-}
-
-/* HuffPost AOL Social News: Most Popular */
-
-.aol-most-popular-social {
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-    position: relative;
-    width: 300px;
-}
-
-.aol-most-popular-social h4 {
-    font-family: Arial, sans-serif;
-    line-height: 1;
-    margin: 0 0 10px;
-
-    /* Gradient Foo */
-    background-color: #010101;
-    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,startColorstr=#45494d, endColorstr=#010101);
-    background-image:
-        -moz-linear-gradient(bottom, #010101 0%, #45494d 100%);
-
-    background-image:
-        linear-gradient(bottom, #010101 0%, #45494d 100%);
-
-    background-image: 
-        -webkit-gradient(linear, left bottom, left top, color-stop(0%,#010101), color-stop( 100%, #45494d ));
-}
-
-.aol-most-popular-social h4 b {
-    background-image: url( http://o.aolcdn.com/os/aol/assets/aolmostpopular.gif );
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-    color: #fff;
-    display: block;
-    height: 32px;
-    text-indent: -99999px;
-}
-
-.aol-most-popular-social span.pane-nav {
-    border-top: 1px solid #fff;
-    color: #fff;
-    display: block;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1;
-    margin: 1px 0 0;
-    padding: 8px 11px;
-    position: relative;
-    text-transform: uppercase;
-    width: 278px;
-
-    /* Gradient Foo */
-    background-color: #206994;
-    filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0,startColorstr=#2372a1, endColorstr=#206994);
-    background-image:
-        -moz-linear-gradient(bottom, #206994 0%, #2372a1 100%);
-
-    background-image:
-        linear-gradient(bottom, #206994 0%, #2372a1 100%);
-
-    background-image: 
-        -webkit-gradient(linear, left bottom, left top, color-stop(0%,#206994), color-stop( 100%, #2372a1));
-}
-
-/* IE7 only */
-*:first-child+html .aol-most-popular-social span.pane-nav {
-}
-
-.aol-most-popular-social span.pane-nav:after {
-    border-bottom: transparent solid 10px;
-    border-right: #71a3c1 solid 20px;
-    bottom: -10px;
-    content: '';
-    display: block;
-    height: 0;
-    left: 0;
-    position: absolute;
-}
-
-.aol-most-popular-social .articles {
-    margin-left: 20px;
-    overflow: hidden;
-    position: relative;
-    width: 280px;
-
-    -webkit-transition: height 0.2s;
-       -moz-transition: height 0.2s;
-         -o-transition: height 0.2s;
-            transition: height 0.2s;
-}
-
-.aol-most-popular-social ul {
-    float: left;
-    left: 280px;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    position: absolute; 
-    width: 280px;
-
-    -webkit-transition: left 0.2s;
-       -moz-transition: left 0.2s;
-         -o-transition: left 0.2s;
-            transition: left 0.2s;
-}
-
-.aol-most-popular-social .left {
-    left: -280px;
-}
-
-.aol-most-popular-social .current {
-    left: 0;
-}
-
-.aol-most-popular-social .right {
-    left: 280px;
-}
-
-.aol-most-popular-social .no-transition {
-    -webkit-transition: none;
-       -moz-transition: none;
-         -o-transition: none;
-            transition: none;
-}
-
-.aol-most-popular-social ul li {
-    border-top: 1px dotted #ccc;
-    float: left; /* Set a float to contain a float */
-    line-height: 1.2;
-    margin: 0;
-    padding: 7px 0 7px 94px;
-    width: 180px;
-}
-
-.aol-most-popular-social ul li .facebook {
-    margin: 10px 0;
-}
-
-.aol-faux-facebook-like p {
-    margin-left: 0;
-    position: relative;
-}
-
 /*
-.aol-faux-facebook-like-init a {
-    display: block !important;
-    left: -99em;
-    margin: 0;
-    position: absolute;
-}
-
-.aol-faux-facebook-like-init p {
-    display: block !important;
-    left: -99em;
-    margin: 0;
-    position: absolute;
-}
+	Mighty Most Popular Core
 */
-
-.aol-most-popular-social ul li:first-child {
-    border-top: none;
+.mighty-mostpopular {
+    background-color: #e9e9e9;
+    padding: 10px;
+}
+.mighty-mostpopular h2 {
+    background: no-repeat url( "../../../images/mostpopular/huffpost.png" ) 50% 50%;
+	color: #296a5a;
+    height: 21px;
+	font-size: 22px;
+    margin: 0;
+	padding-top: 12px;
+	text-align: center;
+    text-indent: -9999px;
+	text-transform: uppercase;
 }
 
-.aol-most-popular-social ul li span.vertical {
-    background-color: transparent;
-    color: #206994;
-    float: none;
-    text-transform: uppercase;
-    overflow: auto;
-    padding: 0;
-    width: auto;
+.mighty-mostpopular h3 {
+    border-bottom: 1px dashed #b4b4b4;
+    color: #333;
+    font-weight: normal;
+    line-height: 1;
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding-bottom: 10px;
+	text-align: center;
+	text-transform: uppercase;
 }
 
-.aol-most-popular-social ul li img {
-    border: 1px solid #ccc;
-    display: inline-block;
+.mighty-mostpopular li {
+    line-height: 1;
+    overflow: hidden;
+}
+
+.mighty-mostpopular li img {
     float: left;
-    height: 64px;
-    margin-left: -94px;
-    padding: 2px;
-    width: 80px;
+    height: 58px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 72px;
 }
 
-.aol-most-popular-social ul li a {
-    color: #000;
-    display: block;
-    font-size: 13px;
-    font-weight: bold;
+.mighty-mostpopular li a {
+    color: #626262;
+    font-size: 12px;
+    line-height: 1;
     text-decoration: none;
 }
 
-.aol-most-popular-social ul li .aol-faux-facebook-like a {
-    color: #3B5998;
-    font: normal 11px/14px "lucida grande",tahoma,verdana,arial,sans-serif;
+
+
+/*
+    Most Popular Tabs Skin
+*/
+
+.mighty-mostpopular.mighty-tabs > .tabs {
+	border-bottom: 0;
 }
 
-.aol-most-popular-social ul li a:hover {
+.mighty-mostpopular.mighty-tabs > .tabs > .tab {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    color: #9a9a9a;
+	cursor: pointer;
+    font-family: Helvetica Neue, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 14px;
+    margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	padding: 6px 10px;
 }
 
-.aol-most-popular-social .footer {
-    border-top: 1px solid #ccc;
-    float: left;
-    margin: 0;
-    padding: 0;
-    width: 300px;
+.mighty-mostpopular.mighty-tabs > .tabs > .selected {
+	background-color: #fff;
+	border-bottom: 0;
+    color: #4a4a4a;
 }
 
-.aol-most-popular-social .footer a {
-    color: #206994;
-    font-size: 10px;
-    text-transform: uppercase;
+.mighty-mostpopular.mighty-tabs > .panel {
+    background: #fff;
+    padding: 10px 10px 0;
 }
 
-.aol-most-popular-social .footer a:hover {
-    text-decoration: underline;
+.mighty-mostpopular.mighty-tabs > .panel.selected {
+    opacity: 1;
 }
 
-.footer .report-corrections, .footer .send-tip {
-    border: none;
-    margin: 0;
-    padding: 0;
+
+/*
+	Mighty Tabs Skin
+.mighty-tabs {
+  -webkit-transition: height 0.3s ease-out;  
+     -moz-transition: height 0.3s ease-out;  
+      -ms-transition: height 0.3s ease-out;  
+       -o-transition: height 0.3s ease-out;  
+          transition: height 0.3s ease-out;  
+}
+.mighty-tabs > .tabs {
+	border-bottom: 2px solid #000;
+	line-height: 13px;
+}
+.mighty-mostpopular .mighty-tabs > .tabs > .tab {
+    border: 10px solid red;
+	padding: 6px 12px;
+	cursor: pointer;
+	margin-left: 12px;
+	margin-bottom: -2px;
+    font-family: Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 14px;
+	font-weight: bold;
+	background-color: #fff;
+}
+.mighty-tabs > .tabs > .selected {
+	background-color: #fff;
+	border-bottom: 2px solid #fff;
+}
+.mighty-tabs > .panel {
+	padding: 12px;
+	border-radius: 0 0 3px 3px;
+
+	background-color: #ffffff;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3ffab)); 
+	background-image: -webkit-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:    -moz-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:     -ms-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:      -o-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:         linear-gradient(top, #ffffff, #e3ffab);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#e3ffab'); 
 }
 
-.footer .report-corrections {
-    float: left;
-}
-
-.footer .send-tip {
-    float: right;
-}
-
-.aol-most-popular-social .nav {
-    float: right;
-    margin: 0 -4px 0 0;
-    zoom: 1;
-}
-
-.aol-most-popular-social .nav .info {
-    float: left;
-    text-transform: lowercase;
-}
-
-.aol-most-popular-social .nav .back,
-.aol-most-popular-social .nav .forward {
-    cursor: pointer;
-    padding: 9px 10px 5px;
-    position: relative;
-}
-
-.aol-most-popular-social .nav .back:active,
-.aol-most-popular-social .nav .forward:active {
-    top: 1px;
-}
-
-.aol-most-popular-social .nav .back {
-    float: left;
-    margin: -9px 0 -8px -8px;
-    padding-right: 6px;
-}
-
-.aol-most-popular-social .nav .back span,
-.aol-most-popular-social .nav .forward span {
-    border-bottom: #216b96 solid 6px;
-    border-left: #216b96 solid 6px;
-    border-right: #216b96 solid 6px;
-    border-top: #216b96 solid 6px;
-    cursor: pointer;
-    display: block;
-    height: 0;
-    line-height: 0;
-    text-indent: -99em;
-    width: 0;
-}
-
-.aol-most-popular-social .nav .back span {
-    border-left-width: 0;
-    border-right-color: #fff;
-}
-
-.aol-most-popular-social .nav .forward {
-    float: left;
-    margin: -9px -8px -8px 0;
-    padding-left: 6px;
-}
-
-.aol-most-popular-social .nav .forward span {
-    border-left-color: #fff;
-    border-right-width: 0;
-}
-
-.aol-most-popular-social .nav .back:hover span {
-    border-right-color: #bae3ff;
-}
-
-.aol-most-popular-social .nav .forward:hover span {
-    border-left-color: #bae3ff;
-}
+*/

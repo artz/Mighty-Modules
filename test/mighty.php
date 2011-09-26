@@ -77,6 +77,13 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <a name="mighty" class="mighty-breakingnews" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
 
+<h2>Most Popular Widget (API)</h2>
+<!-- An API call to our Widget Factory, critical for SEO. -->
+<?php
+	require_once("../src/api/widget-api.php");
+	getWidget("mighty.mostpopular", array("width" => 300));
+?>
+
 </div>
 </body>
 </html>
