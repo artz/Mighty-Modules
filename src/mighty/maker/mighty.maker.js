@@ -1,7 +1,7 @@
 Mighty.define(["mighty.core"], function( core ){
 	
 	// This should run only once, even if multiple maker modules are on the page. (let's verify!).
-	core.inlineCSS(".mighty-maker { background-color: #efefef; padding: 0 12px 12px; } .mighty-maker input { background-color: #fff; } .mighty-maker .help { display: none; } .mighty-maker .input-text, .mighty-maker .input-number { border: 1px solid #d7d7d7; line-height: 15px; padding: 3px 3px 4px; } .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; } .mighty-maker .input-number { width: 50px; } .mighty-maker .input-text { width: 100px; } .mighty-maker .maker-snippet { border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida sans'; font-size: 11px; line-height: 18px; } ");
+	core.inlineCSS(".mighty-maker { background-color: #efefef; padding: 0 12px 12px; } .mighty-maker input { background-color: #fff; } .mighty-maker .help { display: none; } .mighty-maker .input-text, .mighty-maker .input-number { border: 1px solid #d7d7d7; line-height: 15px; padding: 3px 3px 4px; } .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; } .mighty-maker .input-number { width: 60px; } .mighty-maker .input-text { width: 120px; } .mighty-maker .maker-snippet { border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida sans'; font-size: 11px; line-height: 18px; } ");
 				
 	function htmlEntities(str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
