@@ -16,7 +16,15 @@
 <!-- Eventually we will incorporate Boot into mighty.js -->
 <!--<script src="../../Boot/src/boot.js"></script>-->
 <!--<script src="https://raw.github.com/artzstudio/Boot/master/src/boot.js"></script>-->
-
+<!-- Advertisement Setup start -->
+<script type="text/javascript" src="http://o.aolcdn.com/ads/adsWrapper.js"></script>
+<script type="text/javascript">
+<!-- 
+adSetTarget('_blank');
+adSetAdURL('/_uac/adpage.html'); 
+//-->
+</script>
+<!-- Advertisement Setup end -->
 </head>
 
 <body>
@@ -65,12 +73,13 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 -->
-<!--
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.breakingnews", array("count" => 8));
+	getWidget("mighty.breakingnews", array("count" => 3, "ads" => 1 ));
 ?>
+
+<!--
 
 <h2>Breaking News Widget (Embed)</h2>
 <a name="mighty" class="mighty-breakingnews" data-count="5" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>

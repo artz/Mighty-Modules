@@ -2,29 +2,29 @@
 
 // Set up data options.
 $dataOptions = '';
-$numitems = '';
-$numItems = '';
+$count = ''; // Declaring the variable for number of items from data-count
+$ads = ''; // Var for ads
+
 
 if ( isset( $options ) ) {
 	foreach ( $options as $key => $value ) {
 		$dataOptions .= ' data-' . $key . '="' . $value . '"';
-		$numitems .= $value; // This will pickup the numitems from data-numitems;
+		if ( $key == "count" ){
+			$count .= $value; // This will pickup the numitems from data-count
+		}
+		if ( $key == "ads" ){
+			$ads .= $value; // This will pickup the ad setting from data-ads
+		}
+		
 	}
 }
 
-//$numItems = ($_GET['numItems']) ? $_GET['numItems'] : $numitems; 
-
-if($numitems){
-	$numItems = $numitems;
-}else if($_GET['numItems']){
-	$numItems = $_GET['numItems'];
-}else {
-	$numItems = 6;
-}
+$numItems = ($_GET['count']) ? $_GET['count'] : $count; 
 
 /*
  * The following curl method should be used on production. 
-
+ *
+ 
 $c = curl_init();
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
@@ -44,7 +44,7 @@ $json = json_decode($content);
 //print_r($json);
 ?>
 <div class="mighty-breakingnews">
-<h2>HuffPost Breaking News</h2>
+<h2 class="header">Breaking News</h2>
 	<div class="articles">
 		<ul class="article-list">
 <?php
@@ -65,7 +65,7 @@ foreach($json->response as $key=>$value){
 			</a>
 		</li>	
 		<?php
-		}if($key <= $numItems && $key != 0 ) { ?>
+		}if($key < $numItems && $key != 0 ) { ?>
 		<li><a href="<?php echo $url;?>">
 				<?php echo $long_title; ?>
 			</a>

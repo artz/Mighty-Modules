@@ -2,12 +2,16 @@
 	background-color: #F6F6F6;
 	border: 1px solid #ccc;
 	display: block;
+	margin: 5px 0;
 	padding: 5px;
 	width: 300px;	
 }
-.mighty-breakingnews h2 {
+.mighty-breakingnews h2.header {
+	background: url("../../../images/mostpopular/huffpost.png") no-repeat scroll 0 50% transparent;
 	font-size: 18px;	
-	color: #4A4A4A;		
+	color: #4A4A4A;
+	margin-bottom: 5px;
+	padding-left: 160px;		
 }
 
 .mighty-breakingnews .articles ul.article-list li {
