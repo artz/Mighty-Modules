@@ -16,6 +16,9 @@ Mighty.define(["mighty.core"], function( core ){
             blueprint: '' // the name of the module to make
 		},
         */
+		options: {
+			preview: true
+		},
 	
 		// Set up the widget
 		_create: function () {
@@ -44,7 +47,7 @@ Mighty.define(["mighty.core"], function( core ){
 			}
 		},
 		
-		_getCode: function(){
+		_getCode: function( entities, script ){
 			
 			function dataOptions(){
 				var inputs = self.inputs,
@@ -59,14 +62,16 @@ Mighty.define(["mighty.core"], function( core ){
 				
 				return dataOptions;
 			}
-			
+
 			var self = this,
 				options = self.options,
-				snippet = htmlEntities('<a name="mighty" class="mighty-' + options.module + '"' + dataOptions() + '>Mighty Source</a>');
-				
-			snippet += '<br>' + htmlEntities('<script async defer src="../src/mighty.js"></script>');
+				snippet = '<a name="mighty" class="mighty-' + options.module + '"' + dataOptions() + '>Mighty Source</a>';
 			
-			return snippet;
+			if ( script ) {
+				snippet += '<script async defer src="../src/mighty.js"></script>';
+			}
+			
+			return entities ? htmlEntities( snippet ) : snippet;
 		},
 	
 		_build: function( blueprint ) {
@@ -116,8 +121,17 @@ Mighty.define(["mighty.core"], function( core ){
 				ui.code.appendChild( ui.snippet );
                 element.appendChild( ui.code );
 				
-				ui.snippet.innerHTML = self._getCode();
+				ui.snippet.innerHTML = self._getCode( true, true );
+				
+				
             }
+			
+			if ( options.preview ) {
+				ui.preview = core.createHTML( '<div class="maker-preview"><label>Preview</label></div>' );
+				ui.preview.appendChild( core.createHTML( self._getCode() ) );
+				element.appendChild( ui.preview );
+				Mighty.init();
+			}
 
             element.appendChild( widget );
 
@@ -125,52 +139,56 @@ Mighty.define(["mighty.core"], function( core ){
 		},
 
         make: {
-            integer: function( options ) {
+            integer: function( blueprintOptions ) {
 
                 var newOption = document.createElement( 'div' ),
                     input = document.createElement( 'input' ),
-                    defaultValue = options.value;
+					self = this;
 				
 				newOption.className = "maker-option";
-                newOption.innerHTML = '<label for="' + this.options.blueprint + '-option-' + options.option + '">' + options.name + ' <b class="help">' + options.description + '</b></label>';
+                newOption.innerHTML = '<label for="' + this.options.module + '-option-' + blueprintOptions.option + '">' + blueprintOptions.name + ' <b class="help">' + blueprintOptions.description + '</b></label>';
 
                 core.attr( input, 'type', 'number' );
-                core.attr( input, 'data-option', options.option );
+                core.attr( input, 'data-option', blueprintOptions.option );
 				input.className = "input-number";
 
-                core.attr( input, 'value', defaultValue );
+                core.attr( input, 'value', blueprintOptions.value );
 				
-                options.minimum && core.attr( input, 'min', options.minimum );
-                options.maximum && core.attr( input, 'max', options.maximum );
+                blueprintOptions.minimum && core.attr( input, 'min', blueprintOptions.minimum );
+                blueprintOptions.maximum && core.attr( input, 'max', blueprintOptions.maximum );
 
                 newOption.appendChild( input );
 
-                this.element.appendChild( newOption );
+                self.element.appendChild( newOption );
+				
+				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(); });
 
                 return input;
             },
 
-            text: function( options ) {
+            text: function( blueprintOptions ) {
 
                 var newOption = document.createElement( 'div' ),
                     input = document.createElement( 'input' ),
-                    defaultValue = options.value;
+					self = this;
 
 				newOption.className = "maker-option";
-                newOption.innerHTML = '<label for="' + this.options.blueprint + '-option-' + options.option + '">' + options.name + ' <b class="help">' + options.description + '</b></label>';
+                newOption.innerHTML = '<label for="' + this.options.module + '-option-' + blueprintOptions.option + '">' + blueprintOptions.name + ' <b class="help">' + blueprintOptions.description + '</b></label>';
 
                 core.attr( input, 'type', 'text' );
 				
 				// Artz: Should be able to use core.data instead. 
 				// core.data( input, "option", options.option );
-                core.attr( input, 'data-option', options.option );
+                core.attr( input, 'data-option', blueprintOptions.option );
 				input.className = "input-text";
                 
-                core.attr( input, 'value', defaultValue );
+                core.attr( input, 'value', blueprintOptions.value );
 
                 newOption.appendChild( input );
 
-                this.element.appendChild( newOption );
+                self.element.appendChild( newOption );
+				
+				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(); } );
 
                 return input;
             }
