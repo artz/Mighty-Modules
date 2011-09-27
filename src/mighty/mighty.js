@@ -1759,7 +1759,7 @@ Mighty.require("mighty.core", function( core ){
 
 		// Inject mighty module CSS reset.
 		// Temporary fix for hiding mighty anchors.
-		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: arial; font-size: 15px; line-height: inherit; text-align: left; background-color: transparent; color: #333; } a[name=mighty] { display: none; } .mighty-module { line-height: 24px; }");
+		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; text-align: left; background-color: transparent; } a[name=mighty] { display: none; } .mighty-module { font-family: arial; font-size: 15px; line-height: 24px; color: #333; }");
 		
 		Mighty.init = function(){
 

@@ -1,7 +1,7 @@
 Mighty.define(["mighty.core"], function( core ){
 	
 	// This should run only once, even if multiple maker modules are on the page. (let's verify!).
-	core.inlineCSS(".mighty-maker { background-color: #efefef; padding: 0 12px 12px; } .mighty-maker input { background-color: #fff; } .mighty-maker .help { display: none; } .mighty-maker .input-text, .mighty-maker .input-number { border: 1px solid #d7d7d7; line-height: 15px; padding: 3px 3px 4px; } .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; } .mighty-maker .input-number { width: 60px; } .mighty-maker .input-text { width: 120px; } .mighty-maker .maker-snippet { border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida sans'; font-size: 11px; line-height: 18px; } ");
+	core.inlineCSS(".mighty-maker { background-color: #efefef; padding: 12px; } .mighty-maker .maker-title { font-size: 23px; font-weight: bold; } .mighty-maker .maker-description { margin-top: 12px; font-size: 13px; } .mighty-maker input { background-color: #fff; } .mighty-maker .help { display: none; } .mighty-maker .input-text, .mighty-maker .input-number { border: 1px solid #d7d7d7; line-height: 15px; padding: 3px 3px 4px; } .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; } .mighty-maker .input-number { width: 60px; } .mighty-maker .input-text { width: 120px; } .mighty-maker .maker-snippet { border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida sans'; font-size: 11px; line-height: 18px; } ");
 				
 	function htmlEntities(str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -19,6 +19,8 @@ Mighty.define(["mighty.core"], function( core ){
 		},
         */
 		options: {
+			title: true,
+			description: true,
 			preview: true
 		},
 	
@@ -110,7 +112,15 @@ Mighty.define(["mighty.core"], function( core ){
 
 			// Artz: Why do we set this only to reset it later?
 //           element.innerHTML = '<b>make:</b> ' + options.make;
-
+			
+			if ( options.title ) {
+				element.appendChild( core.createHTML('<h2 class="maker-title">' + make.title + '</h2>') );
+			}
+			
+			if ( options.description ) {
+				element.appendChild( core.createHTML('<div class="maker-description">' + make.description + '</div>') );
+			}
+			
             // Build UI for options
             if ( core.isArray( makeOptions ) ) {
                 var i,
