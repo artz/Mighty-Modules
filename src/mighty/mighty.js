@@ -1539,7 +1539,7 @@
 */
 
 /*
-    Proxy scope-setting function
+    Returns a new function with "this" (ie, the scope) set to a specified argument 
 
     Parameters
 
