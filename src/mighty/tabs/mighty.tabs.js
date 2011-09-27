@@ -78,7 +78,7 @@ Mighty.define(["mighty.core"], function( core ){
 		},
 		
 		select: function( index ) {
-			
+
 			var self = this,
 				options = self.options,
 				ui = self.ui,
@@ -92,10 +92,25 @@ Mighty.define(["mighty.core"], function( core ){
 				selectedTab = uiTabs[selected],
 				selectedPanel = uiPanels[selected],
 				
-				newTab = uiTabs[index],
-				newPanel = uiPanels[index],
+				newTab,
+				newPanel,
 				
-				strSelected = "selected";
+				strSelected = "selected",
+				
+				minIndex = 0;
+				maxIndex = uiTabs.length - 1;
+				
+
+			// If the index is too high, set it to the max.
+			if ( index > maxIndex ) {
+				index = maxIndex;
+			// If the index is too low, set it to the min.
+			} else if ( index < minIndex ) {
+				index = minIndex;
+			}
+					
+			newTab = uiTabs[index];
+			newPanel = uiPanels[index];
 			
 			// jQuery UI reverses this, and hides panels 
 			// by default.  Selecting removes the hide class.

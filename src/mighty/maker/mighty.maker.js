@@ -6,6 +6,8 @@ Mighty.define(["mighty.core"], function( core ){
 	function htmlEntities(str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
+	
+	var snippetCache;
 
 	return {
 		
@@ -73,6 +75,19 @@ Mighty.define(["mighty.core"], function( core ){
 			
 			return entities ? htmlEntities( snippet ) : snippet;
 		},
+		
+		_preview: function() {
+			
+			var self = this,
+				snippet = self._getCode();
+			
+			if ( snippet !== snippetCache ) {
+				snippetCache = snippet;
+				self.ui.preview.innerHTML = self._getCode();
+				Mighty.init();
+			}
+			
+		},
 	
 		_build: function( blueprint ) {
             var self = this,
@@ -114,26 +129,26 @@ Mighty.define(["mighty.core"], function( core ){
                         self.inputs[blueprintOptions[i].option] = this.make[type].call( this, blueprintOptions[i] );
                     }
                 }
-				
+
                 ui.code = core.createHTML( '<div class="maker-code"><label>Get the Code</label></div>' );
 				ui.snippet = core.createHTML( '<div class="maker-snippet"></div>"' );
-				
+
 				ui.code.appendChild( ui.snippet );
                 element.appendChild( ui.code );
-				
+
 				ui.snippet.innerHTML = self._getCode( true, true );
-				
-				
+
             }
 			
 			if ( options.preview ) {
-				ui.preview = core.createHTML( '<div class="maker-preview"><label>Preview</label></div>' );
-				ui.preview.appendChild( core.createHTML( self._getCode() ) );
-				element.appendChild( ui.preview );
-				Mighty.init();
+				var previewSection = core.createHTML( '<div class="maker-preview"><label>Preview</label></div>' );
+				ui.preview = core.createHTML( '<div class="maker-widget"></div>' );
+				previewSection.appendChild( ui.preview );
+				element.appendChild( previewSection );
+				self._preview();
 			}
 
-            element.appendChild( widget );
+        //    element.appendChild( widget );
 
 	//		this._bindEvents();
 		},
@@ -161,7 +176,7 @@ Mighty.define(["mighty.core"], function( core ){
 
                 self.element.appendChild( newOption );
 				
-				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(); });
+				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(true, true); self._preview(); });
 
                 return input;
             },
@@ -188,7 +203,7 @@ Mighty.define(["mighty.core"], function( core ){
 
                 self.element.appendChild( newOption );
 				
-				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(); } );
+				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(true, true); self._preview(); } );
 
                 return input;
             }

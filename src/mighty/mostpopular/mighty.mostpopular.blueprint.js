@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-Mighty.define({
-	
-});
-=======
 Mighty.define(function(){ 
 	return [
 	{
@@ -35,4 +30,3 @@ Mighty.define(function(){
 		maxlength: null 
 	}
 ]});
->>>>>>> c71e6302fe9b28aaadcf03e5782f42f05645d840

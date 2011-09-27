@@ -12,7 +12,7 @@ Mighty.define({
 		type: "integer",
 		value: 0,
 		minimum: 0,
-		maximum: null
+		maximum: 2
 	},
 	{
 		option: "width",

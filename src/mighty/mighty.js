@@ -1773,7 +1773,7 @@ Mighty.require("mighty.core", function( core ){
 						
 						// Remember we initialized this widget already.
 						mightyAnchor.widget = 1;
-	
+	console.log( mightyAnchor );
 						var className = mightyAnchor.className,
 							widgetName = className.replace(/-/g, "."),
 							mightyAnchorParent = mightyAnchor.parentNode,
@@ -1851,7 +1851,7 @@ Mighty.require("mighty.core", function( core ){
 						// Add our mighty-loading class, indicating the module
 						// is in the process of being initialized.
 						core.addClass( mightyModule, strMighty + strLoading );
-						
+
 						// Bring in the modules we need.
 						core.require({ basePath: "../src/", filename: function(str){ return str.toLowerCase().replace(/\./, "/") + "/" + str.toLowerCase(); }, suffix: ".js" }, widgetName, function(){						
 
