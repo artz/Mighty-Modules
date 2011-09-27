@@ -4,6 +4,7 @@
 Mighty.define({
 	id: "mighty-source",
 	title: "Mighty Source",
+	description: "This module serves as a reference module for engineers developing Mighty Modules.",
 	href: "http://mightwidgets.com/mighty-source/",
 	options: [{
 		option: "selected",
