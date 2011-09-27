@@ -1773,7 +1773,7 @@ Mighty.require("mighty.core", function( core ){
 						
 						// Remember we initialized this widget already.
 						mightyAnchor.widget = 1;
-	console.log( mightyAnchor );
+
 						var className = mightyAnchor.className,
 							widgetName = className.replace(/-/g, "."),
 							mightyAnchorParent = mightyAnchor.parentNode,

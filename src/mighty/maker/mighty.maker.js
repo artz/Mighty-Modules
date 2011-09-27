@@ -1,7 +1,7 @@
 Mighty.define(["mighty.core"], function( core ){
 	
 	// This should run only once, even if multiple maker modules are on the page. (let's verify!).
-	core.inlineCSS(".mighty-maker { background-color: #efefef; padding: 12px; } .mighty-maker input { background-color: #fff; } .mighty-maker .maker-option { margin-bottom: 12px; } .mighty-maker .help { display: none; } .mighty-maker .input-text, .mighty-maker .input-number { border: 1px solid #d7d7d7; line-height: 15px; padding: 3px 3px 4px; } .mighty-maker label { display: block; font-weight: bold; } .mighty-maker .input-number { width: 50px; } .mighty-maker .input-text { width: 100px; } .mighty-maker .maker-snippet { border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida sans'; font-size: 11px; line-height: 18px; } ");
+	core.inlineCSS(".mighty-maker { background-color: #efefef; padding: 0 12px 12px; } .mighty-maker input { background-color: #fff; } .mighty-maker .help { display: none; } .mighty-maker .input-text, .mighty-maker .input-number { border: 1px solid #d7d7d7; line-height: 15px; padding: 3px 3px 4px; } .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; } .mighty-maker .input-number { width: 50px; } .mighty-maker .input-text { width: 100px; } .mighty-maker .maker-snippet { border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida sans'; font-size: 11px; line-height: 18px; } ");
 				
 	function htmlEntities(str) {
 		return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -158,7 +158,12 @@ Mighty.define(["mighty.core"], function( core ){
 
                 var newOption = document.createElement( 'div' ),
                     input = document.createElement( 'input' ),
-					self = this;
+					self = this,
+					
+					maxValue = blueprintOptions.maximum,
+					minValue = blueprintOptions.minimum,
+					
+					originalValue;
 				
 				newOption.className = "maker-option";
                 newOption.innerHTML = '<label for="' + this.options.module + '-option-' + blueprintOptions.option + '">' + blueprintOptions.name + ' <b class="help">' + blueprintOptions.description + '</b></label>';
@@ -168,14 +173,31 @@ Mighty.define(["mighty.core"], function( core ){
 				input.className = "input-number";
 
                 core.attr( input, 'value', blueprintOptions.value );
+				originalValue = blueprintOptions.value;
 				
-                blueprintOptions.minimum && core.attr( input, 'min', blueprintOptions.minimum );
-                blueprintOptions.maximum && core.attr( input, 'max', blueprintOptions.maximum );
+                // core.isNumber( blueprintOptions.minimum ) && 
+				core.attr( input, 'min', minValue );
+                // core.isNumber( blueprintOptions.maximum ) && 
+				core.attr( input, 'max', maxValue );
 
                 newOption.appendChild( input );
 
                 self.element.appendChild( newOption );
 				
+				// Rudimentary validation.			
+				core.bind( input, "focus", function(){
+					originalValue = parseInt( input.value, 10 );
+				});
+
+				core.bind( input, "blur", function(){
+					var newValue = parseInt( input.value, 10 );
+					if ( newValue >= minValue && newValue <= maxValue ) {
+						originalValue = newValue;
+					}
+					input.value = originalValue;
+				});
+				
+				// Update snippet.
 				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(true, true); self._preview(); });
 
                 return input;
@@ -203,8 +225,10 @@ Mighty.define(["mighty.core"], function( core ){
 
                 self.element.appendChild( newOption );
 				
+				core.bind( input, "blur", function(){ console.log( this.value + " : " + input.value );  } );
+				
 				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(true, true); self._preview(); } );
-
+				
                 return input;
             }
         },

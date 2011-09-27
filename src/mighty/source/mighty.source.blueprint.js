@@ -19,8 +19,8 @@ Mighty.define({
 		name: "Width",
 		description: "The width in pixels of the widget.",
 		type: "integer",
-		value: 300,
-		minimum: 200,
+		value: 400,
+		minimum: 300,
 		maximum: 800
 	}]
 });
