@@ -23,10 +23,12 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 			core.getCSS("../src/mighty/mostpopular/mighty.mostpopular.css");
 
 			core.attr( element, "style", "width: " + width + "px" );
+
 			
 			// Initialize tabs.
 			core.widget( "mighty.tabs", element, { selected: options.selected } );
 
 		}
+
 	};
 });

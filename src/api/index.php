@@ -45,8 +45,22 @@
         */
 
         $data = file_get_contents( $_GET['url'] );
+	
+	// Module API
+    } elseif ( $_GET['module'] ) {
+		
+		$options = $_GET;
+		
+		unset( $options['module'] );
+		unset( $options['callback'] );
+		
+		ob_start();
+		require( './' . $_GET['module'] . '/index.php' );
+		$data = ob_get_clean();
 
-    } else {
+		$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
+		
+	} else {
 
         // Return an empty object
         $data = '{ "error" : "No file or url specified." }';

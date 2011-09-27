@@ -1237,7 +1237,6 @@
 	}
 //	global.removeClass = removeClass;
 
-
 /*
 	Function: Boot.getStyle
 
@@ -1540,6 +1539,21 @@
 */
 
 /*
+    Proxy scope-setting function
+
+    Parameters
+
+        scope - Sets "this" in the function to the object passed as scope
+        fn - The function to set scope for
+        args - an optional array of arguments
+*/
+	function proxy( scope, fn, args ) {
+        return (function() {
+            ( args ) ? fn.apply( scope, args ) : fn.call( scope );
+        });
+	}
+
+/*
 	Function: Boot.trim
 	
 	Trims whitespace before and after a string.
@@ -1558,6 +1572,22 @@
 //	global.trim = trim;
 
 
+	function toQueryString( obj, param ) {
+		var str = [],
+			name,
+			encode = encodeURIComponent;
+
+		param = param || "&";
+
+		for ( name in obj ) {
+			if ( obj.hasOwnProperty( name ) ) {
+				str.push( encode( name ) + "=" + encode( obj[ name ] ) );
+			}
+		}
+		return str.length ? param + str.join("&") : "";
+	}
+//	global.toQueryString = toQueryString;
+	
 /* 
 	Function: Boot.parseJSON
 	
@@ -1695,10 +1725,12 @@
 		defer: defer,
 	
 		trim: trim,
+		toQueryString: toQueryString,
 
 		parseJSON: parseJSON,
-		getJSONP: getJSONP
+		getJSONP: getJSONP,
 		
+        proxy: proxy
 	});
 	
 }("Mighty", this));
@@ -1727,7 +1759,7 @@ Mighty.require("mighty.core", function( core ){
 
 		// Inject mighty module CSS reset.
 		// Temporary fix for hiding mighty anchors.
-		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: arial; font-size: 15px; line-height: 24px; text-align: left; } a[name=mighty] { display: none; }");
+		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: arial; font-size: 15px; line-height: inherit; text-align: left; background-color: transparent; color: #333; } a[name=mighty] { display: none; } .mighty-module { line-height: 24px; }");
 		
 		Mighty.init = function(){
 
@@ -1782,24 +1814,28 @@ Mighty.require("mighty.core", function( core ){
 							
 							// Ajax in the module's content.
 							// Make this configurable, or a function of the module eventually.
-							core.getJSONP("../src/api/?file=" + className + "/index.php", function( data ){
-
-								mightyModule = core.createHTML( data );
-															
-								// This is indeed a mighty module!
-								core.addClass( mightyModule, "mighty-module" );
+							core.getJSONP("../src/api/?module=" + className + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
 								
-								// Add our mighty-loading class, indicating the module
-								// is in the process of being initialized.
-								core.addClass( mightyModule, strMighty + strLoading );
-
-								mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
-//								mightyModule.appendChild( mightyAnchor ); // This needs to be tested in IE.
-								
-								isHTMLReady = 1;
-								
-								// Publish an event on our anchor indicating we're done.
-								core.publish( mightyAnchor, widgetName + strReady );
+								if ( ! data.error ) {
+									
+									mightyModule = core.createHTML( data );
+																
+									// This is indeed a mighty module!
+									core.addClass( mightyModule, "mighty-module" );
+									
+									// Add our mighty-loading class, indicating the module
+									// is in the process of being initialized.
+									core.addClass( mightyModule, strMighty + strLoading );
+	
+									mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
+	//								mightyModule.appendChild( mightyAnchor ); // This needs to be tested in IE.
+									
+									isHTMLReady = 1;
+									
+									// Publish an event on our anchor indicating we're done.
+									core.publish( mightyAnchor, widgetName + strReady );
+									
+								}
 							});
 						}
 						
