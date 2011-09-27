@@ -72,7 +72,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	  d.getElementsByTagName('head')[0].appendChild(js);
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
--->
+
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
@@ -84,15 +84,13 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Breaking News Widget (Embed)</h2>
 <a name="mighty" class="mighty-breakingnews" data-count="5" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
-
-<h2>Most Popular Widget (API)</h2>
 -->
+<h2>Most Popular Widget (API)</h2>
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
 	getWidget("mighty.mostpopular", array("width" => 300));
 ?>
-
 </div>
 </body>
 </html>

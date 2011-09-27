@@ -19,7 +19,7 @@ if ( isset( $options ) ) {
 	}
 }
 
-$numItems = ($_GET['count']) ? $_GET['count'] : $count; 
+$numItems = (isset($_GET['count'])) ? $_GET['count'] : $count; 
 
 /*
  * The following curl method should be used on production. 
@@ -35,7 +35,6 @@ $content = curl_exec($c);
 curl_close($c);
 
 */
-
 
 $content = file_get_contents($_SERVER["DOCUMENT_ROOT"].'/api/hpapi.json'); // This is not for production
 
