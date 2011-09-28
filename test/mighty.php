@@ -36,12 +36,12 @@ adSetAdURL('/_uac/adpage.html');
 Mighty.log.init({ elem: document.getElementById("log") });
 </script>
 
-<!--	<h2>Source Widget (API)</h2>
+	<h2>Source Widget (API)</h2>
 	<!-- An API call to our Widget Factory, critical for SEO. -->
-<!--<?php
+<?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.source", array("width" => 500));
-?>-->
+	MM_Widget::render("mighty.source", array("width" => 500));
+?>
 
 <!--	<h2>Source Widget (Embed)</h2>
 	<!-- Our standard embed code. -->
@@ -76,7 +76,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.breakingnews", array("count" => 3, "ads" => 1 ));
+//	getWidget("mighty.breakingnews", array("count" => 3, "ads" => 1 ));
 ?>
 
 <!--
@@ -89,7 +89,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.mostpopular", array("width" => 300));
+//	getWidget("mighty.mostpopular", array("width" => 300));
 ?>
 </div>
 </body>
