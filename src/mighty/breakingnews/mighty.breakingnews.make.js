@@ -20,7 +20,7 @@ Mighty.define({
 		name: "Ad Display (1 = Yes / 2 = No)",
 		description: "Display ads flag",
 		type: "integer",
-		value: 2,
+		value: 1,
 		minimum: 1,
 		maximum: 2
 	}]
