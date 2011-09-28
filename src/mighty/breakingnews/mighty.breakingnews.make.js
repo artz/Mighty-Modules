@@ -2,7 +2,7 @@
 	Mighty Breaking News Blueprint
 */
 Mighty.define({
-	id: "mighty-breakingnews",
+	id: "mighty.breakingnews",
 	name: "Mighty Breaking News",
 	description: "This module allows you to customize the Breaking News Widget",
 	href: "http://mightymodules.com/mighty-breakingnews/",
