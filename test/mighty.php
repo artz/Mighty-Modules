@@ -81,7 +81,8 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.mostpopular", array("width" => 300));
+	//getWidget("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
+	getWidget("mighty.mostpopular", array("verticals" => "AOL TV, Sports, Home", "width" => 300));
 ?>
 
 </div>
