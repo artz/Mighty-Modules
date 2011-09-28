@@ -15,9 +15,11 @@
 }
 
 .mighty-breakingnews .articles ul.article-list li {
+	line-height: 1;
 	list-style-type: none;
 	border-bottom: 1px dashed #000;
 	margin-bottom: 10px;
+	padding-bottom: 5px;
 }
 
 .mighty-breakingnews .articles ul.article-list li h2{
@@ -36,7 +38,7 @@
 	color: #4A4A4A;
 	display: block;
 	font-size: 11px;
-	margin-top: -5px;
+	margin-top: 5px;
 }
 span.comments b {
 	font-size: 11px;

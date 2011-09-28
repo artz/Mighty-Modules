@@ -6,7 +6,7 @@ Mighty.define(["mighty.core"], function( core ){
 		options: {
 			foo: 'bar',
 			count: 6, // Setting this to 6 for now. This option will help when we build the customize widget feature.
-			ads: 2								
+			ads: 2	// 1 = Show Ads, 2 = No Ads..							
 		},
 
 		// Set up the widget
@@ -63,8 +63,10 @@ Mighty.define(["mighty.core"], function( core ){
 												mightyModule = core.createHTML( data );
 												element.innerHTML = mightyModule.innerHTML;	
 												self._buildfooter();
-												self._adInclude();
-												adsReloadAd( AdId );
+												if ( options.ads == 1 ) {
+													self._adInclude();
+													adsReloadAd( AdId );
+												}
 																							
 				});
 				event.preventDefault();					

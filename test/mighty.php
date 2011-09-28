@@ -72,11 +72,15 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	  d.getElementsByTagName('head')[0].appendChild(js);
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
-
+-->
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
+<<<<<<< HEAD
 //	getWidget("mighty.breakingnews", array("count" => 3, "ads" => 1 ));
+=======
+	getWidget("mighty.breakingnews", array("count" => 3, "ads" => 2 ));
+>>>>>>> a82245e1be219a3a02259e396fcfd6bcef3b8dfe
 ?>
 
 <!--
