@@ -23,7 +23,7 @@ $numItems = (isset($_GET['count'])) ? $_GET['count'] : $count;
 
 /*
  * The following curl method should be used on production. 
- *
+ */
  
 $c = curl_init();
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -34,9 +34,8 @@ curl_setopt($c, CURLOPT_URL, 'http://www.huffingtonpost.com/api/?t=featured_news
 $content = curl_exec($c);
 curl_close($c);
 
-*/
 
-$content = file_get_contents($_SERVER["DOCUMENT_ROOT"].'/api/hpapi.json'); // This is not for production
+//$content = file_get_contents($_SERVER["DOCUMENT_ROOT"].'/api/hpapi.json'); // This is not for production
 
 $json = json_decode($content);
 
@@ -55,6 +54,9 @@ foreach($json->response as $key=>$value){
 	$comment = $value->entry_comment_count;
 	
 	if($key == "0"){
+		if ( empty($img) ){
+			$img = "http://i.huffpost.com/gen/360023/thumbs/r-MONEY-medium260.jpg"; // Placeholder image, if first result does not have an image;
+		}
 		?>
 		<li><a href="<?php echo $url;?>">
 				<img class="thumb" src="<?php echo $img; ?>" alt="" />
