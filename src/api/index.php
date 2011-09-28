@@ -49,13 +49,18 @@
 	// Module API
     } elseif ( $_GET['module'] ) {
 		
+		$name = $_GET['module'];
+		$id = str_replace( '.', '-', $name );
 		$options = $_GET;
 		
 		unset( $options['module'] );
 		unset( $options['callback'] );
-		
+
 		ob_start();
-		require( './' . $_GET['module'] . '/index.php' );
+	//	require_once('widget-api.php');	
+	//	MM_Widget::render( $_GET['module'], $options );
+		$path = '../' . str_replace( '.', '/', $name ) . '/';
+		require( $path . $name . '.php');
 		$data = ob_get_clean();
 
 		$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';

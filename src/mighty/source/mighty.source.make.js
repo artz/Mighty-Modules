@@ -3,8 +3,9 @@
 */
 Mighty.define({
 	id: "mighty-source",
-	title: "Mighty Source",
-	href: "http://mightwidgets.com/mighty-source/",
+	name: "Mighty Source",
+	description: "This module serves as a reference module for engineers developing Mighty Modules.",
+	href: "http://mightymodules.com/mighty-source/",
 	options: [{
 		option: "selected",
 		name: "Selected Tab",
@@ -19,8 +20,8 @@ Mighty.define({
 		name: "Width",
 		description: "The width in pixels of the widget.",
 		type: "integer",
-		value: 300,
-		minimum: 200,
+		value: 400,
+		minimum: 300,
 		maximum: 800
 	}]
 });

@@ -16,7 +16,15 @@
 <!-- Eventually we will incorporate Boot into mighty.js -->
 <!--<script src="../../Boot/src/boot.js"></script>-->
 <!--<script src="https://raw.github.com/artzstudio/Boot/master/src/boot.js"></script>-->
-
+<!-- Advertisement Setup start -->
+<script type="text/javascript" src="http://o.aolcdn.com/ads/adsWrapper.js"></script>
+<script type="text/javascript">
+<!-- 
+adSetTarget('_blank');
+adSetAdURL('/_uac/adpage.html'); 
+//-->
+</script>
+<!-- Advertisement Setup end -->
 </head>
 
 <body>
@@ -28,19 +36,18 @@
 Mighty.log.init({ elem: document.getElementById("log") });
 </script>
 
-<!--	<h2>Source Widget (API)</h2>
+	<h2>Source Widget (API)</h2>
 	<!-- An API call to our Widget Factory, critical for SEO. -->
-<!--<?php
+<?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.source", array("width" => 500));
-?>-->
+	MM_Widget::render("mighty.source", array("width" => 500));
+?>
 
-<!--	<h2>Source Widget (Embed)</h2>
+	<h2>Source Widget (Embed)</h2>
 	<!-- Our standard embed code. -->
-<!--<a name="mighty" class="mighty-source" data-selected="1" data-numItems="6" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
+<a name="mighty" class="mighty-source" data-selected="1" data-numItems="6" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
 	<script async defer src="../src/mighty/mighty.js"></script>
--->
-	<h2>Maker Module</h2>
+
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="source" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
 	<script async defer src="../src/mighty/mighty.js"></script>
 
@@ -65,24 +72,26 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 -->
-<!--
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
-	getWidget("mighty.breakingnews", array("count" => 8));
+	MM_Widget::render("mighty.breakingnews", array("count" => 3, "ads" => 1 ));
 ?>
 
 <h2>Breaking News Widget (Embed)</h2>
-<a name="mighty" class="mighty-breakingnews" data-count="5" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
+<a name="mighty" class="mighty-breakingnews" data-count="5" data-ads="1" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
 
 <h2>Most Popular Widget (API)</h2>
--->
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
+<<<<<<< HEAD
 	//getWidget("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
 	getWidget("mighty.mostpopular", array("verticals" => "AOL TV, Sports, Home", "width" => 300));
+=======
+	MM_Widget::render("mighty.mostpopular", array("width" => 300));
+>>>>>>> 6f1107d9e4dc157ed6f64bc881e06b20475233e5
 ?>
 
 </div>

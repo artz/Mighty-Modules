@@ -1759,7 +1759,7 @@ Mighty.require("mighty.core", function( core ){
 
 		// Inject mighty module CSS reset.
 		// Temporary fix for hiding mighty anchors.
-		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: arial; font-size: 15px; line-height: inherit; text-align: left; background-color: transparent; color: #333; } a[name=mighty] { display: none; } .mighty-module { line-height: 24px; }");
+		core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; text-align: left; background-color: transparent; } a[name=mighty] { display: none; } .mighty-module { font-family: arial; font-size: 15px; line-height: 24px; color: #333; }");
 		
 		Mighty.init = function(){
 
@@ -1773,7 +1773,7 @@ Mighty.require("mighty.core", function( core ){
 						
 						// Remember we initialized this widget already.
 						mightyAnchor.widget = 1;
-	console.log( mightyAnchor );
+
 						var className = mightyAnchor.className,
 							widgetName = className.replace(/-/g, "."),
 							mightyAnchorParent = mightyAnchor.parentNode,
@@ -1784,16 +1784,19 @@ Mighty.require("mighty.core", function( core ){
 							strReady = "-ready",
 
 							// Do our fancy DOM option extraction here.
-							options = core.extend( options || {}, core.data( mightyAnchor ) );
+							options = core.extend( options || {}, core.data( mightyAnchor ) ),
+							reg = new RegExp("(\\s|^)" + className + "(\\s|$)", "g");
 
 						// If the element's parent has the same class name
 						// as the Mighty Anchor, we already have the HTML and
 						// do not need to swap in the <div>.
-						if ( className === mightyAnchorParent.className  ) {
-							
+						
+					//	if ( className === mightyAnchorParent.className  ) {
+						if ( reg.test( mightyAnchorParent.className ) ) {
 							// Set the elem to the parent.
 							mightyModule = mightyAnchorParent;
-							
+							console.log( mightyAnchorParent.className );
+							console.log ( mightyModule );
 							isHTMLReady = 1;
 
 						// Create a new <div> with the same class name
@@ -1814,7 +1817,7 @@ Mighty.require("mighty.core", function( core ){
 							
 							// Ajax in the module's content.
 							// Make this configurable, or a function of the module eventually.
-							core.getJSONP("../src/api/?module=" + className + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
+							core.getJSONP("../src/api/?module=" + widgetName + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
 								
 								if ( ! data.error ) {
 									

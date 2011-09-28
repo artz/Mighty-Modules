@@ -16,6 +16,7 @@
 		}
 	}
 
+<<<<<<< HEAD:src/api/mighty-mostpopular/index.php
     // print_r( $options );
 
     if ( isset( $options["verticals"] ) ) {
@@ -33,6 +34,9 @@
 
     $data = file_get_contents( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' );
     // $data = file_get_contents( '../src/api/mighty-mostpopular/mostpopular.json' );
+=======
+    $data = file_get_contents( '../src/mighty/mostpopular/mighty.mostpopular.json' );
+>>>>>>> 6f1107d9e4dc157ed6f64bc881e06b20475233e5:src/mighty/mostpopular/mighty.mostpopular.php
     $data = json_decode( $data );
     $data = $data->response;
 
