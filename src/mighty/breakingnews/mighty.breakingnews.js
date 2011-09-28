@@ -1,5 +1,7 @@
 Mighty.define(["mighty.core"], function( core ){
 	
+	var adDivCounter = 0;
+	
 	return {			
 		
 		// These options will be used as defaults
@@ -18,7 +20,7 @@ Mighty.define(["mighty.core"], function( core ){
 				
 				adDivId = 0;
 				adDivName = "mighty-breakingnews-ad";
-				AdId = adDivName + (adDivId+1);
+				AdId = adDivName + ( adDivCounter++ );
 							
 			self._buildfooter();
 				

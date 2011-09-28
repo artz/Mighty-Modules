@@ -75,15 +75,12 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
-	MM_Widget::render("mighty.breakingnews", array("count" => 3, "ads" => 2 ));
+	MM_Widget::render("mighty.breakingnews", array("count" => 3, "ads" => 1 ));
 ?>
 
-<!--
-
 <h2>Breaking News Widget (Embed)</h2>
-<a name="mighty" class="mighty-breakingnews" data-count="5" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
+<a name="mighty" class="mighty-breakingnews" data-count="5" data-ads="1" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
--->
 
 <h2>Most Popular Widget (API)</h2>
 <!-- An API call to our Widget Factory, critical for SEO. -->
