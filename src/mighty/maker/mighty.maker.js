@@ -204,16 +204,17 @@ Mighty.define(["mighty.core"], function( core ){
 					originalValue = parseInt( input.value, 10 );
 				});
 
+				// Update snippet.
 				core.bind( input, "blur", function(){
 					var newValue = parseInt( input.value, 10 );
 					if ( newValue >= minValue && newValue <= maxValue ) {
 						originalValue = newValue;
 					}
 					input.value = originalValue;
+					self.ui.snippet.innerHTML = self._getCode(true, true); 
+					self._preview();
 				});
 				
-				// Update snippet.
-				core.bind( input, "blur", function(){ self.ui.snippet.innerHTML = self._getCode(true, true); self._preview(); });
 
                 return input;
             },
