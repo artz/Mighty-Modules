@@ -1,4 +1,4 @@
-.mighty-breakingnews {
+div.mighty-breakingnews {
 	background-color: #F6F6F6;
 	border: 1px solid #ccc;
 	display: block;
@@ -6,7 +6,7 @@
 	padding: 5px;
 	width: 300px;	
 }
-.mighty-breakingnews h2.header {
+div.mighty-breakingnews h2.header {
 	background: url("../../../images/mostpopular/huffpost.png") no-repeat scroll 0 50% transparent;
 	font-size: 18px;	
 	color: #4A4A4A;
@@ -14,7 +14,7 @@
 	padding-left: 160px;		
 }
 
-.mighty-breakingnews .articles ul.article-list li {
+div.mighty-breakingnews .articles ul.article-list li {
 	line-height: 1;
 	list-style-type: none;
 	border-bottom: 1px dashed #000;
@@ -22,19 +22,19 @@
 	padding-bottom: 5px;
 }
 
-.mighty-breakingnews .articles ul.article-list li h2{
+div.mighty-breakingnews .articles ul.article-list li h2{
 	color: #4A4A4A;
 	font-size: 30px;
 	padding-bottom: 5px;
 }
 
-.mighty-breakingnews .articles ul.article-list li a {
+div.mighty-breakingnews .articles ul.article-list li a {
 	color: #4A4A4A;
 	font-size: 12px;
 	text-decoration: none;
 }
 
-.mighty-breakingnews .articles ul.article-list li span.comments{
+div.mighty-breakingnews .articles ul.article-list li span.comments{
 	color: #4A4A4A;
 	display: block;
 	font-size: 11px;
@@ -44,14 +44,14 @@ span.comments b {
 	font-size: 11px;
 }
 
-.mighty-breakingnews img.thumb {
+div.mighty-breakingnews img.thumb {
 	width: 300px;
 	height: 75px;
 }
-.mighty-breakingnews-footer {
+div.mighty-breakingnews-footer {
 	overflow: hidden;
 }
-.mighty-breakingnews-footer .more-news {
+div.mighty-breakingnews-footer .more-news {
 	color: #4A4A4A;
 	float: left;
 	font-size: 15px;
@@ -60,7 +60,7 @@ span.comments b {
 	text-transform: uppercase;
 }
 
-.mighty-breakingnews-footer .refresh-news {
+div.mighty-breakingnews-footer .refresh-news {
 	background: url("/../images/refresh.png") no-repeat scroll left center transparent;
     cursor: pointer;
     float: right;
