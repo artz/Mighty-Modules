@@ -2,7 +2,7 @@
 	Mighty Source Blueprint
 */
 Mighty.define({
-	id: "mighty-source",
+	id: "mighty.source",
 	name: "Mighty Source",
 	description: "This module serves as a reference module for engineers developing Mighty Modules.",
 	href: "http://mightymodules.com/mighty-source/",

@@ -89,12 +89,9 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
-<<<<<<< HEAD
 	//getWidget("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
-	getWidget("mighty.mostpopular", array("verticals" => "AOL TV, Sports, Home", "width" => 300));
-=======
-	MM_Widget::render("mighty.mostpopular", array("width" => 300));
->>>>>>> 6f1107d9e4dc157ed6f64bc881e06b20475233e5
+	//getWidget("mighty.mostpopular", array("verticals" => "AOL TV, Sports, Home", "width" => 300));
+	MM_Widget::render("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
 ?>
 
 </div>
