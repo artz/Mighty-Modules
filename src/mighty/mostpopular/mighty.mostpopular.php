@@ -15,8 +15,8 @@
 			$dataOptions .= ' data-' . $key . '="' . $value . '"';
 		}
 	}
-        
-    $data = file_get_contents( '../src/api/mighty-mostpopular/mostpopular.json' );
+
+    $data = file_get_contents( '../src/mighty/mostpopular/mighty.mostpopular.json' );
     $data = json_decode( $data );
     $data = $data->response;
     echo "<pre><code>";

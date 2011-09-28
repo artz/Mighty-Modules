@@ -46,38 +46,38 @@ $json = json_decode($content);
 	<div class="articles">
 		<ul class="article-list">
 <?php
-foreach($json->response as $key=>$value){
-	$url = $value->entry_url;
-	$img = $value->entry_image_large;
-	$short_title = $value->entry_headline;
-	$long_title = $value->entry_title;
-	$comment = $value->entry_comment_count;
-	
-	if($key == "0"){
-		if ( empty($img) ){
-			$img = "http://i.huffpost.com/gen/360023/thumbs/r-MONEY-medium260.jpg"; // Placeholder image, if first result does not have an image;
-		}
-		?>
-		<li><a href="<?php echo $url;?>">
-				<img class="thumb" src="<?php echo $img; ?>" alt="" />
-				<h2><?php echo $short_title; ?></h2>
-				<?php echo $long_title; ?>
-				<span class="comments"><b>Comments</b>(<?php echo $comment; ?>)</span>
-			</a>
-		</li>	
-		<?php
-		}if($key < $numItems && $key != 0 ) { ?>
-		<li><a href="<?php echo $url;?>">
-				<?php echo $long_title; ?>
-			</a>
-		</li>
+	foreach($json->response as $key=>$value){
+		$url = $value->entry_url;
+		$img = $value->entry_image_large;
+		$short_title = ''; //$value->entry_headline;
+		$long_title = $value->entry_title;
+		$comment = $value->entry_comment_count;
 		
-		<?php	
-		
-		}
-}
+		if ($key == "0"){
+			if ( empty($img) ){
+				$img = "http://i.huffpost.com/gen/360023/thumbs/r-MONEY-medium260.jpg"; // Placeholder image, if first result does not have an image;
+			}
+			?>
+			<li><a href="<?php echo $url;?>">
+					<img class="thumb" src="<?php echo $img; ?>" alt="" />
+					<h2><?php echo $short_title; ?></h2>
+					<?php echo $long_title; ?>
+					<span class="comments"><b>Comments</b>(<?php echo $comment; ?>)</span>
+				</a>
+			</li>	
+			<?php
+			}if($key < $numItems && $key != 0 ) { ?>
+			<li><a href="<?php echo $url;?>">
+					<?php echo $long_title; ?>
+				</a>
+			</li>
+			
+			<?php	
+			
+			}
+	}
 ?>
-</ul>
+		</ul>
 </div>
 <a name="mighty" class="mighty-breakingnews"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Breaking News Module</b></a>
 </div>

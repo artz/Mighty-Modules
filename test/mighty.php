@@ -43,12 +43,11 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	MM_Widget::render("mighty.source", array("width" => 500));
 ?>
 
-<!--	<h2>Source Widget (Embed)</h2>
+	<h2>Source Widget (Embed)</h2>
 	<!-- Our standard embed code. -->
-<!--<a name="mighty" class="mighty-source" data-selected="1" data-numItems="6" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
+<a name="mighty" class="mighty-source" data-selected="1" data-numItems="6" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
 	<script async defer src="../src/mighty/mighty.js"></script>
--->
-	<h2>Maker Module</h2>
+
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="source" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
 	<script async defer src="../src/mighty/mighty.js"></script>
 
@@ -85,12 +84,14 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <a name="mighty" class="mighty-breakingnews" data-count="5" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
 -->
+
 <h2>Most Popular Widget (API)</h2>
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
 	require_once("../src/api/widget-api.php");
-//	getWidget("mighty.mostpopular", array("width" => 300));
+	MM_Widget::render("mighty.mostpopular", array("width" => 300));
 ?>
+
 </div>
 </body>
 </html>

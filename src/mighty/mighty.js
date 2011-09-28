@@ -1784,16 +1784,19 @@ Mighty.require("mighty.core", function( core ){
 							strReady = "-ready",
 
 							// Do our fancy DOM option extraction here.
-							options = core.extend( options || {}, core.data( mightyAnchor ) );
+							options = core.extend( options || {}, core.data( mightyAnchor ) ),
+							reg = new RegExp("(\\s|^)" + className + "(\\s|$)", "g");
 
 						// If the element's parent has the same class name
 						// as the Mighty Anchor, we already have the HTML and
 						// do not need to swap in the <div>.
-						if ( className === mightyAnchorParent.className  ) {
-							
+						
+					//	if ( className === mightyAnchorParent.className  ) {
+						if ( reg.test( mightyAnchorParent.className ) ) {
 							// Set the elem to the parent.
 							mightyModule = mightyAnchorParent;
-							
+							console.log( mightyAnchorParent.className );
+							console.log ( mightyModule );
 							isHTMLReady = 1;
 
 						// Create a new <div> with the same class name
@@ -1814,7 +1817,7 @@ Mighty.require("mighty.core", function( core ){
 							
 							// Ajax in the module's content.
 							// Make this configurable, or a function of the module eventually.
-							core.getJSONP("../src/api/?module=" + className + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
+							core.getJSONP("../src/api/?module=" + widgetName + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
 								
 								if ( ! data.error ) {
 									
