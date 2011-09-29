@@ -24,11 +24,10 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 			core.getCSS("../src/mighty/mostpopular/mighty.mostpopular.css");
 
             //console.log( 'Self:', self, 'Element:', element );
-            console.dir( element );
-			// core.attr( element, "style", "width: " + width + "px" );
+			core.attr( element, "style", "width: " + width + "px" );
 
 			// Initialize tabs.
-			// core.widget( "mighty.tabs", element, { selected: options.selected } );
+			core.widget( "mighty.tabs", element, { selected: options.selected } );
 
 		}
 
