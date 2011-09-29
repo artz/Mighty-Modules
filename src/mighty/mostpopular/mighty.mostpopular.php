@@ -31,9 +31,11 @@
 
     array_walk($verticals, 'trim_value');
 
-//	$data = file_get_contents( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' );
-//	$data = file_get_contents( '../src/api/mighty-mostpopular/mostpopular.json' );
-	$data = file_get_contents( '../src/mighty/mostpopular/mighty.mostpopular.json' );
+    // Live Data
+    $data = file_get_contents( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' );
+
+    // Local Data
+	// $data = file_get_contents( '../src/mighty/mostpopular/mighty.mostpopular.json' );
 
     $data = json_decode( $data );
     $data = $data->response;
@@ -61,7 +63,8 @@
     */
 	
 ?>
-<div id="fb-root"></div>
+<!-- <div id="fb-root"></div> -->
+<? /*
 <script>(function(d, s, id) {
 var js, fjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) {return;}
@@ -69,6 +72,7 @@ js = d.createElement(s); js.id = id;
 js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
 fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+*/ ?>
 <div class="mighty-mostpopular">
 	<h2>Huffpost</h2>
     <h3>Most Popular</h3>

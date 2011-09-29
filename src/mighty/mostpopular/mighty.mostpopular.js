@@ -20,13 +20,15 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 				
 				width = options.width;
 
+
 			core.getCSS("../src/mighty/mostpopular/mighty.mostpopular.css");
 
-			core.attr( element, "style", "width: " + width + "px" );
+            //console.log( 'Self:', self, 'Element:', element );
+            console.dir( element );
+			// core.attr( element, "style", "width: " + width + "px" );
 
-			
 			// Initialize tabs.
-			core.widget( "mighty.tabs", element, { selected: options.selected } );
+			// core.widget( "mighty.tabs", element, { selected: options.selected } );
 
 		}
 

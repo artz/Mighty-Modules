@@ -50,8 +50,10 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <script async defer src="../src/mighty/mighty.js"></script>
 -->
 <h2>Mighty Maker (Source)</h2>
+    <!--
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="source" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
 	<script async defer src="../src/mighty/mighty.js"></script>
+    -->
 
 <!--
 	<h2>Source Widget #3</h2>
@@ -81,12 +83,14 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	MM_Widget::render("mighty.breakingnews", array("count" => 3, "ads" => 2 ));
 ?>
 -->
+<!--
 <h2>Breaking News Widget (Embed)</h2>
 <a name="mighty" class="mighty-breakingnews" data-count="5" data-ads="2" href="http://www.mightymodules.com/breaking-news/">Get the <b>Breaking News Module</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
 
 <div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="breakingnews" href="http://www.mightymodules.com/breakingnews/">Get the <b>Maker Widget</b></a></div>
 <script async defer src="../src/mighty/mighty.js"></script>
+-->
 
 <h2>Most Popular Widget (API)</h2>
 <!-- An API call to our Widget Factory, critical for SEO. -->
@@ -95,13 +99,12 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	require_once("../src/api/widget-api.php");
 	//getWidget("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
 	//getWidget("mighty.mostpopular", array("verticals" => "AOL TV, Sports, Home", "width" => 300));
-	MM_Widget::render("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
+	MM_Widget::render("mighty.mostpopular", array("width" => 300));
     */
 ?>
 
 <h2>Most Popular Widget (Embed)</h2>
-<!-- Our standard embed code. -->
-<a name="mighty" class="mighty-mostpopular" href="http://www.mightymodules.com/mostpopular/">Get this <b>Widget</b></a>
+<a name="mighty" data-width="300" class="mighty-mostpopular" href="http://www.mightymodules.com/mostpopular/">Get this <b>Widget</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
 
 </div>
