@@ -88,11 +88,18 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Most Popular Widget (API)</h2>
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
+    /*
 	require_once("../src/api/widget-api.php");
 	//getWidget("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
 	//getWidget("mighty.mostpopular", array("verticals" => "AOL TV, Sports, Home", "width" => 300));
 	MM_Widget::render("mighty.mostpopular", array("verticals" => "Politics,Business, Entertainment", "width" => 300));
+    */
 ?>
+
+<h2>Most Popular Widget (Embed)</h2>
+<!-- Our standard embed code. -->
+<a name="mighty" class="mighty-mostpopular" href="http://www.mightymodules.com/mostpopular/">Get this <b>Widget</b></a>
+<script async defer src="../src/mighty/mighty.js"></script>
 
 </div>
 </body>
