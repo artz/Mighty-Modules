@@ -43,11 +43,13 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	MM_Widget::render("mighty.source", array("width" => 500));
 ?>
 
-	<h2>Source Widget (Embed)</h2>
-	<!-- Our standard embed code. -->
-<!--<a name="mighty" class="mighty-source" data-selected="1" data-numItems="6" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
-	<script async defer src="../src/mighty/mighty.js"></script>
+<h2>Source Widget (Embed)</h2>
+<!-- Our standard embed code. -->
+<!--
+<a name="mighty" class="mighty-source" data-selected="1" data-numItems="6" href="http://www.mightymodules.com/source/">Get the <b>Source Widget</b></a>
+<script async defer src="../src/mighty/mighty.js"></script>
 -->
+<h2>Mighty Maker (Source)</h2>
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="source" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
 	<script async defer src="../src/mighty/mighty.js"></script>
 
@@ -72,7 +74,8 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	}(document));</script>
 	<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
 -->
-<!--<h2>Breaking News Widget (API)</h2>
+<!--
+<h2>Breaking News Widget (API)</h2>
 <?php
 	require_once("../src/api/widget-api.php");
 	MM_Widget::render("mighty.breakingnews", array("count" => 3, "ads" => 2 ));

@@ -1792,7 +1792,7 @@ Mighty.require("mighty.core", function( core ){
 						// do not need to swap in the <div>.
 						
 					//	if ( className === mightyAnchorParent.className  ) {
-						if ( reg.test( mightyAnchorParent.className ) ) {
+						if ( mightyAnchorParent.className && reg.test( mightyAnchorParent.className ) ) {
 							// Set the elem to the parent.
 							mightyModule = mightyAnchorParent;
 
