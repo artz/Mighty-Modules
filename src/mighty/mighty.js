@@ -1795,8 +1795,7 @@ Mighty.require("mighty.core", function( core ){
 						if ( reg.test( mightyAnchorParent.className ) ) {
 							// Set the elem to the parent.
 							mightyModule = mightyAnchorParent;
-							console.log( mightyAnchorParent.className );
-							console.log ( mightyModule );
+
 							isHTMLReady = 1;
 
 						// Create a new <div> with the same class name
