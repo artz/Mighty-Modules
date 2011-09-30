@@ -95,7 +95,7 @@
 	};
 	
 	global.log = log;
-	
+
 
 /*
 	Function: Boot.contains
@@ -145,7 +145,8 @@
 		return obj && contains( obj.constructor.toString(), "rray" );
 	}
 //	global.isArray = isArray;
-	
+
+//	Artz: Should isObject weed out elements, maybe?
 	function isObject( obj ) {
 		return obj !== null && is( obj, strObject );
 	}
@@ -214,7 +215,7 @@
 	Boot.extend( target, [object1], [objectN] )
 	
 	Parameters
-	
+
 		target -  An object that will receive the new properties if additional 
 				  objects are passed in [or that will extend the Boot namespace 
 				  if it is the sole argument].
@@ -475,6 +476,7 @@
 	}
 //	global.bind = bind;
 
+
 /*
 	Boot.delegate
 */
@@ -495,6 +497,7 @@
 		});
 	}
 //	global.delegate = delegate;
+
 
 /*
 	Function: Boot.load
@@ -854,9 +857,9 @@
 
 				var module,
 					moduleDependencies,
-					moduleDefinition;
+					moduleDefinition = moduleDefinitions[ moduleName ];
 
-				if ( moduleDefinition = moduleDefinitions[ moduleName ] || definedModules.shift() ) {
+				if ( moduleDefinition || definedModules.shift() ) {
 
 					if ( moduleDependencies = moduleDefinition.d ) {
 
@@ -1153,6 +1156,7 @@
 	}
 //	global.attr = attr;
 
+
 /*
 	Boot.data
 	
@@ -1199,7 +1203,7 @@
 		// Adding the class name greedily won't 
 		// hurt and keeps things small. 
 		classNames = classNames.split( strSpace );
-
+		
 		var elemClassName = elem.className,
 			className,
 			l = classNames.length,
@@ -1212,14 +1216,14 @@
 				elemClassName += strSpace + className;
 			}	
 		}
-
+		
 		elem.className = elemClassName;
 	}
 //	global.addClass = addClass;
 
 	// Supports multiple class removals.
 	function removeClass( elem, classNames ) {
-
+		
 		classNames = classNames.split( strSpace );
 		
 		var elemClassName = elem.className,
@@ -1236,6 +1240,7 @@
 		elem.className = trim( elemClassName );
 	}
 //	global.removeClass = removeClass;
+
 
 /*
 	Function: Boot.getStyle
@@ -1283,6 +1288,7 @@
 	Boot.inlineCSS
 	
 	Thanks Stoyan!
+	http://www.phpied.com/dynamic-script-and-style-elements-in-ie/
 */
 	function inlineCSS( css ){
 
@@ -1308,6 +1314,7 @@
 	}
 //	global.inlineCSS = inlineCSS;
 
+
 /*
 	Boot.createHTML
 	
@@ -1320,108 +1327,6 @@
 	}
 //	global.createHTML = create;
 
-
-/*
-	Boot.getFont
-*/
-/*
-	var getFontOptions = {
-			namespace: "wf-",
-			path: "fonts/{f}/{f}-webfont",
-			fontface: "@font-face { font-family: '{f}'; src: url('{p}.eot'); src: url('{p}.eot?#iefix') format('embedded-opentype'), url('{p}.woff') format('woff'), url('{p}.ttf') format('truetype'), url('{p}.svg#{f}') format('svg'); font-weight: normal; font-style: normal; }"
-		},
-		testDiv, // Keep it empty until invoked the first time.
-		strLoading = "-loading",
-		strActive = "-active",
-		strInactive = "-inactive";
-	
-	function getFont() {
-		
-		var args = arguments,
-			options = getFontOptions,
-			fontTemplate = /\{f\}/g,
-			fontPathTemplate = /\{p\}/g,
-			fontDiv,
-			fontName,
-			namespacedFontName,
-			fontPath,
-			fontFace,
-			fontfaceCSS = [],
-			i = 0, 
-			l = args.length;
-	
-		if ( ! testDiv ) {
-			// Shouldn't need these: height:auto;line-height:normal;margin:0;padding:0;font-variant:normal;
-			testDiv = createHTML("<div style=\"position:absolute;top:-999px;left:-999px;width:auto;font-size:300px;font-family:serif\">BESs</div>" ); 
-			docElem.appendChild( testDiv );
-		}
-		
-		function pollFontDiv( fontDiv, namespacedFontName ) {
-			poll( function( time ){
-//					global.log( "Test width: " + testDiv.offsetWidth + ", " + fontName + ": " + fontDiv.offsetWidth );
-				return testDiv.offsetWidth !== fontDiv.offsetWidth;
-			}, function( isTimeout, time){ 
-//					global.log("Different widths detected in " + time + "ms. Timeout? " + isTimeout); 
-				if ( isTimeout ) {
-					
-					removeClass( docElem, namespacedFontName + strLoading );
-					addClass( docElem, namespacedFontName + strInactive );
-
-					publish( eventNamespace + namespacedFontName + strInactive );
-//					window.console && console.log( "Font timeout: " + namespacedFontName );
-				} else {
-				
-					removeClass( docElem, namespacedFontName + strLoading );
-					addClass( docElem, namespacedFontName + strActive );
-					
-					publish( eventNamespace + namespacedFontName + strActive );
-
-				}
-//					fontDiv.parentNode.removeChild( fontDiv ); // Unnecessary expense?
-			}, 25, 10000 ); // Make this configurable via Boot.options.
-		}
-		
-		// Boot.each might be a cleaner approach, revisit someday maybe.
-		for (; i < l; i++ ) {
-			
-			fontName = args[i].toLowerCase();
-			
-//			global.log( "Getting font: <b>" + fontName + "</b>" );
-			
-			fontPath = options.path.replace( fontTemplate, fontName );
-			
-//			global.log( "Setting font URL: <b>" + fontPath + "</b>" );
-			
-			fontFace = options.fontface.replace( fontTemplate, fontName ).replace( fontPathTemplate, fontPath );
-			
-//			global.log( "Generating @fontface: <b>" + fontFace + "</b>");
-			
-			fontfaceCSS.push( fontFace );
-			
-			fontDiv = testDiv.cloneNode( true );
-			
-			fontDiv.style.fontFamily = "'" + fontName + "',serif";
-						
-			docElem.appendChild( fontDiv );
-						
-			namespacedFontName = options.namespace + fontName;
-			
-			publish( eventNamespace + namespacedFontName + strLoading );
-						
-			addClass( docElem, namespacedFontName + strLoading );
-			
-			// Had to use a closure inside the loob because of the callback.
-			// Consider switching to Boot.each() for brevity.
-			pollFontDiv( fontDiv, namespacedFontName );
-			
-		}
-		
-		inlineCSS( fontfaceCSS.join("") );
-		
-	}
-
-	global.getFont = getFont;
-*/
 
 /*
 	Function: Boot.disableTextSelect
@@ -1552,6 +1457,8 @@
             ( args ) ? fn.apply( scope, args ) : fn.call( scope );
         });
 	}
+//	global.proxy = proxy;
+
 
 /*
 	Function: Boot.trim
@@ -1572,6 +1479,9 @@
 //	global.trim = trim;
 
 
+/*
+	Function: Boot.toQueryString
+*/
 	function toQueryString( obj, param ) {
 		var str = [],
 			name,
@@ -1587,7 +1497,8 @@
 		return str.length ? param + str.join("&") : "";
 	}
 //	global.toQueryString = toQueryString;
-	
+
+
 /* 
 	Function: Boot.parseJSON
 	
@@ -1664,7 +1575,8 @@
 		
 	}
 //	global.getJSONP = getJSONP;
-	
+
+
 	// Expose our internal utilities through a module definition.
 	define( namespace.toLowerCase() + ".core", {
 		
@@ -1717,20 +1629,18 @@
 		inlineCSS: inlineCSS,
 		
 		createHTML: createHTML,
-	
-//		getFont: getFont,
-
+		
 		disableTextSelect: disableTextSelect,
-
+		
 		defer: defer,
-	
+        proxy: proxy,
+		
 		trim: trim,
 		toQueryString: toQueryString,
-
-		parseJSON: parseJSON,
-		getJSONP: getJSONP,
 		
-        proxy: proxy
+		parseJSON: parseJSON,
+		getJSONP: getJSONP
+		
 	});
 	
 }("Mighty", this));
