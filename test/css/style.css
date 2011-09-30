@@ -21,9 +21,11 @@ h1 {
     cursor: default;
     font-size: 48px;
 	text-align: center;
+    /*too strong 
+    
     text-shadow:
         0 0 5px hsl( 0, 0%, 0% ),
-        0 0 1em hsl( 0, 0%, 60% );
+        0 0 1em hsl( 0, 0%, 60% );*/
 }
 
 h1 b:nth-of-type( 1 ) {
