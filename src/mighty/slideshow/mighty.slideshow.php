@@ -12,6 +12,8 @@ curl_close($c);
 
 $slideshows = json_decode($content);
 
+//print_r($slideshows);
+
 $i = 0;
 
 $slideShowsCount = 0;
@@ -26,28 +28,33 @@ $slideShowsCount = 0;
 
 <?php foreach ( $slideshows as $slideshow ) {
 
-	if ( $i === 0 ) {
-		//build featured slideshow
-		$slideCount = count( $slideshow->slides );
-		$ulWidth = $slideCount * 298;
-		$firstHeadline = !empty($slideshow->front_headline) ? $slideshow->front_headline : $slideshow->entry_title;
-		
-		echo '<ul class="mighty-slideshow-viewer-ul" style="width:'.$ulWidth.'px;">';
-		
-		foreach ( $slideshow->slides as $slide ) {
-		
-			echo '<li class="mighty-slideshow-viewer-li"><img data-src="'.$slide.'" src="" width="292"></li>';
-			
-		}
-					
-		echo '</ul>';
-		
-	} else {
-		$slideShowsCount .= 1;
-		//build more slideshows
-	}
+	$slideCount = count( $slideshow->slides );
 	
-	$i .= 1;
+	if ( $slideCount !== 0 ) { 
+
+		if ( $i === 0 ) {
+			//build featured slideshow
+			$ulWidth = $slideCount * 298;
+			$firstHeadline = !empty($slideshow->front_headline) ? $slideshow->front_headline : $slideshow->entry_title;
+			
+			echo '<ul class="mighty-slideshow-viewer-ul" style="width:'.$ulWidth.'px;">';
+			
+			foreach ( $slideshow->slides as $slide ) {
+			
+				echo '<li class="mighty-slideshow-viewer-li"><img data-src="'.$slide.'" src="" width="292"></li>';
+				
+			}
+						
+			echo '</ul>';
+			
+		} else {
+			$slideShowsCount .= 1;
+			//build more slideshows
+		}
+		
+		$i .= 1;
+	
+	}
 	
 } ?>
 

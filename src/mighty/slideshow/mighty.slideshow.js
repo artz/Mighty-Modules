@@ -51,8 +51,6 @@ Mighty.define(["mighty.core"], function( core ){
 				
 		_bindevents: function () {
 		
-			console.log(core)
-			
 			var self = this,
 				options = self.options,
 				element = self.element,
