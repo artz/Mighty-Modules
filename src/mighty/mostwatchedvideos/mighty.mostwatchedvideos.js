@@ -1,0 +1,121 @@
+Mighty.define(["mighty.core"], function( core ){
+	
+	var adDivCounter = 0;
+	
+	return {			
+		
+		// These options will be used as defaults
+		options: {
+			foo: 'bar',
+			ads: 1	// 1 = Show Ads, 2 = No Ads..							
+		},
+
+		// Set up the widget
+		_create: function () {
+			
+			var self = this,
+				options = self.options,
+				element = self.element,
+				ui = self.ui;
+				images = core.query('.mighty-videos-li img', element);
+				totalCount = images.length;
+				
+				ui.videoSlide = document.createElement( 'div' );
+				ui.videoSlide.className = "mighty-vid";
+				element.insertBefore( ui.videoSlide, element.lastChild );
+								
+				
+				adDivId = 0;
+				adDivName = "mighty-mostwatchedvideos-ad";
+				AdId = adDivName + ( adDivCounter++ );
+							
+				
+			core.getCSS("../src/mighty/mostwatchedvideos/mighty.mostwatchedvideos.css");
+			
+			if( options.ads == 1 ){
+				self._adInclude();
+			}
+		
+			self._loadSlide(0);
+			
+			self._bindevents(1);			
+		},
+		
+		_loadSlide : function (which) {
+					var self = this,
+						which = which,
+						element = self.element,
+						ui = self.ui;
+						
+						core.each(images, function (elm, i, array) {
+						
+							if ( which === i ) {
+							
+									elm.src = elm.getAttribute('data-src');
+									elm.href = elm.getAttribute('data-href');
+									elm.title = elm.getAttribute('data-title');
+									
+									mightyHTML = '<div class="mighty-mostwatchedvideos-active"><a href="'+elm.href+'" target="_blank"><img src="'+elm.src+'" /></a><p><a href="'+elm.href+'" target="_blank">'+elm.title+'</a></p></div>';
+									
+									ui.videoSlide.innerHTML =  mightyHTML;
+																		
+							}
+							
+						});
+					
+				},
+		
+		
+		_adInclude: function () {
+			var self = this,
+				options = self.options,
+				element = self.element,
+				ui = self.ui;				
+			
+			ui.adDiv = document.createElement( 'div' );
+			ui.adDiv.className = "mighty-ad";
+			ui.adDiv.innerHTML = '<div class="footer-links"><a href="http://www.huffingtonpost.com/" class="logo"><img src="../../../images/mostpopular/huffpost.png" width="120" /></a><a href="#" class="link">Get This Widget</a></div><div id="'+ AdId +'" class="advertisement"></div>';
+			
+			element.insertBefore( ui.adDiv, element.lastChild );
+			
+			// Render the ad.
+			if ( window.htmlAdWH ) {
+					htmlAdWH( 808216, 234, 60, "ajax", AdId );
+				}			
+		
+		},
+		
+		_bindevents: function ( which ) {
+			
+			var self = this,
+				options = self.options,
+				which = which,
+				nextSlideNumber,
+				element = self.element;			
+											
+			core.delegate( element, ".mighty-mostwatchedvideos-controls-next", "click", function( event ){
+				nextSlideNumber = which++;
+				console.log(nextSlideNumber);
+
+				self._loadSlide(nextSlideNumber);
+				
+				event.preventDefault();					
+			});
+			core.delegate(element,'.mighty-mostwatchedvideos-controls-prev','click',function( event ){
+				nextSlideNumber = which--;
+				if (nextSlideNumber == 0){
+					which = totalCount;
+				}
+				console.log(nextSlideNumber);
+				
+				self._loadSlide(nextSlideNumber);
+								
+				event.preventDefault();	
+			
+			});
+				
+		},
+
+	};
+	
+});
