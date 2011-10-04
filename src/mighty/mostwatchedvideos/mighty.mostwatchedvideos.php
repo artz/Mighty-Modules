@@ -23,18 +23,16 @@ $c = curl_init();
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
 curl_setopt($c, CURLOPT_URL, 'http://www.huffingtonpost.com/api/?t=most_popular_merged&verticals=video&viral_sort=1&limit=20');
-//curl_setopt($c, CURLOPT_URL, '../api/hpapi.json');
 
 $content = curl_exec($c);
 curl_close($c);
 
 $json = json_decode($content);
 
-//print_r($json);
 ?>
 <div class="mighty-mostwatchedvideos">
 <h2 class="header">Most Watched Videos</h2>
-		<ul class="mighty-videos-ul" style="display:none;">
+		<ul class="mighty-videos-ul">
 <?php
 	foreach($json->response as $key=>$value){
 		$url = $value->entry_url;
@@ -51,7 +49,7 @@ $json = json_decode($content);
 	
 ?>
 		</ul>
-		<div class="mighty-mostwatchedvideos-controls">
+		<div class="mighty-mostwatchedvideos-controls">			
 			<div class="mighty-mostwatchedvideos-controls-prev">previous slide</div>
 			<div class="mighty-mostwatchedvideos-controls-next">next slide</div>
 		</div>
