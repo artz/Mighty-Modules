@@ -5,7 +5,7 @@ html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
 del, dfn, em, font, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
+smbackground-color, strike, strong, sub, sup, tt, var,
 b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
@@ -16,7 +16,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	outline: 0;
 	font-size: 100%;
 	vertical-align: baseline;
-	background: transparent;
 }
 body {
 	line-height: 1;
@@ -59,6 +58,7 @@ body {
 	font-family: arial;
 	line-height: 24px;
 	margin: 24px;
+	color: #333;
 }
 
 .header {
@@ -70,4 +70,61 @@ body {
 	height: 72px;
 	width: 372px;	
 	text-indent: -99em;
+}
+
+.chooser {
+	margin-top: 24px;
+	margin-right: 36px;
+	width: 288px;
+	float: left;
+}
+.chooser > h2 {
+	font-size: 22px;
+	margin-bottom: 24px;
+}
+.chooser > ul > li {
+	border-bottom: 1px solid #ccc;	
+}
+.chooser > ul > li:first-child {
+	border-top: 1px solid #ccc;
+}
+.chooser > ul > li > a {
+	font-size: 16px;
+	padding: 4px 24px 3px;
+	display: block;
+	text-decoration: none;
+	color: #fe5f35;
+	
+	background-color: rgb(255,255,255);
+	
+	-webkit-transition: background-color 0.5 linear;  
+	-moz-transition: background-color 0.5 linear;  
+	-ms-transition: background-color 0.5 linear;  
+	-o-transition: background-color 0.5 linear;  
+	transition: background-color 0.5 linear;  
+}
+.chooser > ul > li > a:hover {
+	background-color: rgb(241,241,241);
+}
+
+.factory {
+	float: left;
+	margin-top: 12px;
+	width: 600px;
+}
+.factory > .widgets > li {
+	border-left: 6px solid #fff;
+	padding: 12px 24px;
+}
+.factory > .widgets > li:hover {
+  -webkit-transition: background-color 0.5 linear;  
+     -moz-transition: background-color 0.5 linear;  
+      -ms-transition: background-color 0.5 linear;  
+       -o-transition: background-color 0.5 linear;  
+          transition: background-color 0.5 linear;  
+	
+	background-color: #f1f1f1;
+	border-left: 6px solid #fe5f35;
+	
+	cursor: pointer;
 }
