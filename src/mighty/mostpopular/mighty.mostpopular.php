@@ -9,10 +9,14 @@
 
 	// Set up data options.
 	$dataOptions = '';
+	$header = 'Most Popular'; // This is just a test for adding a 'text' based field to Mighty Maker module for Most Popular Widget.
 	
 	if ( isset( $options ) ) {
 		foreach ( $options as $key => $value ) {
 			$dataOptions .= ' data-' . $key . '="' . $value . '"';
+			if ( $key == "header" ){
+				$header = $value; // This will pickup the header name from data-header
+			}
 		}
 	}
 
@@ -65,7 +69,7 @@
 ?>
 <div class="mighty-mostpopular">
 	<h2>Huffpost</h2>
-    <h3>Most Popular</h3>
+    <h3><?php echo $header; ?></h3>
 
     <?php for ( $i = 0; $i < count( $verticals ); $i++ ) : ?>
 

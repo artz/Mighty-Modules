@@ -2,6 +2,19 @@
 
 error_reporting(-1);
 
+// Set up data options.
+$dataOptions = '';
+$header = 'Photo Galleries'; // This is just a test for adding a 'text' based field to Mighty Maker module for Most Popular Widget.
+
+if ( isset( $options ) ) {
+	foreach ( $options as $key => $value ) {
+		$dataOptions .= ' data-' . $key . '="' . $value . '"';
+		if ( $key == "header" ){
+			$header = $value; // This will pickup the header name from data-header
+		}
+	}
+}
+
 $c = curl_init();
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
@@ -22,7 +35,7 @@ $slideShowsCount = 0;
 
 <div class="aol-huffpost-slideshows">
 	<div class="mighty-slideshow-header">
-		<h1>Photo Galleries</h1>
+		<h1><?php echo $header; ?></h1>
 	</div>
 	<div class="mighty-slideshow-viewer">
 
@@ -48,7 +61,7 @@ $slideShowsCount = 0;
 			echo '</ul>';
 			
 		} else {
-			$slideShowsCount .= 1;
+			$slideShowsCount .= 2;
 			//build more slideshows
 		}
 		

@@ -3,6 +3,7 @@
 // Set up data options.
 $dataOptions = '';
 $ads = ''; // Var for ads
+$count = ''; // Var for limiting the number of videos
 
 
 if ( isset( $options ) ) {
@@ -10,6 +11,9 @@ if ( isset( $options ) ) {
 		$dataOptions .= ' data-' . $key . '="' . $value . '"';
 		if ( $key == "ads" ){
 			$ads .= $value; // This will pickup the ad setting from data-ads
+		}
+		if ( $key == "count" ){
+			$count .= $value; // This will pickup the count from data-count. It limits the number of videos to be displayed in the widget.
 		}
 		
 	}
@@ -29,23 +33,26 @@ curl_close($c);
 
 $json = json_decode($content);
 
+//$count = $count-1; // Doing this, as the index always starts from 0
 ?>
 <div class="mighty-mostwatchedvideos">
 <h2 class="header">Most Watched Videos</h2>
 		<ul class="mighty-videos-ul">
 <?php
 	foreach($json->response as $key=>$value){
-		$url = $value->entry_url;
-		$img = $value->entry_image_large;
-		$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
-		?>
+		if ($key <= $count){
+				$url = $value->entry_url;
+				$img = $value->entry_image_large;
+				$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
+?>
 			<li class="mighty-videos-li">
 				<img src="<?php echo $img; ?>" data-href="<?php echo $url;?>" data-title="<?php echo $title;?>" data-src="<?php echo $img; ?>" />
 			</li>
 			
-			<?php	
+<?php	
 			
-			}
+		} // IF condition closes here
+	} // End Foreach
 	
 ?>
 		</ul>

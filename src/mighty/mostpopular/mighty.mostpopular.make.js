@@ -1,32 +1,34 @@
-Mighty.define(function(){ 
-	return [
-	{
-		option: "perpane",
-		name: "Items per pane",
-		description: "Maximum number of items to display on each pane",
+Mighty.define({
+	id: "mighty.mostpopular",
+	name: "Mighty Most Popular",
+	description: "This module allows you to customize the Most Popular Widget.",
+	href: "http://mightymodules.com/mighty-mostpopular/",
+	options: [{
+		option: "selected",
+		name: "Selected Tab",
+		description: "A zero-based index of the current selected tab.",
 		type: "integer",
-		value: 7,
-		minimum: 1,
-		maximum: null
+		value: 0,
+		minimum: 0,
+		maximum: 10
 	},
-
+	
 	{
-		option: "initial",
-		name: "Initial pane",
-		description: "What pane should be visible initially",
-		type: "integer",
-		value: 1,
-		minimum: 1,
-		maximum: null
-	},
-
-	{
-		option: "foo",
-		name: "Foo",
-		description: "Please input value of foo",
+		option: "header",
+		name: "Header Title",
+		description: "Customize the title of the widget",
 		type: "text",
-		value: "bar",
-		minlength: null,
-		maxlength: null 
-	}
-]});
+		value: "Most Awesome"
+		//minimum: 0,
+		//maximum: 10
+	},
+	{
+		option: "width",
+		name: "Width",
+		description: "The width in pixels of the widget.",
+		type: "integer",
+		value: 400,
+		minimum: 300,
+		maximum: 800
+	}]
+});
