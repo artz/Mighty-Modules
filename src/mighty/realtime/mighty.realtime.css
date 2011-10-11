@@ -1,0 +1,72 @@
+.mighty-realtime{
+	width:300px;
+	border:1px solid #eaeaea;
+}
+.mighty-realtime h2.header {
+    background: none repeat scroll 0 0 #333333;
+    color: #FFFFFF;
+    font-size: 25px;
+    font-weight: bold;
+    height: 23px;
+    padding: 15px;
+}
+.mighty-realtime .mighty-realtime-li {
+	margin: 5px;
+    overflow: hidden;
+}
+.mighty-realtime .mighty-realtime-title {
+	//border-radius: 0 50px 50px 0;
+	float: left;
+    height: 60px;
+    line-height: 16px;
+    opacity: 0.7;
+    padding: 5px;
+    position: relative;
+    width: 200px;
+    z-index: 2;
+}
+.mighty-realtime .mighty-realtime-title a {
+	display: inline-block;
+	padding: 10px;
+	width: 190px;	
+}
+.mighty-realtime .mighty-realtime-li a.arrow {
+	border-color: transparent transparent transparent #3BD512;
+    border-style: solid;
+    border-width: 35px;
+    content: " ";
+    float: left;
+    height: 0;
+    left: 100%;
+    margin-top: 0;
+    opacity: 0.7;
+    width: 0;
+    z-index: 2;
+}
+.mighty-realtime .mighty-realtime-views {
+	bottom: 45px;
+    float: right;
+    font-size: 45px;
+    margin-bottom: -45px;
+    position: relative;
+    z-index: 1;
+}
+.mighty-realtime .mighty-realtime-li a {
+	color: #fff;
+	font-weight: bold;
+	text-decoration: none;
+}
+.mighty-realtime .footer-links {
+	margin: 15px 10px 5px;
+	overflow: hidden;
+}
+.mighty-realtime .footer-links a.logo {
+	float: left;
+}
+.mighty-realtime .footer-links a.link {
+	color: #333;
+	float: right;
+	font-size: 11px;
+	margin-top: -3px;
+    text-decoration: none;
+}
