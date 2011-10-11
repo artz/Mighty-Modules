@@ -7,21 +7,22 @@ $count = ''; // Var for limiting the number of videos
 
 
 if ( isset( $options ) ) {
-	foreach ( $options as $key => $value ) {
-		$dataOptions .= ' data-' . $key . '="' . $value . '"';
-		if ( $key == "ads" ){
-			$ads .= $value; // This will pickup the ad setting from data-ads
-		}
-		if ( $key == "count" ){
-			$count .= $value; // This will pickup the count from data-count. It limits the number of videos to be displayed in the widget.
-		}
-		
-	}
+foreach ( $options as $key => $value ) {
+$dataOptions .= ' data-' . $key . '="' . $value . '"';
+if ( $key == "ads" ){
+$ads .= $value; // This will pickup the ad setting from data-ads
+}
+if ( $key == "count" ){
+$count .= $value; // This will pickup the count from data-count. It limits the number of videos to be displayed in the widget.
 }
 
+}
+}
+
+$count = ( !empty($count) ) ? $count : 10;
 /*
- * The following curl method should be used on production. 
- */
+* The following curl method should be used on production.
+*/
  
 $c = curl_init();
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -37,28 +38,27 @@ $json = json_decode($content);
 ?>
 <div class="mighty-mostwatchedvideos">
 <h2 class="header">Most Watched Videos</h2>
-		<ul class="mighty-videos-ul">
+<ul class="mighty-videos-ul">
 <?php
-	foreach($json->response as $key=>$value){
-		if ($key <= $count){
-				$url = $value->entry_url;
-				$img = $value->entry_image_large;
-				$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
+foreach($json->response as $key=>$value){
+if ($key <= $count){
+$url = $value->entry_url;
+$img = $value->entry_image_large;
+$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
 ?>
-			<li class="mighty-videos-li">
-				<img src="<?php echo $img; ?>" data-href="<?php echo $url;?>" data-title="<?php echo $title;?>" data-src="<?php echo $img; ?>" />
-			</li>
-			
-<?php	
-			
-		} // IF condition closes here
-	} // End Foreach
-	
+<li class="mighty-videos-li">
+<img src="<?php echo $img; ?>" data-href="<?php echo $url;?>" data-title="<?php echo $title;?>" data-src="<?php echo $img; ?>" />
+</li>
+<?php
+
+} // IF condition closes here
+} // End Foreach
+
 ?>
-		</ul>
-		<div class="mighty-mostwatchedvideos-controls">			
-			<div class="mighty-mostwatchedvideos-controls-prev">previous slide</div>
-			<div class="mighty-mostwatchedvideos-controls-next">next slide</div>
-		</div>
+</ul>
+<div class="mighty-mostwatchedvideos-controls">
+<div class="mighty-mostwatchedvideos-controls-prev">previous slide</div>
+<div class="mighty-mostwatchedvideos-controls-next">next slide</div>
+</div>
 <a name="mighty" class="mighty-mostwatchedvideos"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Most Watched Videos Module</b></a>
 </div>
