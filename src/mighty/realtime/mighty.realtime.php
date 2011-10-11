@@ -83,13 +83,13 @@ function truncate ($str, $length=10, $trailing='...') {
 				$vcolor = ($value->vertical_color) ? $value->vertical_color : "3BD512";
 				$views = number_format($value->viral_views);
 ?>
-			<li class="mighty-realtime-li" title="<?php echo $title; ?>">
-				<span class="mighty-realtime-title" data-vcolor="<?php echo $vcolor; ?>" style="background:<?php echo "#".$vcolor; ?>;">
+			<li class="mighty-realtime-li" data-vcolor="<?php echo "#".$vcolor; ?>" title="<?php echo $title; ?>">
+				<span class="mighty-realtime-title" data-vcolor="<?php echo "#".$vcolor; ?>">
 					<a href="<?php echo $url ?>"><?php echo truncate($title,40); ?></a>
 				</span>
-				<a class="arrow" style="border-left-color:<?php echo "#".$vcolor; ?>; "></a>
+				<a class="arrow"></a>
 				<span class="mighty-realtime-views">
-					<a href="<?php echo $url ?>" style="color:<?php echo "#".$vcolor; ?>;"><?php echo $views; ?></a>
+					<a href="<?php echo $url ?>"><?php echo $views; ?></a>
 				</span>						
 				
 			</li>
