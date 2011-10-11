@@ -16,6 +16,8 @@ if ( isset( $options ) ) {
 	}
 }
 
+$count = (!empty($count)) ? $count : 4;
+
 /*
  * The following curl method should be used on production. 
  */
@@ -77,7 +79,7 @@ function truncate ($str, $length=10, $trailing='...') {
 
 //	foreach($output as $key=>$value){ 
 	foreach($json->response as $key=>$value){
-		if ( $key <= 3 ) {
+		if ( $key <= $count-1 ) {
 				$url = $value->entry_url;
 				$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
 				$vcolor = ($value->vertical_color) ? $value->vertical_color : "3BD512";

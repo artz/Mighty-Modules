@@ -18,27 +18,37 @@ Mighty.define(["mighty.core"], function( core ){
 						
 					core.getCSS("../src/mighty/realtime/mighty.realtime.css");
 					
-					core.each(titles, function (elm, i, array) {
-						elm.vcolor = elm.getAttribute('data-vcolor');
-						spanTitle = core.query('.mighty-realtime-title', elm);
-						spanArrow = core.query('.arrow', elm);
-						spanViews = core.query('.mighty-realtime-views a', elm);
-						
-						core.each(spanTitle, function (elem, i, array) {
-							elem.style.backgroundColor= elm.vcolor;	
-						});
-						
-						core.each(spanArrow, function (elems, i, array) {
-							elems.style.borderLeftColor= elm.vcolor;	
-						});
-						core.each(spanViews, function (elems, i, array) {
-							elems.style.color= elm.vcolor;	
-						});
-						
-										
-					});
+					self._styleEvents();
 										
 							
+		},
+		
+		_styleEvents: function () {
+					var self = this,
+						options = self.options,
+						element = self.element,
+						ui = self.ui;
+						
+					core.each(titles, function (elm, i, array) {
+								elm.vcolor = elm.getAttribute('data-vcolor');
+								spanTitle = core.query('.mighty-realtime-title', elm);
+								spanArrow = core.query('.arrow', elm);
+								spanViews = core.query('.mighty-realtime-views a', elm);
+								
+								core.each(spanTitle, function (elem, i, array) {
+									elem.style.backgroundColor= elm.vcolor;	
+								});
+								
+								core.each(spanArrow, function (elems, i, array) {
+									elems.style.borderLeftColor= elm.vcolor;	
+								});
+								core.each(spanViews, function (elems, i, array) {
+									elems.style.color= elm.vcolor;	
+								});
+						
+										
+					});	
+		
 		}
 		
 		
