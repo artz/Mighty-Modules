@@ -68,7 +68,7 @@ function truncate ($str, $length=10, $trailing='...') {
 	  return $res;
 }
 
-// $output=sortStdArray($json->response,"viral_views"); // This is commented, since most of the popular stories are from AOL. 
+ $output=sortStdArray($json->response,"viral_views"); // This is commented, since most of the popular stories are from AOL. 
 
 ?>
 
@@ -77,13 +77,30 @@ function truncate ($str, $length=10, $trailing='...') {
 		<ul class="mighty-realtime-ul">
 <?php
 
-//	foreach($output as $key=>$value){ 
-	foreach($json->response as $key=>$value){
+	foreach($output as $key=>$value){ // Comment this, if sorted results are needed.
+//	foreach($json->response as $key=>$value){  // Uncomment this line, if sorted results are not required.
 		if ( $key <= $count-1 ) {
 				$url = $value->entry_url;
 				$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
-				$vcolor = ($value->vertical_color) ? $value->vertical_color : "3BD512"; // Setting the default vertical color here for all non-huffingtonpost sites.
+				$vertical = $value->vertical_name;
 				$views = number_format($value->viral_views);
+				
+				// Doing the following bit to assign vertical colors for non-huffingtonpost sites. HP API does not return any color for non-HP sites. 
+				
+				if (!empty($value->vertical_color)){
+						$vcolor = $value->vertical_color;
+				} else {
+					if ( $vertical == "AOL TV" ) {
+							$vcolor = "006B9A";
+					} elseif ( $vertical == "Daily Finance" ) {
+							$vcolor = "288BCB";
+					} elseif ( $vertical == "Moviefone Blog" ) {
+							$vcolor = "ED382E";
+					} else {
+							$color = "3BD512";	
+					} 
+				}				
+				
 ?>
 			<li class="mighty-realtime-li" data-vcolor="<?php echo "#".$vcolor; ?>" title="<?php echo $title; ?>">
 				<span class="mighty-realtime-title" data-vcolor="<?php echo "#".$vcolor; ?>">
