@@ -14,12 +14,12 @@ Mighty.define(["mighty.core"], function( core ){
 						options = self.options,
 						element = self.element,
 						ui = self.ui;
-						titles = core.query('.mighty-realtime-li', element); 
+						titles = core.query('.mighty-realtime-li', element);
+						spanTitles = core.query('.mighty-realtime-li .mighty-realtime-title', element); 
 						
 					core.getCSS("../src/mighty/realtime/mighty.realtime.css");
 					
-					self._styleEvents();
-										
+					self._styleEvents();										
 							
 		},
 		
@@ -28,7 +28,7 @@ Mighty.define(["mighty.core"], function( core ){
 						options = self.options,
 						element = self.element,
 						ui = self.ui;
-						
+					
 					core.each(titles, function (elm, i, array) {
 								elm.vcolor = elm.getAttribute('data-vcolor');
 								spanTitle = core.query('.mighty-realtime-title', elm);
@@ -45,8 +45,6 @@ Mighty.define(["mighty.core"], function( core ){
 								core.each(spanViews, function (elems, i, array) {
 									elems.style.color= elm.vcolor;	
 								});
-						
-										
 					});	
 		
 		}

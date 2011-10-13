@@ -25,7 +25,7 @@ $count = (!empty($count)) ? $count : 4;
 $c = curl_init();
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
-curl_setopt($c, CURLOPT_URL, 'http://www.huffingtonpost.com/api/?t=most_popular_merged&viral_sort=1&i=24h');
+curl_setopt($c, CURLOPT_URL, 'http://www.huffingtonpost.com/api/?t=most_popular_merged&viral_sort=1&i=1h');
 
 $content = curl_exec($c);
 curl_close($c);
@@ -68,7 +68,7 @@ function truncate ($str, $length=10, $trailing='...') {
 	  return $res;
 }
 
-// $output=sortStdArray($json->response,"viral_views"); // This is to commented, since most of the popular stories are from AOL. 
+// $output=sortStdArray($json->response,"viral_views"); // This is commented, since most of the popular stories are from AOL. 
 
 ?>
 
@@ -82,7 +82,7 @@ function truncate ($str, $length=10, $trailing='...') {
 		if ( $key <= $count-1 ) {
 				$url = $value->entry_url;
 				$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
-				$vcolor = ($value->vertical_color) ? $value->vertical_color : "3BD512";
+				$vcolor = ($value->vertical_color) ? $value->vertical_color : "3BD512"; // Setting the default vertical color here for all non-huffingtonpost sites.
 				$views = number_format($value->viral_views);
 ?>
 			<li class="mighty-realtime-li" data-vcolor="<?php echo "#".$vcolor; ?>" title="<?php echo $title; ?>">
