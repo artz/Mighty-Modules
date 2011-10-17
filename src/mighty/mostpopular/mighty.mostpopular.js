@@ -30,6 +30,5 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 			core.widget( "mighty.tabs", element, { selected: options.selected } );
 
 		}
-
 	};
 });

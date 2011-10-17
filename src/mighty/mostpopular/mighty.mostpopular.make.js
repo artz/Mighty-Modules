@@ -12,7 +12,6 @@ Mighty.define({
 		minimum: 0,
 		maximum: 10
 	},
-	
 	{
 		option: "header",
 		name: "Header Title",

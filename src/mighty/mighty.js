@@ -646,6 +646,10 @@
 	Function: Boot.getCSS
 	
 	Fetches a CSS file and appends it to the DOM.
+	
+	To Do:
+	Add a callback using Jason's technique:
+	http://www.viget.com/inspire/js-201-run-a-function-when-a-stylesheet-finishes-loading/
 */
 	var head = document.head || document.getElementsByTagName( "head" )[0] || document.documentElement,
 		cssLoading = {};
