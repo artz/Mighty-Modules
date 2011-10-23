@@ -17,11 +17,16 @@ Mighty.define({
 	},
 	{
 		option: "ads",
-		name: "Ad Display (1 = Yes / 2 = No)",
+		name: "Ad Display?",
 		description: "Display ads flag",
-		type: "integer",
-		value: 1,
-		minimum: 1,
-		maximum: 2
+		type: "select",
+		value: [{
+					slug: "1",
+					title: "Yes"
+				},
+				{
+					slug: "2",
+					title: "No"
+				}]
 	}]
 });

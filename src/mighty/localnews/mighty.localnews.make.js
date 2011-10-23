@@ -13,6 +13,37 @@ Mighty.define({
 		type: "integer",
 		value: 4,
 		minimum: 2,
-		maximum: 10
+		maximum: 7
+	},
+	
+	{
+		option: "vertical",
+		name: "Change the City",
+		description: "Change the City",
+		type: "select",
+		value: [{
+					slug: "los-angeles",
+					title: "Los Angeles"
+				},
+				{
+					slug: "chicago",
+					title: "Chicago"
+				},
+				{
+					slug: "dc",
+					title: "DC"
+				},
+				{
+					slug: "san-francisco",
+					title: "San Francisco"
+				},
+				{
+					slug: "denver",
+					title: "Denver"
+				},
+				{
+					slug: "new-york",
+					title: "New York"
+				}]
 	}]
 });
