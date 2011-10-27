@@ -1,0 +1,127 @@
+body .mighty-bloggers {
+	background-color: #FFF;
+	border: 1px solid #ccc;
+	display: block;
+	margin: 5px 0;
+	width: 300px;	
+}
+.mighty-bloggers h2.header {
+	background: none repeat scroll 0 0 #333333;
+	color: #fff;
+	font-size: 25px;
+	font-weight: bold;
+	height: 23px;
+	padding: 15px;
+    margin-bottom: 5px;		
+}
+
+.mighty-bloggers .articles {
+	margin: 10px;
+}
+
+.mighty-bloggers .articles .first-result {
+	line-height: 1;
+	list-style-type: none;
+	margin-bottom: 10px;
+}
+.mighty-bloggers .articles li.article-list-post {
+	line-height: 1;
+	list-style-type: none;
+	border-top: 1px solid #ccc;
+	margin-bottom: 10px;
+	padding-top: 10px;
+}
+
+.mighty-bloggers .articles .first-result h2 {
+	color: #4A4A4A;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.mighty-bloggers .articles ul.article-list li a {
+	color: #4A4A4A;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.mighty-bloggers .articles ul.article-list a.list-post-title {
+	color: #4A4A4A;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.mighty-bloggers .articles ul.article-list li span.comments{
+	color: #4A4A4A;
+	display: block;
+	font-size: 11px;
+	margin-top: 5px;
+}
+span.comments b {
+	color: #D96565;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.mighty-bloggers .main-promo {
+	display: block;
+	margin-bottom: 10px;
+	overflow: hidden;	
+}
+
+.mighty-bloggers .main-promo .author-info-main {
+	float: left;
+	margin: 45px 0 0 10px;
+}
+.mighty-bloggers .first-result .author-info-main span.author-name a {
+	color: #1F8BD7;
+	display: block;
+	font-size: 16px;
+}
+
+.mighty-bloggers .first-result .author-info-main span.vertical-name a {
+	color: #666;
+	display: block;
+	font-size: 12px;
+}
+
+.mighty-bloggers .author-info-list {
+	display: block;
+	margin-bottom: 5px;
+	overflow: hidden;
+}
+
+.mighty-bloggers .article-list-post .author-info-list .author-name a {
+	color: #1F8BD7;
+	font-size: 13px;
+}
+.mighty-bloggers .article-list-post .author-info-list .vertical-name a {
+	color: #333;
+	font-size: 12px;
+}
+.mighty-bloggers img.thumb {
+	float: left;
+	width: 75px;
+	border: 1px solid #ccc;
+	height: 75px;
+}
+
+.mighty-bloggers img.hp-logo {
+	float: right;
+    height: 12px;
+    position: relative;	
+}
+.mighty-bloggers .mighty-bloggers-footer {
+	background-color: #F6F6F6;
+	overflow: hidden;
+	padding: 5px;
+}
+.mighty-bloggers .mighty-bloggers-footer .more-news {
+	color: #4A4A4A;
+	float: left;
+	font-size: 13px;
+	font-weight: bold;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+

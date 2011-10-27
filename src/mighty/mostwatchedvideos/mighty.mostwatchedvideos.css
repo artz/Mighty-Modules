@@ -1,4 +1,5 @@
-.mighty-mostwatchedvideos{
+body .mighty-mostwatchedvideos{
+	background-color: #FFF;
 	width:298px;
 	border:1px solid #eaeaea;
 }

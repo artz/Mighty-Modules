@@ -1,4 +1,5 @@
-.mighty-realtime{
+body .mighty-realtime{
+	background: #fff;
 	width:300px;
 	border:1px solid #eaeaea;
 }
