@@ -21,7 +21,8 @@ Mighty.define(["mighty.core"], function( core ){
 		options: {
 			name: true,
 			description: true,
-			preview: true
+			preview: true,
+      basePath: "http://localhost/Mighty-Modules/src/" // Path to source mighty module files.
 		},
 	
 		// Set up the widget
@@ -44,7 +45,8 @@ Mighty.define(["mighty.core"], function( core ){
 //            });
 
 			if ( module ) {
-				core.require({ basePath: "../src/mighty/" + module + "/", suffix: ".js" }, "mighty." + module + ".make", function( make ){
+        // Pull in the make file.
+				core.require({ basePath: options.basePath + "/mighty/" + module + "/", suffix: ".js" }, "mighty." + module + ".make", function( make ){
 					self.make = make;
 					self._build( make );
 				});
@@ -73,11 +75,11 @@ Mighty.define(["mighty.core"], function( core ){
 				href = make.href ? ' href="' + make.href + '"' : "",
 				name = make.name || "Mighty Modules",
 				options = self.options,
-				// Consider addint a title attribute to the snippet?
+				// Consider adding a title attribute to the snippet?
 				snippet = '<a name="mighty" class="mighty-' + options.module + '"' + dataOptions() + href + '>Mighty Source</a>';
 			
 			if ( script ) {
-				snippet += '<script async defer src="../src/mighty.js"></script>';
+				snippet += '<script async defer src="' + options.basePath + '"mighty.js"></script>';
 			}
 			
 			return entities ? htmlEntities( snippet ) : snippet;
