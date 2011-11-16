@@ -77,7 +77,7 @@ Mighty.define(["mighty.core"], function( core ){
 					
 					ui.adDiv = document.createElement( 'div' );
 					ui.adDiv.className = "mighty-ad";
-					ui.adDiv.innerHTML = '<div class="footer-links"><a href="http://www.huffingtonpost.com/" class="logo"><img src="../../../images/mostpopular/huffpost.png" width="120" /></a><a href="#" class="link">Get This Widget</a></div><div id="'+ AdId +'" class="advertisement"></div>';
+					ui.adDiv.innerHTML = '<div class="footer-links"><a href="http://www.huffingtonpost.com/" class="huffpost-logo">Breaking News and Opinion on The Huffington Post</a><a href="#" class="link">Get This Widget</a></div><div id="'+ AdId +'" class="advertisement"></div>';
 					
 					element.insertBefore( ui.adDiv, element.lastChild );
 					

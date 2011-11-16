@@ -61,6 +61,14 @@ body .mighty-realtime{
 	font-weight: bold;
 	text-decoration: none;
 }
+.mighty-realtime .huffpost-logo {
+  background: url(../../images/mostpopular/huffpost.png);
+  width: 151px;
+  height: 21px;
+  text-indent: -99em;
+  overflow: hidden;
+  float: left;
+}
 .mighty-realtime .footer-links {
 	margin: 15px 10px 5px;
 	overflow: hidden;

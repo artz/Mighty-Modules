@@ -73,6 +73,15 @@ span.comments b {
 	float: left;
 	margin: 45px 0 0 10px;
 }
+.mighty-bloggers .huffpost-logo {
+  background: url(../../images/mostpopular/huffpost.png);
+  width: 151px;
+  height: 21px;
+  display: block;
+  text-indent: -99em;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
 .mighty-bloggers .first-result .author-info-main span.author-name a {
 	color: #1F8BD7;
 	display: block;

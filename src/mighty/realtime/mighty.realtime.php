@@ -121,9 +121,7 @@ function truncate ($str, $length=10, $trailing='...') {
 ?>
 		</ul>
 		<div class="footer-links">
-			<a class="logo" href="http://www.huffingtonpost.com/">
-				<img width="120" src="../../../images/mostpopular/huffpost.png">
-			</a>
+			<a class="huffpost-logo" href="http://www.huffingtonpost.com/">Breaking News and Opinion on The Huffington Post</a>
 			<a class="link" href="#">
 				Get This Widget
 			</a>

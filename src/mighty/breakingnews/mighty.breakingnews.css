@@ -7,7 +7,7 @@ body .mighty-breakingnews {
 	width: 300px;	
 }
 .mighty-breakingnews h2.header {
-	background: url("../../../images/mostpopular/huffpost.png") no-repeat scroll 0 50% transparent;
+	background: url("../../images/mostpopular/huffpost.png") no-repeat scroll 0 50% transparent;
 	font-size: 18px;	
 	color: #4A4A4A;
 	margin-bottom: 5px;
@@ -60,7 +60,7 @@ span.comments b {
 }
 
 .mighty-breakingnews-footer .refresh-news {
-	background: url("/../images/refresh.png") no-repeat scroll left center transparent;
+	background: url("../../images/refresh.png") no-repeat scroll left center transparent;
     cursor: pointer;
     float: right;
     font-size: 9px;

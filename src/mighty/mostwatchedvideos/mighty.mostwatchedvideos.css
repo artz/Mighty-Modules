@@ -25,7 +25,7 @@ body .mighty-mostwatchedvideos{
     text-decoration: none; 
 }
 .mighty-mostwatchedvideos-active a.mighty-mostwatchedvideos-play {
-	background: url("../../../images/video-play-btn.png") no-repeat scroll -6px -2px transparent;
+	background: url("../../images/video-play-btn.png") no-repeat scroll -6px -2px transparent;
 	display: block;
 	height: 80px;
 	margin-left: 105px;
@@ -40,6 +40,14 @@ body .mighty-mostwatchedvideos{
 }
 .mighty-mostwatchedvideos-active p {
 	padding-left: 10px;
+}
+.mighty-mostwatchedvideos .huffpost-logo {
+  background: url(../../images/mostpopular/huffpost.png);
+  width: 151px;
+  height: 21px;
+  text-indent: -99em;
+  overflow: hidden;
+  float: left;
 }
 .mighty-mostwatchedvideos .footer-links {
  	border-bottom: 1px dashed;

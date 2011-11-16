@@ -79,9 +79,7 @@ $json = json_decode($content);
 				}
 				?>
 			<li class="first-result">
-				<a href="http://www.huffingtonpost.com/"><img class="hp-logo" src="../../../images/mostpopular/huffpost.png"></a>
-				
-				
+				<a class="huffpost-logo" href="http://www.huffingtonpost.com/">Breaking News and Opinion on The Huffington Post</a>
 						<div class="main-promo">
 							<a href="http://www.huffingtonpost.com/<?php echo $authorslug; ?>"><img class="thumb" src="<?php echo $img; ?>" alt="" /></a>
 							<div class="author-info-main">
