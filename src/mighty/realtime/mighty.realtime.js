@@ -17,7 +17,7 @@ Mighty.define(["mighty.core"], function( core ){
 						titles = core.query('.mighty-realtime-li', element);
 						spanTitles = core.query('.mighty-realtime-li .mighty-realtime-title', element); 
 						
-					core.getCSS("../src/mighty/realtime/mighty.realtime.css");
+					core.getCSS( core.option("mighty.basePath") + "mighty/realtime/mighty.realtime.css");
 					
 					self._styleEvents();										
 							

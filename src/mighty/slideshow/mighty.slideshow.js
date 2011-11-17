@@ -14,7 +14,7 @@ Mighty.define(["mighty.core"], function( core ){
 				options = self.options,
 				element = self.element;
 				
-			core.getCSS("../src/mighty/slideshow/mighty.slideshow.css");
+			core.getCSS( core.option("mighty.basePath") + "mighty/slideshow/mighty.slideshow.css" );
 
 			self._loadSlide(0);		
 			

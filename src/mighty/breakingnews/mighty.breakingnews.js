@@ -24,7 +24,7 @@ Mighty.define(["mighty.core"], function( core ){
 							
 			self._buildfooter();
 				
-			core.getCSS("../src/mighty/breakingnews/mighty.breakingnews.css");
+			core.getCSS( core.option("mighty.basePath") + "mighty/breakingnews/mighty.breakingnews.css" );
 			
 			if( options.ads == 1 ){
 				self._adInclude();

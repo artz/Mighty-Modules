@@ -21,7 +21,7 @@ Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
 				width = options.width;
 
 
-			core.getCSS("../src/mighty/mostpopular/mighty.mostpopular.css");
+			core.getCSS( core.option("mighty.basePath") + "mighty/mostpopular/mighty.mostpopular.css");
 
             //console.log( 'Self:', self, 'Element:', element );
 			core.attr( element, "style", "width: " + width + "px" );

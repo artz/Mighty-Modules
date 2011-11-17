@@ -19,7 +19,7 @@ Mighty.define(["mighty.core"], function( core ){
 				
 			self._buildFooter();
 				
-			core.getCSS("../src/mighty/bloggers/mighty.bloggers.css");
+			core.getCSS( core.option("mighty.basePath") + "mighty/bloggers/mighty.bloggers.css" );
 
 			//self._bindEvents();			
 		},

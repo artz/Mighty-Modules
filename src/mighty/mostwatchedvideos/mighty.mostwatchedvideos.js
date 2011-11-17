@@ -32,7 +32,7 @@ Mighty.define(["mighty.core"], function( core ){
 						AdId = adDivName + ( adDivCounter++ );
 									
 						
-					core.getCSS("../src/mighty/mostwatchedvideos/mighty.mostwatchedvideos.css");
+					core.getCSS( core.option("mighty.basePath") + "mighty/mostwatchedvideos/mighty.mostwatchedvideos.css" );
 					
 					if( options.ads == 1 ){
 						self._adInclude();

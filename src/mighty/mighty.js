@@ -272,6 +272,8 @@
 
 /*
 	Boot.options
+  Internal mechanism for setting options.
+  Need to figure out a better way to expose this.
 */
 	var bootOptions = {};
 	function options( customOptions, value ) {
@@ -282,6 +284,26 @@
 		}
 	}
 //	global.options = options;
+
+
+/*
+ * Boot.option
+ * Mechanism for storing configuration options for Boot.
+ */
+  var bootOption = {};
+  function option( key, value ) {
+    if ( value ) {
+      // console.log( "Setting: ", key, value );
+      bootOption[ key ] = value; 
+    } else if ( key ) {
+      // console.log( "Retrieving: ", key, bootOption[ key ] );
+      return bootOption[ key ];
+    } else {
+      // We return a copy of options, just in case.
+      return extend( {}, bootOption );
+    }
+  }
+// global.option = option;
 
 
 /*
@@ -1602,6 +1624,7 @@
 		extend: extend,
 		
 	//	options: options, // Meh?
+    option: option,
 
 		poll: poll,
 		
@@ -1637,7 +1660,7 @@
 		disableTextSelect: disableTextSelect,
 		
 		defer: defer,
-        proxy: proxy,
+    proxy: proxy,
 		
 		trim: trim,
 		toQueryString: toQueryString,
@@ -1664,6 +1687,10 @@ Mighty.require("mighty.core", function( core ){
 		// The mighty init function scans the DOM for anchor 
 		// links that contain the "mighty" global namespace,
 		// and then initializes its widget's source.
+
+    // Artz: We'll figure out a better way to control 
+    // global options later.
+    core.option("mighty.basePath", "http://localhost/Mighty-Modules/src/");
 		
 		var strMighty = "mighty",
 			mightyAnchors = document.getElementsByName( strMighty );
@@ -1704,10 +1731,11 @@ Mighty.require("mighty.core", function( core ){
 						// If the element's parent has the same class name
 						// as the Mighty Anchor, we already have the HTML and
 						// do not need to swap in the <div>.
-						
-					//	if ( className === mightyAnchorParent.className  ) {
+            // Note: This test requires the class name to exactly match.
+            // Artz: Consider developing a "hasClass" method.
 						if ( mightyAnchorParent.className && reg.test( mightyAnchorParent.className ) ) {
-							// Set the elem to the parent.
+
+              // Set the elem to the parent.
 							mightyModule = mightyAnchorParent;
 
 							isHTMLReady = 1;
@@ -1718,19 +1746,14 @@ Mighty.require("mighty.core", function( core ){
 
 							mightyModule = document.createElement("div");
 
-							// Assign the same class name as the anchor.
-//							mightyModule.className = mightyAnchor.className;
-
 							// These log checks were F'ed up without the
 							// boot.defer wrapper above in IE6/7.
-						//	global.log( "My name: " + widgetName );							
-						//	global.log( "Setting className: " + div.className );
-
-//							mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
+					  	// global.log( "My name: " + widgetName );							
+						  // global.log( "Setting className: " + div.className );
 							
 							// Ajax in the module's content.
 							// Make this configurable, or a function of the module eventually.
-							core.getJSONP("../src/api/?module=" + widgetName + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
+							core.getJSONP( core.option("mighty.basePath") + "api/?module=" + widgetName + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
 								
 								if ( ! data.error ) {
 									
@@ -1769,7 +1792,7 @@ Mighty.require("mighty.core", function( core ){
 						core.addClass( mightyModule, strMighty + strLoading );
 
 						// Bring in the modules we need.
-						core.require({ basePath: "../src/", filename: function(str){ return str.toLowerCase().replace(/\./, "/") + "/" + str.toLowerCase(); }, suffix: ".js" }, widgetName, function(){						
+						core.require({ basePath: core.option("mighty.basePath"), filename: function(str){ return str.toLowerCase().replace(/\./, "/") + "/" + str.toLowerCase(); }, suffix: ".js" }, widgetName, function(){						
 
 							function moduleReady(){
 								mightyAnchor.widget = core.widget( widgetName, mightyModule, options );
@@ -1791,7 +1814,7 @@ Mighty.require("mighty.core", function( core ){
 			}); // end core.each
 		}; // end Mighty.init()
 		
-		// Run Mighty.init() on DOM Ready.
+		// Run Mighty.init() on DOM Ready (or immediately).
 		core.ready( Mighty.init );
 	}
 	

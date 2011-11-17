@@ -21,8 +21,8 @@ Mighty.define(["mighty.core"], function( core ){
 		options: {
 			name: true,
 			description: true,
-			preview: true,
-      basePath: "http://localhost/Mighty-Modules/src/" // Path to source mighty module files.
+			preview: true
+      // basePath - if needed, you can override the basePath for maker.
 		},
 	
 		// Set up the widget
@@ -32,8 +32,9 @@ Mighty.define(["mighty.core"], function( core ){
 				options = self.options,
 				element = self.element,
 				module = options.module,
-				width = options.width;
-	
+				width = options.width,
+        basePath = options.basePath || core.option("mighty.basePath");
+
 		// 	core.getCSS("../src/mighty.mostpopular.css");
 			
 			// Artz: Can we make this more dynamic? I.e. it should be a data option on the 
@@ -46,7 +47,7 @@ Mighty.define(["mighty.core"], function( core ){
 
 			if ( module ) {
         // Pull in the make file.
-				core.require({ basePath: options.basePath + "/mighty/" + module + "/", suffix: ".js" }, "mighty." + module + ".make", function( make ){
+				core.require({ basePath: basePath + "mighty/" + module + "/", suffix: ".js" }, "mighty." + module + ".make", function( make ){
 					self.make = make;
 					self._build( make );
 				});
@@ -75,11 +76,12 @@ Mighty.define(["mighty.core"], function( core ){
 				href = make.href ? ' href="' + make.href + '"' : "",
 				name = make.name || "Mighty Modules",
 				options = self.options,
+        basePath = options.basePath || core.option("mighty.basePath"),
 				// Consider adding a title attribute to the snippet?
 				snippet = '<a name="mighty" class="mighty-' + options.module + '"' + dataOptions() + href + '>Mighty Source</a>';
 			
 			if ( script ) {
-				snippet += '<script async defer src="' + options.basePath + '"mighty.js"></script>';
+				snippet += '<script async defer src="' + basePath + 'mighty/mighty.js"></script>';
 			}
 			
 			return entities ? htmlEntities( snippet ) : snippet;
