@@ -1,124 +1,124 @@
 Mighty.define(["mighty.core"], function( core ){
-		
-	return {			
-		
-		// These options will be used as defaults
-		options: {
-			foo: 'bar'
-		},
 
-		// Set up the widget
-		_create: function () {
-			
-			var self = this,
-				options = self.options,
-				element = self.element;
-				
-			core.getCSS( core.option("mighty.basePath") + "mighty/slideshow/mighty.slideshow.css" );
+    return {
 
-			self._loadSlide(0);		
-			
-			self._bindevents();	
-		},
-		
-		_loadSlide : function (which) {
-			var self = this,
-				which = which,
-				element = self.element;
-				images = core.query('.mighty-slideshow-viewer-li img', element);
+        // These options will be used as defaults
+        options: {
+            foo: 'bar'
+        },
 
-				core.each(images, function (elm, i, array) {
-				
-					if ( which === i ) {
-				
-						if ( elm.getAttribute('data-src') !== elm.getAttribute('src') ) {
-						
-							core.bind(elm,'load',function(e){
-								
-								//console.log(e.target);
-								
-							});
-							
-							elm.src = elm.getAttribute('data-src');
-						
-						}
-					
-					}
-					
-				});
-			
-		},
-				
-		_bindevents: function () {
-		
-			var self = this,
-				options = self.options,
-				element = self.element,
-				slideshowView = core.query('.mighty-slideshow-viewer-ul',element)[0];
-				
-			core.delegate(element,'.mighty-slideshow-controls-next','click',function(){
-	
-				if ( Number(slideshowView.style.marginLeft.split('px')[0]) > -(Number(slideshowView.style.width.split('px')[0])-298) ) {
-	
-					slideshowView.style.marginLeft = (slideshowView.style.marginLeft.split('px')[0] - 298) + 'px';
-					
-					var nextSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)+1;
+        // Set up the widget
+        _create: function () {
 
-					self._loadSlide( nextSlideNumber );
-	
-				}
-	
-			});
-			
-			core.delegate(element,'.mighty-slideshow-controls-prev','click',function(){
+            var self = this,
+                options = self.options,
+                element = self.element;
 
-				if ( Number(slideshowView.style.marginLeft.split('px')[0]) < 0 ) {
+            core.getCSS( Mighty.option("basePath") + "mighty/slideshow/mighty.slideshow.css" );
 
-					slideshowView.style.marginLeft = (Number(slideshowView.style.marginLeft.split('px')[0]) + 298) + 'px';
-					
-					var prevSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)-1;
-					
-					self._loadSlide( prevSlideNumber );
+            self._loadSlide(0);
 
-				}
+            self._bindevents();
+        },
 
-			});
-			
-			core.delegate(element,'.mighty-slideshow-controls-prev','mouseover',function(){
+        _loadSlide : function (which) {
+            var self = this,
+                which = which,
+                element = self.element;
+                images = core.query('.mighty-slideshow-viewer-li img', element);
 
-				if ( Number(slideshowView.style.marginLeft.split('px')[0]) < 0 ) {
+                core.each(images, function (elm, i, array) {
 
-					var prevSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)-1;
+                    if ( which === i ) {
 
-					if ( prevSlideNumber > -1 ) {
+                        if ( elm.getAttribute('data-src') !== elm.getAttribute('src') ) {
 
-						self._loadSlide( prevSlideNumber );
+                            core.bind(elm,'load',function(e){
 
-					}
+                                //console.log(e.target);
 
-				}
+                            });
 
-			});
-			
-			core.delegate(element,'.mighty-slideshow-controls-next','mouseover',function(){
+                            elm.src = elm.getAttribute('data-src');
 
-				if ( Number(slideshowView.style.marginLeft.split('px')[0]) > -(Number(slideshowView.style.width.split('px')[0])-298) ) {
+                        }
 
-					var nextSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)+1,
-						totalSlides = Number(slideshowView.style.width.split('px')[0])/298;
+                    }
 
-					if ( nextSlideNumber <= totalSlides ) {
+                });
 
-						self._loadSlide( nextSlideNumber );
+        },
 
-					}
+        _bindevents: function () {
 
-				}
+            var self = this,
+                options = self.options,
+                element = self.element,
+                slideshowView = core.query('.mighty-slideshow-viewer-ul',element)[0];
 
-			});
-				
-		}
+            core.delegate(element,'.mighty-slideshow-controls-next','click',function(){
 
-	};
-	
+                if ( Number(slideshowView.style.marginLeft.split('px')[0]) > -(Number(slideshowView.style.width.split('px')[0])-298) ) {
+
+                    slideshowView.style.marginLeft = (slideshowView.style.marginLeft.split('px')[0] - 298) + 'px';
+
+                    var nextSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)+1;
+
+                    self._loadSlide( nextSlideNumber );
+
+                }
+
+            });
+
+            core.delegate(element,'.mighty-slideshow-controls-prev','click',function(){
+
+                if ( Number(slideshowView.style.marginLeft.split('px')[0]) < 0 ) {
+
+                    slideshowView.style.marginLeft = (Number(slideshowView.style.marginLeft.split('px')[0]) + 298) + 'px';
+
+                    var prevSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)-1;
+
+                    self._loadSlide( prevSlideNumber );
+
+                }
+
+            });
+
+            core.delegate(element,'.mighty-slideshow-controls-prev','mouseover',function(){
+
+                if ( Number(slideshowView.style.marginLeft.split('px')[0]) < 0 ) {
+
+                    var prevSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)-1;
+
+                    if ( prevSlideNumber > -1 ) {
+
+                        self._loadSlide( prevSlideNumber );
+
+                    }
+
+                }
+
+            });
+
+            core.delegate(element,'.mighty-slideshow-controls-next','mouseover',function(){
+
+                if ( Number(slideshowView.style.marginLeft.split('px')[0]) > -(Number(slideshowView.style.width.split('px')[0])-298) ) {
+
+                    var nextSlideNumber = (Math.abs(Number(slideshowView.style.marginLeft.split('px')[0]))/298)+1,
+                        totalSlides = Number(slideshowView.style.width.split('px')[0])/298;
+
+                    if ( nextSlideNumber <= totalSlides ) {
+
+                        self._loadSlide( nextSlideNumber );
+
+                    }
+
+                }
+
+            });
+
+        }
+
+    };
+
 });

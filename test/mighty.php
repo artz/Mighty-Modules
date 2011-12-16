@@ -19,9 +19,9 @@
 <!-- Advertisement Setup start -->
 <script type="text/javascript" src="http://o.aolcdn.com/ads/adsWrapper.js"></script>
 <script type="text/javascript">
-<!-- 
+<!--
 adSetTarget('_blank');
-adSetAdURL('/_uac/adpage.html'); 
+adSetAdURL('/_uac/adpage.html');
 //-->
 </script>
 <!-- Advertisement Setup end -->
@@ -31,7 +31,7 @@ adSetAdURL('/_uac/adpage.html');
 <h1><b>Mighty</b><b>Module</b> Test Page</h1>
 <div class="content">
 <pre id="log" style="font-size:12px;"></pre>
-<script src="../src/mighty/mighty.js"></script> 
+<script src="../src/mighty/mighty.js"></script>
 <script>
 Mighty.log.init({ elem: document.getElementById("log") });
 </script>
@@ -51,7 +51,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Mighty Maker (Source)</h2>
 	<div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="source" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
 	<script async defer src="../src/mighty/mighty.js"></script>
-    
+
 
 <!--
 	<h2>Source Widget #3</h2>
@@ -63,9 +63,9 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	<div class="mighty-mostpopular"><a name="mighty" class="mighty-mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Most Popular Module</b></a></div>
 	<script async defer src="../src/mighty.js"></script>
 
-<!-- 
+<!--
 	Example FB Code:
-	
+
 	<script>(function(d){
 	  var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
 	  js = d.createElement('script'); js.id = id; js.async = true;
@@ -97,7 +97,7 @@ Mighty.log.init({ elem: document.getElementById("log") });
 	//getWidget("mighty.mostpopular", array("verticals" => "AOL TV, Sports, Home", "width" => 300));
 //	MM_Widget::render("mighty.mostpopular", array("width" => 300));
 ?>
-
+-->
 <h2>Most Popular Widget (Embed)</h2>
 <a name="mighty" data-width="300" class="mighty-mostpopular" href="http://www.mightymodules.com/mostpopular/">Get this <b>Widget</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
