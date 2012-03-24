@@ -271,38 +271,37 @@
 
 
 /*
-   Boot.setup
+    Boot.setup
 
-   A function that appends a new "option" method
-   on a method to allow developers to override
-   default options.
- */
-  function setup( method, defaultOptions ) {
+    A function that appends a new "option" method
+    on a method to allow developers to override
+    default options.
+*/
+    function setup( method, defaultOptions ) {
 
-    defaultOptions = defaultOptions || {};
+        defaultOptions = defaultOptions || {};
 
-    // Create an option method on the method.
-    method.option = function( key, value ) {
-      if ( isString(key) ) {
-        // Retrieve an option using the key.
-        if ( value === undefined ) {
-          return defaultOptions[ key ];
-        // Set an option using a key.
-        } else {
-          defaultOptions[ key ] = value;
-        }
-      // Extend the default options.
-      } else if ( isObject(key) ) {
-        extend( defaultOptions, key );
-      // Return a copy of the current options.
-      } else {
-        return extend( {}, defaultOptions );
-      }
-    };
-
-    return global;
-  }
-  global.setup = setup;
+        // Create an option method on the method.
+        method.option = function( key, value ) {
+            if ( isString(key) ) {
+                // Retrieve an option using the key.
+                if ( value === undefined ) {
+                    return defaultOptions[ key ];
+                // Set an option using a key.
+                } else {
+                    defaultOptions[ key ] = value;
+                }
+                // Extend the default options.
+            } else if ( isObject(key) ) {
+                extend( defaultOptions, key );
+                // Return a copy of the current options.
+            } else {
+                return extend( {}, defaultOptions );
+            }
+        };
+//      return global;
+    }
+//  global.setup = setup;
 
 
 /*
@@ -320,6 +319,9 @@
             start = now(),
             time,
             isTimeout = false;
+
+        // Internet Explorer needs at least a 1 for setInterval.
+        pollDelay = pollDelay || 1;
 
         timers[ name ] = setInterval(function(){
 
@@ -482,7 +484,10 @@
         event.preventDefault = function(){
             event.returnValue = false;
         };
-        event.target = event.srcElement;
+
+        if ( ! event.target ) {
+            event.target = event.srcElement;
+        }
 
         return event;
     }
@@ -1221,6 +1226,8 @@
                 attribute = attributes[ attributesLength ];
                 attributeName = attribute.nodeName;
                 if ( contains( attributeName, strData ) ) {
+                    // Artz: It would be cool to provide camelCase property
+                    // names as an option (or standard).
                     attributesObject[ attributeName.replace( strData, "" ) ] = attribute.nodeValue;
                 }
             }
@@ -1333,7 +1340,7 @@
             textNode;
 
         // Stoyan says this is "absolutely required",
-        // but so far has passed all our tests.
+        // but so far has passed all our unit tests.
 //        style.setAttribute("type", "text/css");
 
         // This must happen before setting CSS for IE.
@@ -1407,7 +1414,6 @@
 
         return element;
     }
-
 //    global.disableTextSelect = disableTextSelect;
 
 
