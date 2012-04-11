@@ -29,5 +29,14 @@ Mighty.define({
 		value: 400,
 		minimum: 300,
 		maximum: 800
+	},
+	{
+		option: "height",
+		name: "Height",
+		description: "The height in pixels of the widget.",
+		type: "integer",
+		value: 400,
+		minimum: 300,
+		maximum: 800
 	}]
 });
