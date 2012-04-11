@@ -1771,7 +1771,8 @@ Mighty.require("mighty.core", function( core ){
 
         // Inject mighty module CSS reset.
         // Includes temporary fix for hiding mighty anchors.
-        core.inlineCSS(".mighty-module * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: inherit; font-size: inherit; font-weight: inherit; line-height: inherit; text-align: left; background-color: transparent; } a[name=mighty] { display: none; } .mighty-module { font-family: arial; font-size: 15px; line-height: 24px; color: #333; }");
+        // Need to research ability to use shorthand (i.e. font: inherit)
+        core.inlineCSS(".mighty-reset * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: inherit; font-size: inherit; font-weight: inherit; font-variant: inherit; font-style: inherit; line-height: inherit; text-align: left; background-color: transparent; color: inherit; } a[name=mighty] { display: none; } .mighty-reset { font-family: arial; font-size: 1em; font-weight: normal; font-variant: normal; font-style: normal; line-height: 1.5em; }");
 
         Mighty.init = function(){
 

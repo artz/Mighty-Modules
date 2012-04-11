@@ -23,7 +23,7 @@ $count = ( !empty($count) ) ? $count : 10;
 /*
 * The following curl method should be used on production.
 */
- 
+
 $c = curl_init();
 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
@@ -36,7 +36,7 @@ $json = json_decode($content);
 
 //$count = $count-1; // Doing this, as the index always starts from 0
 ?>
-<div class="mighty-mostwatchedvideos">
+<div class="mighty-mostwatchedvideos mighty-reset">
 <h2 class="header">Most Watched Videos</h2>
 <ul class="mighty-videos-ul">
 <?php

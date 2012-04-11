@@ -7,6 +7,14 @@ class MM_Widget {
 		// Replace with configurable absolute path eventually.
 		$path = '../src/' . str_replace( '.', '/', $name ) . '/';
 		$file = $name . '.php';
+
+        if ( isset( $options ) ) {
+            $dataOptions = '';
+            foreach ( $options as $key => $value ) {
+                $dataOptions .= ' data-' . $key . '="' . $value . '"';
+            }
+        }
+
 		require( $path . $file );
 	}
 }
