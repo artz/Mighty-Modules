@@ -2,6 +2,10 @@
 // http://jqueryui.com/demos/tabs/
 Mighty.define(["mighty.core"], function( core ){
 
+    // Eventually, let's protect against multiple insertions of the core styles.
+    core.inlineCSS(".mighty-tabs > .tabs > li { display: inline-block; *display: inline; zoom: 1; } \
+        .mighty-tabs .panel { display: none; } .mighty-tabs .selected { display: block; }");
+
     // Localize core functions.
     var addClass = core.addClass,
         removeClass = core.removeClass;
@@ -34,9 +38,6 @@ Mighty.define(["mighty.core"], function( core ){
                 strIndex = "index",
 
                 tabParent = core.createHTML("<ul class=\"tabs\"></ul>");
-
-            // Eventually, let's protect against multiple insertions of the core styles.
-            core.inlineCSS(".mighty-tabs > .tabs > li {	display: inline-block; *display: inline; zoom: 1; } .mighty-tabs .panel { display: none; } .mighty-tabs .selected { display: block; }");
 
             core.each( uiTabs, function( elem, i ) {
 
