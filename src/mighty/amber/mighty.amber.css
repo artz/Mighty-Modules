@@ -1,0 +1,104 @@
+body .mighty-localnews {
+	background-color: #FFF;
+	border: 1px solid #ccc;
+	display: block;
+	margin: 5px 0;
+	padding: 5px;
+	width: 300px;	
+}
+.mighty-localnews .header {
+	margin-bottom: 5px;
+}
+.mighty-localnews .header h2 {
+	background: url("../../images/mostpopular/huffpost.png") no-repeat scroll 0 50% transparent;
+	font-size: 18px;	
+	color: #4A4A4A;
+	margin-bottom: 5px;
+	margin-left: 75px;
+	text-indent: -9000em;		
+}
+.mighty-localnews .header span.vertical-name {
+	display:block;
+	font-size: 25px;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.mighty-localnews .articles ul.article-list li {
+	line-height: 1;
+	list-style-type: none;
+	border-bottom: 1px dashed #000;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+
+.mighty-localnews .articles ul.article-list li h2{
+	color: #4A4A4A;
+	font-size: 25px;
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+.mighty-localnews .articles ul.article-list li a {
+	color: #4A4A4A;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.mighty-localnews .articles ul.article-list li span.comments{
+	color: #4A4A4A;
+	display: block;
+	font-size: 11px;
+	margin-top: 5px;
+}
+span.comments b {
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.mighty-localnews img.thumb {
+	width: 300px;
+	//height: 75px;
+}
+.mighty-localnews-footer {
+	overflow: hidden;
+}
+.mighty-localnews-footer .more-news {
+	color: #4A4A4A;
+	float: left;
+	font-size: 15px;
+	font-weight: bold;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.mighty-localnews-footer .change-city-button {
+	color: red;
+    cursor: pointer;
+    float: right;
+    font-size: 9px;
+    padding-left: 20px;
+    text-transform: uppercase;
+}
+
+.mighty-localnews .change-city {
+	background-color: #F6F6F6;
+    border-top: 1px dashed;
+    margin-top: 10px;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.mighty-localnews .change-city select.city-dropdown {
+	border: 1px solid #000000;
+	display: block;
+	float: left;
+	margin-right: 10px;    
+}
+
+.mighty-localnews .change-city .change-city-submit {
+	color: red;
+	cursor: pointer;
+	float: left;
+}

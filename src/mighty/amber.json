@@ -1,0 +1,84 @@
+[
+   {
+       "Alert": {
+           "Status": "Active",
+           "AlertId": "9929",
+           "AlertPageUrl": "http://socialalerts.aol.com/amber/alert/9929",
+           "IncidentInformation": {
+               "MissingPersonCircumstanceText": "UPDATE: The child was abducted from Milan, Georgia in Dodge County. Also added the abductor's age. \r\n\r\nLevi's Call Activation\r\n\r\nA Levi's call has been issued on behalf of he Dodge County Sheriff's Office for Mathew Maskill Johnson. He was abducted on this date at 5:00 am by Taylor Nicole Maskill. The child was abducted from Milan, Georgia in Dodge County. The child was last seen in Lincoln, Alabama and they were traveling West on Interstate 20. They are believed to be traveling in the listed vehicle. The child is believed to be in extreme danger. If you have any information, please call the Dodge County Sheriff's Office at 478-374-1691.",
+               "MissingPersonLastSeenDate": "2012-03-22",
+               "MissingPersonLastSeenTime": "05:00:00-05:00",
+               "LastSeenAddress": {
+                   "Address": "",
+                   "AddressStateName": "GA",
+                   "AddressCityName": "Milan",
+                   "LocaleNeighborhoodName": ""
+               },
+               "PointOfContact": {
+                   "ContactPersonName": "",
+                   "ContactOrganizationName": "Dodge County Sheriff's Office",
+                   "PhoneNumber": {
+                       "Number": "478-374-1691",
+                       "Type": ""
+                   },
+                   "EmailAddress": "",
+                   "Website": ""
+               }
+           },
+           "AbbreviatedMessage": "UPDTEAMBRALRT:Lincoln,AL VEH:02 Slvr IsuzRodeo TAG:TX CY8B489 or CH5P601 CHILD:8MO W/M 2FT0 19 Bro/Bro SUSP:19YO W/F 5FT1 150 Grn/Red CALL 478-374-1691",
+           "ShortMessage": "UPDATE AMBER ALERT:Lincoln,AL VEHICLE:2002 Silver Isuzu Rodeo TAG:TX CY8B489 or CH5P601 CHILD:8MO White M 2FT0 19LBS Eyes:Brown Hair:Brown SUSPECT:19YO White F 5FT1 150LBS Eyes:Green Hair:Red CALL 478-374-1691",
+           "Victims": [
+               {
+                   "PersonGivenName": "Mathew",
+                   "PersonMiddleName": "",
+                   "PersonSurName": "Maskill Johnson",
+                   "PersonSuffixName": "",
+                   "PersonMonikerName": "",
+                   "Gender": "Male",
+                   "Age": "8MO",
+                   "PhysicalDescription": {
+                       "PersonEyeColorCode": "Brown",
+                       "PersonHairColorCode": "Brown",
+                       "PersonSkinToneCode": "White",
+                       "Height": "2FT0",
+                       "Weight": "19LBS",
+                       "Description": "The child was last seen wearing a blue and white striped infant jumper."
+                   }
+               }
+           ],
+           "Suspects": {
+               "SuspectPerson": {
+                   "PersonGivenName": "Taylor",
+                   "PersonMiddleName": "Nicole",
+                   "PersonSurName": "Maskill",
+                   "PersonSuffixName": "",
+                   "PersonMonikerName": "",
+                   "Gender": "Female",
+                   "Age": "19YO",
+                   "PhysicalDescription": {
+                       "PersonEyeColorCode": "Green",
+                       "PersonHairColorCode": "Red",
+                       "PersonSkinToneCode": "White",
+                       "Height": "5FT1",
+                       "Weight": "150LBS",
+                       "Description": "The suspect was last seen wearing a red shirt and blue jeans."
+                   }
+               },
+               "SuspectVehicle": {
+                   "VehicleMakeCode": "Isuzu",
+                   "VehicleModelCode": "Rodeo",
+                   "VehicleModelYearText": "2002",
+                   "VehicleStyleCode": "",
+                   "VehicleColorPrimaryCode": "Silver",
+                   "VehicleColorSecondaryCode": "",
+                   "VehicleColorInteriorText": "",
+                   "LicensePlate": {
+                       "LicensePlateText": "CY8B489 or CH5P601",
+                       "LicensePlateState": "TX"
+                   },
+                   "VehicleDescription": ""
+               }
+           }
+       }
+   }
+]
