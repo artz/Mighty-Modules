@@ -16,6 +16,7 @@ class MM_Widget {
     }
 
     public function param( $obj ) {
+        $params = array();
         foreach ( $obj as $key => $value ):
             $params[] = $this->encodeURIComponent( $key ) . '=' . $this->encodeURIComponent( $value );
         endforeach;
