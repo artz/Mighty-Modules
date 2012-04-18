@@ -17,7 +17,11 @@
     <h2>Amber Alerts Widget (API)</h2>
     <?php
         require_once("../src/api/widget-api.php");
-        MM_Widget::render("mighty.amber");
+        $amber = new MM_Widget();
+        // Path to Mighty API
+        $amber->host = "www.artzstudio.com";
+        $amber->basePath = "http://localhost/Mighty-Modules/src/api/";
+        $amber->render("mighty.amber");
     ?>
 
     <h2>Amber Alerts Widget (Embed)</h2>

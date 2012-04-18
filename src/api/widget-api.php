@@ -1,20 +1,34 @@
 <?php
 // Super simple example of a widget API :D
 class MM_Widget {
-	function render( $name, $options=array() ) {
-		// $name looks like 'mighty.source'
-		$id = str_replace( '.', '-', $name );
-		// Replace with configurable absolute path eventually.
-		$path = '../src/' . str_replace( '.', '/', $name ) . '/';
-		$file = $name . '.php';
 
-        if ( isset( $options ) ) {
-            $dataOptions = '';
-            foreach ( $options as $key => $value ) {
-                $dataOptions .= ' data-' . $key . '="' . $value . '"';
-            }
-        }
+    // Path to Mighty API.
+    public $basePath = "http://mighty.aol.com/api/";
 
-		require( $path . $file );
+    // Host name of this user.
+    public $host = "";
+
+    // JavaScript encodeURIComponent Equivalent
+    // http://stackoverflow.com/questions/1734250/what-is-the-equivalent-of-javascripts-encodeuricomponent-in-php
+    public function encodeURIComponent($str) {
+        $revert = array( '%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')' );
+        return strtr( rawurlencode($str), $revert );
+    }
+
+    public function param( $obj ) {
+        foreach ( $obj as $key => $value ):
+            $params[] = $this->encodeURIComponent( $key ) . '=' . $this->encodeURIComponent( $value );
+        endforeach;
+        return implode( $params, '&' );
+    }
+
+    public function render( $name, $options=array() ) {
+
+        $url = $this->basePath . '?_host=' . $this->host . '&_module=' . $name . '&' . $this->param( $options );
+
+        $ch = curl_init($url);
+        curl_exec($ch);
+        curl_close($ch);
+
 	}
 }

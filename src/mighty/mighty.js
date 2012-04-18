@@ -18,6 +18,7 @@
         // Localize global objects and functions for better compression.
         document = window.document,
         JSON = window.JSON,
+        encode = encodeURIComponent,
 
 //        slice = Array.prototype.slice,
 
@@ -1580,23 +1581,22 @@
 
 
 /*
-    Function: Boot.toQueryString
+    Function: Boot.param
 */
-    function toQueryString( obj, param ) {
-        var str = [],
-            name,
-            encode = encodeURIComponent;
+    function param( obj ) {
 
-        param = param || "&";
+        var params = [],
+            name;
 
         for ( name in obj ) {
             if ( obj.hasOwnProperty( name ) ) {
-                str.push( encode( name ) + "=" + encode( obj[ name ] ) );
+                params.push( encode( name ) + "=" + encode( obj[ name ] ) );
             }
         }
-        return str.length ? param + str.join("&") : "";
+
+        return params.join("&");
     }
-//    global.toQueryString = toQueryString;
+//    global.param = param;
 
 
 /*
@@ -1660,7 +1660,7 @@
 
         var callbackId = "JSONP_" + jsonpId++;
 
-        url += "&callback=" + namespace + "." + callbackId;
+        url += "&_jsonp=" + namespace + "." + callbackId;
 
         global[ callbackId ] = function( data ) {
 
@@ -1736,7 +1736,7 @@
         proxy: proxy,
 
         trim: trim,
-        toQueryString: toQueryString,
+        param: param,
 
         parseJSON: parseJSON,
         getJSONP: getJSONP
@@ -1826,7 +1826,9 @@ Mighty.require("mighty.core", function( core ){
 
                             // Ajax in the module's content.
                             // Make this configurable, or a function of the module eventually.
-                            core.getJSONP( Mighty.option("basePath") + "api/?module=" + widgetName + core.toQueryString( core.data( mightyAnchor ) ), function( data ){
+                            core.getJSONP( Mighty.option("basePath") + "api/?_host=" +
+                                location.hostname + "&_module=" + widgetName +
+                                "&" + core.param( core.data( mightyAnchor ) ), function( data ){
 
                                 if ( ! data.error ) {
 

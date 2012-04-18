@@ -1,40 +1,33 @@
 <?php
 
-    /*
-     * Super simple AJAX -> JSONP Proxy
-     * Like... seriously simple
-     */
+    if ( isset( $_GET['_file'] ) ) {
 
-    header( 'content-type: application/javascript; charset=utf-8' );
+        // Retrieve dummy JSON data stored as a file in this directory
+        if ( file_exists( $_GET['_file'] ) ) {
 
-    if ( isset( $_GET['file'] ) ) {
-		
-		// Retrieve dummy JSON data stored as a file in this directory	
-		if ( file_exists( $_GET['file'] ) ) {
+//			$data = file_get_contents( './' . $_GET['file'] );
 
-//			$data = file_get_contents( './' . $_GET['file'] ); 
+            ob_start();
+            require( './' . $_GET['_file'] );
+            $data = ob_get_clean();
 
-			ob_start();
-			require( './' . $_GET['file'] );
-			$data = ob_get_clean();
-			
-			// If the file type requested is HTML, convert it to a JSON escaped string.
-			if ( strstr( $_GET['file'], ".php" ) ) {
-				$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
-			}
-	
-			// Simulate asynchronicity delay so nobody accidentally assumes synchronicity
-			sleep( ( isset( $_GET['delay'] ) ) ? $_GET['delay'] : 1 );
-		} else {
-			// Return an empty object
-			$data = '{ "error" : "Specified file (' . $_GET['file'] . ') not found." }';	
-		}
+            // If the file type requested is HTML, convert it to a JSON escaped string.
+            if ( strstr( $_GET['_file'], ".php" ) ) {
+                $data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
+            }
 
-    } elseif ( isset( $_GET['url'] ) ) {
-		
+            // Simulate asynchronicity delay so nobody accidentally assumes synchronicity
+            sleep( ( isset( $_GET['delay'] ) ) ? $_GET['delay'] : 1 );
+        } else {
+            // Return an empty object
+            $data = '{ "error" : "Specified file (' . $_GET['_file'] . ') not found." }';
+        }
+
+    } elseif ( isset( $_GET['_url'] ) ) {
+
         // Proxy JSON from an external URL
         // (If your API serves JSONP, why are you using this, buddy?)
-        
+
         /* This method causes errors in my VPS
         $proxy = curl_init( urldecode( $_GET['url'] ) );
 
@@ -44,35 +37,43 @@
         $data = curl_exec( $proxy );
         */
 
-        $data = file_get_contents( $_GET['url'] );
-	
-	// Module API
-    } elseif ( $_GET['module'] ) {
-		
-		$name = $_GET['module'];
-		$id = str_replace( '.', '-', $name );
-		$options = $_GET;
-		
-		unset( $options['module'] );
-		unset( $options['callback'] );
+        $data = file_get_contents( $_GET['_url'] );
 
-		ob_start();
-	//	require_once('widget-api.php');	
-	//	MM_Widget::render( $_GET['module'], $options );
-		$path = '../' . str_replace( '.', '/', $name ) . '/';
-		require( $path . $name . '.php');
-		$data = ob_get_clean();
+    // Module API
+    } elseif ( isset( $_GET['_module'] ) ) {
 
-		$data = '"' . addslashes( str_replace( "\n", "", $data ) ) . '"';
-		
-	} else {
+        // Require the host name param for module API.
+        if ( ! isset( $_GET['_host'] ) ) {
+            echo '{ "error" : "A _host param is required." }';
+            die;
+        }
 
+        $name = $_GET['_module'];
+        unset( $_GET['_module'] );
+
+        $options = new stdClass();
+        $dataOptions = "";
+
+        foreach ( $_GET as $key => $value ) {
+            $options->$key = $value;
+            $dataOptions .= ' data-' . $key . '="' . $value . '"';
+        }
+
+        ob_start();
+        $path = '../' . str_replace( '.', '/', $name ) . '/';
+        // echo realpath( dirname( __FILE__ ) ) . '<br>';
+        require( $path . $name . '.php');
+        $data = ob_get_clean();
+
+    } else {
         // Return an empty object
         $data = '{ "error" : "No file or url specified." }';
-
     }
 
-    $callback = ( isset( $_GET['callback'] ) ) ? $_GET['callback'] : 'callback';
+    // Set up JSONP
+    if ( isset( $_GET['_jsonp'] ) ) {
+        header( 'content-type: application/javascript; charset=utf-8' );
+        $data = $_GET['_jsonp'] . '("' . addslashes( str_replace( "\n", "", $data ) ) . '")';
+    }
 
-//	echo "alert(" . $callback . ");";
-    echo $callback . '(' . $data . ');';
+    echo $data;
