@@ -5,8 +5,6 @@ $dataOptions = '';
 $count = ''; // Declaring the variable for number of items from data-count
 $vertical = ''; // Var for vertical name in slug format - data-vertical
 
-
-
 if ( isset( $options ) ) {
     foreach ( $options as $key => $value ) {
         $dataOptions .= ' data-' . $key . '="' . $value . '"';

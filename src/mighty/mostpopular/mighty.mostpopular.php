@@ -11,21 +11,11 @@
     $dataOptions = '';
     $header = 'Most Popular'; // This is just a test for adding a 'text' based field to Mighty Maker module for Most Popular Widget.
 
-    if ( isset( $options ) ) {
-        foreach ( $options as $key => $value ) {
-            $dataOptions .= ' data-' . $key . '="' . $value . '"';
-            // Artz: Make this cleaner somehow - extend function?
-            if ( $key == "header" ){
-                $header = $value; // This will pickup the header name from data-header
-            }
-        }
-    }
-
     // print_r( $options );
     // Artz: Seems like we need a way to set default options in PHP.
     // Not sure if somehow options can be shared between JS and PHP?
-    if ( isset( $options["verticals"] ) ) {
-        $verticals = $options["verticals"];
+    if ( isset( $options->verticals ) ) {
+        $verticals = $options->verticals;
         $verticals = explode( ",", $verticals );
     } else {
         $verticals = array();
@@ -41,14 +31,10 @@
     array_walk($verticals, 'trim_value');
 
     // Live Data
-    // $data = file_get_contents( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' );
-    // Artz: We need to think about what the ideal API for this is.
-    // i.e. "Here is what we want the call to look like, and here is what we expect the results to be.
+    $data = file_get_contents( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' );
 
     // Local Data
     // $data = file_get_contents( '../src/mighty/mostpopular/mighty.mostpopular.json' );
-    // Artz: Figure out a plan for testing local data? Make a wrapper in API?
-    $data = file_get_contents( 'mighty.mostpopular.json' );
 
     $data = json_decode( $data );
     $data = $data->response;

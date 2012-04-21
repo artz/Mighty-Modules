@@ -1799,16 +1799,18 @@ Mighty.require("mighty.core", function( core ){
                             // Do our fancy DOM option extraction here.
                             dataOptions = core.data( mightyAnchor ),
 
-                            reg = new RegExp("(\\s|^)" + className + "(\\s|$)", "g");
+                            reg = new RegExp("(\\s|^)" + className + "(\\s|$)", "g"),
+
+                            optionParams;
 
                         // If the element's parent has the same class name
                         // as the Mighty Anchor, we already have the HTML and
                         // do not need to swap in the <div>.
-            // Note: This test requires the class name to exactly match.
-            // Artz: Consider developing a "hasClass" method.
+                        // Note: This test requires the class name to exactly match.
+                        // Artz: Consider developing a "hasClass" method.
                         if ( mightyAnchorParent.className && reg.test( mightyAnchorParent.className ) ) {
 
-              // Set the elem to the parent.
+                            // Set the elem to the parent.
                             mightyModule = mightyAnchorParent;
 
                             isHTMLReady = true;
@@ -1819,16 +1821,16 @@ Mighty.require("mighty.core", function( core ){
 
                             mightyModule = document.createElement("div");
 
-                            // These log checks were F'ed up without the
-                            // boot.defer wrapper above in IE6/7.
-                          // global.log( "My name: " + widgetName );
-                          // global.log( "Setting className: " + div.className );
-
+                            optionParams = core.param( core.data( mightyAnchor ) );
+                            if ( optionParams ) {
+                                optionParams = "&" + optionParams;
+                            }
                             // Ajax in the module's content.
                             // Make this configurable, or a function of the module eventually.
                             core.getJSONP( Mighty.option("basePath") + "api/?_host=" +
-                                location.hostname + "&_module=" + widgetName +
-                                "&" + core.param( core.data( mightyAnchor ) ), function( data ){
+
+                                Mighty.option("host") + "&_cache=" + (Mighty.option("cache") || 60) +
+                                "&_module=" + widgetName + optionParams, function( data ){
 
                                 if ( ! data.error ) {
 
@@ -1900,5 +1902,7 @@ Mighty.require("mighty.core", function( core ){
 });
 
 })(Mighty, document, {
-    basePath: "http://localhost/Mighty-Modules/src/"
+    host: location.hostname,
+    basePath: "http://localhost/Mighty-Modules/src/",
+    cache: 15
 });

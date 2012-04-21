@@ -1,5 +1,7 @@
 Mighty.define(["mighty.core"], function( core ){
 
+    core.getCSS( Mighty.option("basePath") + "mighty/slideshow/mighty.slideshow.css" );
+
     return {
 
         // These options will be used as defaults
@@ -14,32 +16,31 @@ Mighty.define(["mighty.core"], function( core ){
                 options = self.options,
                 element = self.element;
 
-            core.getCSS( Mighty.option("basePath") + "mighty/slideshow/mighty.slideshow.css" );
-
             self._loadSlide(0);
-
             self._bindevents();
+
         },
 
         _loadSlide : function (which) {
+
             var self = this,
                 which = which,
                 element = self.element;
                 images = core.query('.mighty-slideshow-viewer-li img', element);
 
-                core.each(images, function (elm, i, array) {
+                core.each(images, function (elem) {
 
                     if ( which === i ) {
 
-                        if ( elm.getAttribute('data-src') !== elm.getAttribute('src') ) {
+                        if ( elem.getAttribute('data-src') !== elem.getAttribute('src') ) {
 
-                            core.bind(elm,'load',function(e){
+                            core.bind(elem,'load',function(e){
 
                                 //console.log(e.target);
 
                             });
 
-                            elm.src = elm.getAttribute('data-src');
+                            elem.src = elem.getAttribute('data-src');
 
                         }
 

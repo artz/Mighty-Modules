@@ -27,10 +27,11 @@
 <div class="content">
     <h2>Mighty Local News Widget ( API )</h2>
 
-            <?php
-                require_once("../src/api/widget-api.php");
-                MM_Widget::render("mighty.localnews",array( "vertical" => "los-angeles", "vname" => "Los Angeles" ));
-            ?>
+<?php
+    require_once("../src/lib/mighty.php");
+    $localnews = new MM_Widget();
+    $localnews->render("mighty.localnews", array( "vertical" => "los-angeles", "vname" => "Los Angeles" ));
+?>
 
         <h2>Mighty Local News Widget ( Embed )</h2>
 

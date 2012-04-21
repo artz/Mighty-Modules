@@ -32,7 +32,7 @@ $i = 0;
 $slideShowsCount = 0;
 
 ?>
-<div class="aol-huffpost-slideshows mighty-reset">
+<div class="mighty-slideshow mighty-reset">
     <div class="mighty-slideshow-header">
         <h1><?php echo $header; ?></h1>
     </div>
@@ -52,9 +52,7 @@ $slideShowsCount = 0;
             echo '<ul class="mighty-slideshow-viewer-ul" style="width:'.$ulWidth.'px;">';
 
             foreach ( $slideshow->slides as $slide ) {
-
                 echo '<li class="mighty-slideshow-viewer-li"><img data-src="'.$slide.'" src="" width="292"></li>';
-
             }
 
             echo '</ul>';

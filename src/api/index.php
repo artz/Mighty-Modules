@@ -1,5 +1,20 @@
 <?php
 
+    // Set up cache TTL.
+    $cache_default = 60;
+    $cache_min = 15;
+
+    if ( isset( $_GET['_cache'] ) ) {
+        $cache = $_GET['_cache'];
+    } else {
+        $cache = $cache_default;
+    }
+
+    if ( $cache < $cache_min ) {
+        $cache = $cache_min;
+    }
+
+    // Handle file requests.
     if ( isset( $_GET['_file'] ) ) {
 
         // Retrieve dummy JSON data stored as a file in this directory
@@ -23,6 +38,7 @@
             $data = '{ "error" : "Specified file (' . $_GET['_file'] . ') not found." }';
         }
 
+    // Handle URL requests.
     } elseif ( isset( $_GET['_url'] ) ) {
 
         // Proxy JSON from an external URL
@@ -59,15 +75,22 @@
             $dataOptions .= ' data-' . $key . '="' . $value . '"';
         }
 
-        ob_start();
-        $path = '../' . str_replace( '.', '/', $name ) . '/';
-        // echo realpath( dirname( __FILE__ ) ) . '<br>';
-        require( $path . $name . '.php');
-        $data = ob_get_clean();
+        $cache_key = $_SERVER['QUERY_STRING'];
+        $cache_key = preg_replace( '/&_jsonp.*/', '', $cache_key ); // Strip out JSONP
+        if ( apc_exists( $cache_key ) ) {
+            $data = apc_fetch( $cache_key );
+        } else {
+            ob_start();
+            $path = '../' . str_replace( '.', '/', $name ) . '/';
+            // echo realpath( dirname( __FILE__ ) ) . '<br>';
+            require( $path . $name . '.php');
+            $data = ob_get_clean();
+            apc_store( $cache_key, $data, $cache );
+        }
 
     } else {
         // Return an empty object
-        $data = '{ "error" : "No file or url specified." }';
+        $data = '{ "error" : "No file or url specified. {Link to API Documentation}" }';
     }
 
     // Set up JSONP

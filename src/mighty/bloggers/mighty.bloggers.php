@@ -1,20 +1,8 @@
 <?php
 
 // Set up data options.
-$dataOptions = '';
 $count = ''; // Declaring the variable for number of items from data-count
-
-
-if ( isset( $options ) ) {
-    foreach ( $options as $key => $value ) {
-        $dataOptions .= ' data-' . $key . '="' . $value . '"';
-        if ( $key == "count" ){
-            $count .= $value; // This will pickup the numitems from data-count
-        }
-    }
-}
-
-$count = ( !empty($count) ) ? $count : 7;
+$count = isset( $options->count ) ? $options->count : 7;
 
 /**
  * Modifies a string to remove all non ASCII characters and spaces.

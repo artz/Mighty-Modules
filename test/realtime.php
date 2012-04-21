@@ -16,10 +16,11 @@
 <div class="content">
     <h2>What's Being Read - Realtime ( API )</h2>
 
-        <?php
-            require_once("../src/api/widget-api.php");
-            MM_Widget::render("mighty.realtime");
-        ?>
+<?php
+    require_once("../src/lib/mighty.php");
+    $realtime = new MM_Widget();
+    $realtime->render("mighty.realtime");
+?>
 
     <h2>What's Being Read - Realtime ( Embed )</h2>
 

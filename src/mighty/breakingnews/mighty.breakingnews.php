@@ -1,23 +1,7 @@
 <?php
 
-// Set up data options.
-$dataOptions = '';
 $count = ''; // Declaring the variable for number of items from data-count
 $ads = ''; // Var for ads
-
-
-if ( isset( $options ) ) {
-    foreach ( $options as $key => $value ) {
-        $dataOptions .= ' data-' . $key . '="' . $value . '"';
-        if ( $key == "count" ){
-            $count .= $value; // This will pickup the numitems from data-count
-        }
-        if ( $key == "ads" ){
-            $ads .= $value; // This will pickup the ad setting from data-ads
-        }
-
-    }
-}
 
 $numItems = (isset($_GET['count'])) ? $_GET['count'] : $count;
 

@@ -39,8 +39,9 @@ Mighty.log.init({ elem: document.getElementById("log") });
 <h2>Source Widget (API)</h2>
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
-	require_once("../src/api/widget-api.php");
-	MM_Widget::render("mighty.source", array("width" => 500));
+    require_once("../src/lib/mighty.php");
+    $source = new MM_Widget();
+    $source->render("mighty.source", array("width" => 500));
 ?>
 
 <h2>Source Widget (Embed)</h2>

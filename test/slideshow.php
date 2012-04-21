@@ -17,8 +17,14 @@
 <body>
 <h1><b>Mighty</b><b>Module</b> Test Page</h1>
 <div class="content">
+<h2>Slideshow Widget (API)</h2>
+<?php
+    require_once("../src/lib/mighty.php");
+    $slideshow = new MM_Widget();
+    $slideshow->render("mighty.slideshow");
+?>
 
-<h2>Slideshow Widget</h2>
+<h2>Slideshow Widget (Embed)</h2>
 <a name="mighty" data-width="300" class="mighty-slideshow" href="http://www.mightymodules.com/slideshow/">Get this <b>Widget</b></a>
 <script async defer src="../src/mighty/mighty.js"></script>
 
