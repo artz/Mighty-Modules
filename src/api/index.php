@@ -77,15 +77,20 @@
 
         $cache_key = $_SERVER['QUERY_STRING'];
         $cache_key = preg_replace( '/&_jsonp.*/', '', $cache_key ); // Strip out JSONP
-        if ( apc_exists( $cache_key ) ) {
+
+        if ( function_exists( 'apc_exists' ) && apc_exists( $cache_key ) ) {
             $data = apc_fetch( $cache_key );
         } else {
+
             ob_start();
             $path = '../' . str_replace( '.', '/', $name ) . '/';
             // echo realpath( dirname( __FILE__ ) ) . '<br>';
             require( $path . $name . '.php');
             $data = ob_get_clean();
-            apc_store( $cache_key, $data, $cache );
+
+            if ( function_exists( 'apc_store' ) ) {
+                apc_store( $cache_key, $data, $cache );
+            }
         }
 
     } else {
