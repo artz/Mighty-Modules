@@ -76,7 +76,7 @@ Mighty.define(["mighty.core"], function( core ){
         basePath = options.basePath || Mighty.option("basePath"),
                 // Consider adding a title attribute to the snippet?
                 snippet = '<a name="mighty" class="mighty-' + options.module +
-                    '"' + dataOptions() + href + '>Mighty Source</a>';
+                    '"' + dataOptions() + href + '>' + make.name + '</a>';
 
             if ( script ) {
                 snippet += '<script async defer src="' + basePath + 'mighty/mighty.js"></script>';
@@ -127,6 +127,7 @@ Mighty.define(["mighty.core"], function( core ){
 
             // Build UI for options
             if ( core.isArray( makeOptions ) ) {
+
                 var i,
                     length = makeOptions.length;
 
@@ -150,6 +151,8 @@ Mighty.define(["mighty.core"], function( core ){
                     }
                 }
 
+            }
+
                 ui.code = core.createHTML( '<div class="maker-code"><label>Get the Code</label></div>' );
                 ui.snippet = core.createHTML( '<div class="maker-snippet"></div>"' );
 
@@ -157,8 +160,6 @@ Mighty.define(["mighty.core"], function( core ){
                 element.appendChild( ui.code );
 
                 ui.snippet.innerHTML = self._getCode( true, true );
-
-            }
 
             if ( options.preview ) {
                 var previewSection = core.createHTML( '<div class="maker-preview"><label>Preview</label></div>' );
