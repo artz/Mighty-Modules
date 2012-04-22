@@ -54,6 +54,12 @@
         $name = $_GET['_module'];
         unset( $_GET['_module'] );
 
+        $host = $_GET['_host'];
+        unset( $_GET['_host'] );
+
+        $cache = $_GET['_cache'];
+        unset( $_GET['_cache'] );
+
         $options = new stdClass();
         $dataOptions = "";
 
@@ -61,6 +67,8 @@
             $options->$key = $value;
             $dataOptions .= ' data-' . $key . '="' . $value . '"';
         }
+        unset( $key );
+        unset( $value );
 
         $cache_key = $_SERVER['QUERY_STRING'];
         $cache_key = preg_replace( '/[&]*_host=[^&]*/', '', $cache_key ); // Strip out host
@@ -72,17 +80,15 @@
 
             // Grab the module's view.
             ob_start();
-            $path = '../' . str_replace( '.', '/', $name ) . '/';
-            require( $path . $name . '.php');
+            require( '../' . str_replace( '.', '/', $name ) . '/' . $name . '.php');
             $data = ob_get_clean();
 
             // Set up cache TTL.
+            // TODO: Allow cache TTL at a module level.
             $cache_default = 60;
             $cache_min = 15;
 
-            if ( isset( $_GET['_cache'] ) ) {
-                $cache = $_GET['_cache'];
-            } else {
+            if ( ! isset( $cache ) ) {
                 $cache = $cache_default;
             }
 
