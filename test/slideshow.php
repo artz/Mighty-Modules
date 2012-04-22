@@ -20,8 +20,8 @@
 <h2>Slideshow Widget (API)</h2>
 <?php
     require_once("../src/lib/mighty.php");
-    $slideshow = new MM_Widget();
-    $slideshow->render("mighty.slideshow");
+    $slideshow = new MM_Widget("mighty.slideshow");
+    $slideshow->render();
 ?>
 
 <h2>Slideshow Widget (Embed)</h2>

@@ -33,8 +33,8 @@ Mighty.log("TODO: See if we really need Mighty.proxy.");
 <!-- An API call to our Widget Factory, critical for SEO. -->
 <?php
     require_once("../src/lib/mighty.php");
-    $source = new MM_Widget();
-    $source->render("mighty.source", array("width" => 500));
+    $source = new MightyModule("mighty.source", array("width" => 500));
+    $source->render();
 ?>
 <h2>Source Widget (Embed)</h2>
 <!-- Our standard embed code. -->

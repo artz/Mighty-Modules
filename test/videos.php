@@ -29,14 +29,14 @@
 
 <?php
     require_once("../src/lib/mighty.php");
-    $mostwatchedvideos = new MM_Widget();
-    $mostwatchedvideos->render("mighty.mostwatchedvideos", array( "ads" => 1 ));
+    $mostwatchedvideos = new MightyModule("mighty.mostwatchedvideos", array( "ads" => 1 ));
+    $mostwatchedvideos->render();
 ?>
 
     <h2>Most Watched Videos Widget ( Embed )</h2>
 
-        <a name="mighty" class="mighty-mostwatchedvideos" href="http://www.mightymodules.com/source/">Get the <b>Most Watched Videos Module</b></a>
-        <script async defer src="../src/mighty/mighty.js"></script>
+    <a name="mighty" class="mighty-mostwatchedvideos" href="http://www.mightymodules.com/source/">Get the <b>Most Watched Videos Module</b></a>
+    <script async defer src="../src/mighty/mighty.js"></script>
 
 </div>
 </body>

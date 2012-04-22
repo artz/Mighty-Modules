@@ -18,14 +18,14 @@
 
 <?php
     require_once("../src/lib/mighty.php");
-    $realtime = new MM_Widget();
-    $realtime->render("mighty.realtime");
+    $realtime = new MightyModule("mighty.realtime");
+    $realtime->render();
 ?>
 
     <h2>What's Being Read - Realtime ( Embed )</h2>
 
-            <a name="mighty" class="mighty-realtime" href="http://www.mightymodules.com/realtime/">Get the <b>What's Being Read - Realtime Widget</b></a>
-            <script async defer src="../src/mighty/mighty.js"></script>
+    <a name="mighty" class="mighty-realtime" href="http://www.mightymodules.com/realtime/">Get the <b>What's Being Read - Realtime Widget</b></a>
+    <script async defer src="../src/mighty/mighty.js"></script>
 
    <h2>Mighty Maker (RealTime widget)</h2>
 

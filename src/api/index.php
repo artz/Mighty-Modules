@@ -1,6 +1,5 @@
 <?php
 
-
     // Handle file requests.
     if ( isset( $_GET['_file'] ) ) {
 
@@ -54,11 +53,20 @@
         $name = $_GET['_module'];
         unset( $_GET['_module'] );
 
-        $host = $_GET['_host'];
-        unset( $_GET['_host'] );
+        if ( isset( $_GET['_host'] ) ) {
+            $host = $_GET['_host'];
+            unset( $_GET['_host'] );
+        }
 
-        $cache = $_GET['_cache'];
-        unset( $_GET['_cache'] );
+        if ( isset( $_GET['_cache'] ) ) {
+            $cache = $_GET['_cache'];
+            unset( $_GET['_cache'] );
+        }
+
+        if ( isset( $_GET['_jsonp'] ) ) {
+            $jsonp = $_GET['_jsonp'];
+            unset( $_GET['_jsonp'] );
+        }
 
         $options = new stdClass();
         $dataOptions = "";
@@ -107,9 +115,9 @@
     }
 
     // Set up JSONP
-    if ( isset( $_GET['_jsonp'] ) ) {
+    if ( isset( $jsonp ) ) {
         header( 'content-type: application/javascript; charset=utf-8' );
-        $data = $_GET['_jsonp'] . '("' . addslashes( str_replace( "\n", "", $data ) ) . '")';
+        $data = $jsonp . '("' . addslashes( str_replace( "\n", "", $data ) ) . '")';
     }
 
     echo $data;

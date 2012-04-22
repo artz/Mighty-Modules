@@ -26,18 +26,15 @@
 
 <div class="content">
     <h2>Mighty Local News Widget ( API )</h2>
-
 <?php
     require_once("../src/lib/mighty.php");
-    $localnews = new MM_Widget();
-    $localnews->render("mighty.localnews", array( "vertical" => "los-angeles", "vname" => "Los Angeles" ));
+    $localnews = new MightyModule("mighty.localnews", array( "vertical" => "los-angeles", "vname" => "Los Angeles" ));
+    $localnews->render();
 ?>
 
-        <h2>Mighty Local News Widget ( Embed )</h2>
-
-            <a name="mighty" class="mighty-localnews" data-vertical="dc" data-vname="DC" href="http://www.mightymodules.com/source/">Get the <b>Most Watched Videos Module</b></a>
-            <script async defer src="../src/mighty/mighty.js"></script>
-
+    <h2>Mighty Local News Widget ( Embed )</h2>
+    <a name="mighty" class="mighty-localnews" data-vertical="dc" data-vname="DC" href="http://www.mightymodules.com/source/">Get the <b>Most Watched Videos Module</b></a>
+    <script async defer src="../src/mighty/mighty.js"></script>
 
 </div>
 </body>
