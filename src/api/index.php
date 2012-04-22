@@ -63,6 +63,7 @@
         }
 
         $cache_key = $_SERVER['QUERY_STRING'];
+        $cache_key = preg_replace( '/[&]*_host=[^&]*/', '', $cache_key ); // Strip out host
         $cache_key = preg_replace( '/&_jsonp.*/', '', $cache_key ); // Strip out JSONP
 
         if ( function_exists( 'apc_exists' ) && apc_exists( $cache_key ) ) {
