@@ -1,18 +1,5 @@
 <?php
 
-    // Set up cache TTL.
-    $cache_default = 60;
-    $cache_min = 15;
-
-    if ( isset( $_GET['_cache'] ) ) {
-        $cache = $_GET['_cache'];
-    } else {
-        $cache = $cache_default;
-    }
-
-    if ( $cache < $cache_min ) {
-        $cache = $cache_min;
-    }
 
     // Handle file requests.
     if ( isset( $_GET['_file'] ) ) {
@@ -82,11 +69,25 @@
             $data = apc_fetch( $cache_key );
         } else {
 
+            // Grab the module's view.
             ob_start();
             $path = '../' . str_replace( '.', '/', $name ) . '/';
-            // echo realpath( dirname( __FILE__ ) ) . '<br>';
             require( $path . $name . '.php');
             $data = ob_get_clean();
+
+            // Set up cache TTL.
+            $cache_default = 60;
+            $cache_min = 15;
+
+            if ( isset( $_GET['_cache'] ) ) {
+                $cache = $_GET['_cache'];
+            } else {
+                $cache = $cache_default;
+            }
+
+            if ( $cache < $cache_min ) {
+                $cache = $cache_min;
+            }
 
             if ( function_exists( 'apc_store' ) ) {
                 apc_store( $cache_key, $data, $cache );

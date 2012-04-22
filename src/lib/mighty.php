@@ -35,6 +35,8 @@ class MightyModule {
 
         if ( count( $options ) === 0 ) {
             $options = $this->options;
+        } else {
+            $options = array_merge( $this->options, $options );
         }
 
         global $MightyConfig;
