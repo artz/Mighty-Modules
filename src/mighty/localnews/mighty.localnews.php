@@ -84,6 +84,5 @@ $vcolor = $json->response[0]->vertical_color;
     }
 ?>
         </ul>
-</div>
-<a name="mighty" class="mighty-localnews"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Local News Module</b></a>
+    </div>
 </div>

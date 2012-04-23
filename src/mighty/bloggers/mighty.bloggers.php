@@ -46,7 +46,7 @@ $json = json_decode($content);
 
 ?>
 <div class="mighty-bloggers mighty-reset">
-        <h2 class="header">Featured Bloggers</h2>
+    <h2 class="header">Featured Bloggers</h2>
     <div class="articles">
         <ul class="article-list">
 <?php
@@ -68,18 +68,18 @@ $json = json_decode($content);
                 ?>
             <li class="first-result">
                 <a class="huffpost-logo" href="http://www.huffingtonpost.com/">Breaking News and Opinion on The Huffington Post</a>
-                        <div class="main-promo">
-                            <a href="http://www.huffingtonpost.com/<?php echo $authorslug; ?>"><img class="thumb" src="<?php echo $img; ?>" alt="" /></a>
-                            <div class="author-info-main">
-                                <span class="author-name"><a href="http://www.huffingtonpost.com/<?php echo $authorslug; ?>"><?php echo $author; ?></a></span>
-                                <span class="vertical-name"><a href="<?php echo $vlink; ?>"><?php echo $vname; ?></a></span>
-                            </div>
+                    <div class="main-promo">
+                        <a href="http://www.huffingtonpost.com/<?php echo $authorslug; ?>"><img class="thumb" src="<?php echo $img; ?>" alt="" /></a>
+                        <div class="author-info-main">
+                            <span class="author-name"><a href="http://www.huffingtonpost.com/<?php echo $authorslug; ?>"><?php echo $author; ?></a></span>
+                            <span class="vertical-name"><a href="<?php echo $vlink; ?>"><?php echo $vname; ?></a></span>
                         </div>
-                        <a href="<?php echo $url;?>">
-                        <h2><?php echo strip_tags($short_title); ?></h2>
-                        <span class="comments"><b>Comments</b>(<?php echo $comment; ?>)</span>
-                        </a>
-        </li>
+                    </div>
+                    <a href="<?php echo $url;?>">
+                    <h2><?php echo strip_tags($short_title); ?></h2>
+                    <span class="comments"><b>Comments</b>(<?php echo $comment; ?>)</span>
+                </a>
+            </li>
             <?php
             } else {
                 if ( $key < $count ){
@@ -102,6 +102,5 @@ $json = json_decode($content);
     }
 ?>
         </ul>
-</div>
-<a name="mighty" class="mighty-bloggers"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Local News Module</b></a>
+    </div>
 </div>

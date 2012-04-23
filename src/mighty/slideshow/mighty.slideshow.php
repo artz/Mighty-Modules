@@ -67,7 +67,6 @@ $slideShowsCount = 0;
     }
 
 } ?>
-
         <div class="mighty-slideshow-controls">
             <div class="mighty-slideshow-controls-prev">previous slide</div>
             <div class="mighty-slideshow-controls-next">next slide</div>

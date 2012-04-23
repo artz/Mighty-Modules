@@ -26,7 +26,7 @@ $json = json_decode($content);
 //print_r($json);
 ?>
 <div class="mighty-breakingnews mighty-reset">
-<h2 class="header">Breaking News</h2>
+    <h2 class="header">Breaking News</h2>
     <div class="articles">
         <ul class="article-list">
 <?php
@@ -62,6 +62,5 @@ $json = json_decode($content);
     }
 ?>
         </ul>
-</div>
-<a name="mighty" class="mighty-breakingnews"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Breaking News Module</b></a>
+    </div>
 </div>

@@ -71,10 +71,9 @@ function truncate ($str, $length=10, $trailing='...') {
  $output=sortStdArray($json->response,"viral_views"); // This is commented, since most of the popular stories are from AOL.
 
 ?>
-
 <div class="mighty-realtime mighty-reset">
-<h2 class="header">What's Being Read</h2>
-        <ul class="mighty-realtime-ul">
+    <h2 class="header">What's Being Read</h2>
+    <ul class="mighty-realtime-ul">
 <?php
 
     foreach($output as $key=>$value){ // Comment this, if sorted results are needed.
@@ -102,16 +101,16 @@ function truncate ($str, $length=10, $trailing='...') {
                 }
 
 ?>
-            <li class="mighty-realtime-li" data-vcolor="<?php echo "#".$vcolor; ?>" title="<?php echo $title; ?>">
-                <span class="mighty-realtime-title" data-vcolor="<?php echo "#".$vcolor; ?>">
-                    <a href="<?php echo $url ?>"><?php echo truncate($title,40); ?></a>
-                </span>
-                <a class="arrow"></a>
-                <span class="mighty-realtime-views">
-                    <a href="<?php echo $url ?>"><?php echo $views; ?></a>
-                </span>
+        <li class="mighty-realtime-li" data-vcolor="<?php echo "#".$vcolor; ?>" title="<?php echo $title; ?>">
+            <span class="mighty-realtime-title" data-vcolor="<?php echo "#".$vcolor; ?>">
+                <a href="<?php echo $url ?>"><?php echo truncate($title,40); ?></a>
+            </span>
+            <a class="arrow"></a>
+            <span class="mighty-realtime-views">
+                <a href="<?php echo $url ?>"><?php echo $views; ?></a>
+            </span>
 
-            </li>
+        </li>
 
 
 <?php
@@ -119,12 +118,11 @@ function truncate ($str, $length=10, $trailing='...') {
     } // End Foreach
 
 ?>
-        </ul>
-        <div class="footer-links">
-            <a class="huffpost-logo" href="http://www.huffingtonpost.com/">Breaking News and Opinion on The Huffington Post</a>
-            <a class="link" href="#">
-                Get This Widget
-            </a>
-        </div>
-<a name="mighty" class="mighty-realtime"<?=$dataOptions?> href="http://www.mightymodules.com/realtime/">Get the <b>What's Being Read (Realtime) Widget</b></a>
+    </ul>
+    <div class="footer-links">
+        <a class="huffpost-logo" href="http://www.huffingtonpost.com/">Breaking News and Opinion on The Huffington Post</a>
+        <a class="link" href="#">
+            Get This Widget
+        </a>
+    </div>
 </div>

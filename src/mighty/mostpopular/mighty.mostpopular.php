@@ -73,31 +73,28 @@
 
         <div class="panel">
             <ul>
-
-                <?php for ( $j = 0; $j < count( $data ); $j++ ) : ?>
-                    <?php $entry = $data[$j]; ?>
-                    <?php if ( $entry->vertical_name == $verticals[$i] ) : ?>
-                        <li>
-                            <a href="<?php echo $entry->entry_url; ?>"><img src="<?php echo $entry->entry_image; ?>"></a>
-                            <a href="<?php echo $entry->entry_url; ?>" title="<?php echo $entry->entry_title ?>" >
-                                <?php
-                                    // Artz: Give some thought to the value of the title attribute.
-                                    // Perhaps it should store the excerpt instead, and we give
-                                    // the user a "quickread" sort of experience.
-                                    if ( ! empty( $entry->entry_front_page_title ) ) {
-                                        echo $entry->entry_front_page_title;
-                                    } else {
-                                        echo $entry->entry_title;
-                                    }
-                                ?>
-                            </a>
-                            <div class="fb-like" data-href="<?php echo $entry->entry_url; ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
-                        </li>
-                    <?php endif; ?>
-                <?php endfor; ?>
-
+        <?php for ( $j = 0; $j < count( $data ); $j++ ) :
+                $entry = $data[$j];
+                if ( $entry->vertical_name == $verticals[$i] ) : ?>
+                <li>
+                    <a href="<?php echo $entry->entry_url; ?>"><img src="<?php echo $entry->entry_image; ?>"></a>
+                    <a href="<?php echo $entry->entry_url; ?>" title="<?php echo $entry->entry_title ?>" >
+                        <?php
+                            // Artz: Give some thought to the value of the title attribute.
+                            // Perhaps it should store the excerpt instead, and we give
+                            // the user a "quickread" sort of experience.
+                            if ( ! empty( $entry->entry_front_page_title ) ) {
+                                echo $entry->entry_front_page_title;
+                            } else {
+                                echo $entry->entry_title;
+                            }
+                        ?>
+                    </a>
+                    <div class="fb-like" data-href="<?php echo $entry->entry_url; ?>" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
+                </li>
+            <?php endif;
+                endfor; ?>
             </ul>
         </div>
     <?php endfor; ?>
-    <a name="mighty" class="mighty-mostpopular"<?=$dataOptions?> href="http://www.mightymodules.com/mostpopular/">Get this widget</a>
 </div>

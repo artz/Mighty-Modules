@@ -37,28 +37,27 @@ $json = json_decode($content);
 //$count = $count-1; // Doing this, as the index always starts from 0
 ?>
 <div class="mighty-mostwatchedvideos mighty-reset">
-<h2 class="header">Most Watched Videos</h2>
-<ul class="mighty-videos-ul">
-<?php
-foreach($json->response as $key=>$value){
-if ($key <= $count){
-$url = $value->entry_url;
-$img = $value->entry_image_large;
-$title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
-?>
-<li class="mighty-videos-li">
-<img src="<?php echo $img; ?>" data-href="<?php echo $url;?>" data-title="<?php echo $title;?>" data-src="<?php echo $img; ?>" />
-</li>
-<?php
+    <h2 class="header">Most Watched Videos</h2>
+    <ul class="mighty-videos-ul">
+    <?php
+    foreach($json->response as $key=>$value){
+    if ($key <= $count){
+    $url = $value->entry_url;
+    $img = $value->entry_image_large;
+    $title = ($value->entry_front_page_title) ? $value->entry_front_page_title : $value->entry_title;
+    ?>
+        <li class="mighty-videos-li">
+        <img src="<?php echo $img; ?>" data-href="<?php echo $url;?>" data-title="<?php echo $title;?>" data-src="<?php echo $img; ?>" />
+        </li>
+    <?php
 
-} // IF condition closes here
-} // End Foreach
+    } // IF condition closes here
+    } // End Foreach
 
-?>
-</ul>
-<div class="mighty-mostwatchedvideos-controls">
-<div class="mighty-mostwatchedvideos-controls-prev">previous slide</div>
-<div class="mighty-mostwatchedvideos-controls-next">next slide</div>
-</div>
-<a name="mighty" class="mighty-mostwatchedvideos"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Most Watched Videos Module</b></a>
+    ?>
+    </ul>
+    <div class="mighty-mostwatchedvideos-controls">
+        <div class="mighty-mostwatchedvideos-controls-prev">previous slide</div>
+        <div class="mighty-mostwatchedvideos-controls-next">next slide</div>
+    </div>
 </div>

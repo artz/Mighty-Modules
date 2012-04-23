@@ -1789,7 +1789,7 @@ Mighty.require("mighty.core", function( core ){
 
                         var className = mightyAnchor.className,
                             widgetName = className.replace(/-/g, "."),
-                            mightyAnchorParent = mightyAnchor.parentNode,
+                            mightyAnchorParent = mightyAnchor.parentNode, //mightyAnchor.parentNode,
                             mightyModule,
                             isHTMLReady = false,
 
@@ -1808,7 +1808,7 @@ Mighty.require("mighty.core", function( core ){
                         // do not need to swap in the <div>.
                         // Note: This test requires the class name to exactly match.
                         // Artz: Consider developing a "hasClass" method.
-                        if ( mightyAnchorParent.className && reg.test( mightyAnchorParent.className ) ) {
+                        if ( core.isElement( mightyAnchorParent ) && mightyAnchorParent.className && reg.test( mightyAnchorParent.className ) ) {
 
                             // Set the elem to the parent.
                             mightyModule = mightyAnchorParent;
@@ -1903,6 +1903,6 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-    basePath: "http://localhost/Mighty-Modules/src/",
+    basePath: "http://10.66.67.240/Mighty-Modules/src/",
     cache: 15
 });

@@ -109,6 +109,12 @@
             }
         }
 
+        // Inject Mighty Anchor if not JSONP
+        if ( ! isset( $jsonp ) ) {
+            $anchor = '<a name="mighty" class="' . str_replace( '.', '-', $name ) . '"' . $dataOptions . ' href="#">Get the <b>Mighty Module</b></a>';
+            $data = preg_replace( '/(<\/[A-Za-z]+>[\s]*$)/', $anchor . '\1', $data );
+        }
+
     } else {
         // Return an empty object
         $data = '{ "error" : "No file or url specified. {Link to API Documentation}" }';

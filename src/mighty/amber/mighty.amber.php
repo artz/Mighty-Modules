@@ -41,7 +41,6 @@ if ( count( $json ) > 0 ):
     endforeach;
 ?>
 </ul>
-<a name="mighty" class="mighty-amber"<?=$dataOptions?> href="http://www.mightymodules.com/source/">Get the <b>Amber Alerts Module</b></a>
 </div>
 <?php
 endif;
