@@ -88,7 +88,7 @@
 
             // Grab the module's view.
             ob_start();
-            require( '../' . str_replace( '.', '/', $name ) . '/' . $name . '.php');
+            require( $_SERVER['DOCUMENT_ROOT'] . '/../' . str_replace( '.', '/', $name ) . '/' . $name . '.php');
             $data = ob_get_clean();
 
             // Set up cache TTL.
