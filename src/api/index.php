@@ -1,5 +1,55 @@
 <?php
 
+class Mighty {
+
+    public $cacheTTL = 5;
+
+    public function get( $url ) {
+
+        if ( function_exists( 'apc_exists' ) && apc_exists( $url ) ) {
+            $response = apc_fetch( $url );
+        } else {
+
+            if ( ! isset( $ttl ) ) {
+                $ttl = $this->cacheTTL;
+            }
+
+            // If this is an HTTP request, cURL it.
+            if ( strpos( $url, 'http' ) === 0 ) {
+                $ch = curl_init($url);
+                curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+                $response = curl_exec($ch);
+
+                curl_close($ch);
+
+            // Otherwise, attempt to pull from local file system.
+            } else {
+
+                $url = realpath( dirname( __FILE__ ) ) .  '/../' .
+                    str_replace('.', '/', $_GET['_module']) . '/' . $url ;
+                $response = file_get_contents($url);
+            }
+
+            if ( function_exists( 'apc_store' ) ) {
+                apc_store( $url, $response, $ttl );
+            }
+        }
+
+        return $response;
+    }
+
+    public function getJSON( $url ) {
+        $response = $this->get( $url );
+        return json_decode( $response );
+    }
+
+    public function getXML( $url ) {
+        $response = $this->get( $url );
+        return xmlrpc_decode( $response );
+    }
+}
+
     // Handle file requests.
     if ( isset( $_GET['_file'] ) ) {
 
@@ -50,33 +100,36 @@
             die;
         }
 
-        $name = $_GET['_module'];
-        unset( $_GET['_module'] );
+        $params = $_GET;
 
-        if ( isset( $_GET['_host'] ) ) {
-            $host = $_GET['_host'];
-            unset( $_GET['_host'] );
+        $name = $params['_module'];
+        unset( $params['_module'] );
+
+        if ( isset( $params['_host'] ) ) {
+            $host = $params['_host'];
+            unset( $params['_host'] );
         }
 
-        if ( isset( $_GET['_cache'] ) ) {
-            $cache = $_GET['_cache'];
-            unset( $_GET['_cache'] );
+        if ( isset( $params['_cache'] ) ) {
+            $cache = $params['_cache'];
+            unset( $params['_cache'] );
         }
 
-        if ( isset( $_GET['_jsonp'] ) ) {
-            $jsonp = $_GET['_jsonp'];
-            unset( $_GET['_jsonp'] );
+        if ( isset( $params['_jsonp'] ) ) {
+            $jsonp = $params['_jsonp'];
+            unset( $params['_jsonp'] );
         }
 
         $options = new stdClass();
         $dataOptions = "";
 
-        foreach ( $_GET as $key => $value ) {
+        foreach ( $params as $key => $value ) {
             $options->$key = $value;
             $dataOptions .= ' data-' . $key . '="' . $value . '"';
         }
         unset( $key );
         unset( $value );
+        unset( $params );
 
         $cache_key = $_SERVER['QUERY_STRING'];
         $cache_key = preg_replace( '/[&]*_host=[^&]*/', '', $cache_key ); // Strip out host
@@ -93,8 +146,8 @@
 
             // Set up cache TTL.
             // TODO: Allow cache TTL at a module level.
-            $cache_default = 60;
-            $cache_min = 15;
+            $cache_default = 5;
+            $cache_min = 5;
 
             if ( ! isset( $cache ) ) {
                 $cache = $cache_default;

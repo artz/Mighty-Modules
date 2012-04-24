@@ -1789,7 +1789,7 @@ Mighty.require("mighty.core", function( core ){
 
                         var className = mightyAnchor.className,
                             widgetName = className.replace(/-/g, "."),
-                            mightyAnchorParent = mightyAnchor.parentNode, //mightyAnchor.parentNode,
+                            mightyAnchorParent = mightyAnchor.parentNode,
                             mightyModule,
                             isHTMLReady = false,
 
@@ -1808,10 +1808,17 @@ Mighty.require("mighty.core", function( core ){
                         // do not need to swap in the <div>.
                         // Note: This test requires the class name to exactly match.
                         // Artz: Consider developing a "hasClass" method.
-                        if ( core.isElement( mightyAnchorParent ) && mightyAnchorParent.className && reg.test( mightyAnchorParent.className ) ) {
+                        if ( mightyAnchorParent.className && reg.test( mightyAnchorParent.className ) ) {
 
                             // Set the elem to the parent.
                             mightyModule = mightyAnchorParent;
+
+                            // This is indeed a mighty module!
+                            core.addClass( mightyModule, "mighty-module" );
+
+                            // Add our mighty-loading class, indicating the module
+                            // is in the process of being initialized.
+                            core.addClass( mightyModule, strMighty + strLoading );
 
                             isHTMLReady = true;
 
@@ -1828,22 +1835,28 @@ Mighty.require("mighty.core", function( core ){
                             // Ajax in the module's content.
                             // Make this configurable, or a function of the module eventually.
                             core.getJSONP( Mighty.option("basePath") + "api/?_host=" +
-
                                 Mighty.option("host") + "&_cache=" + (Mighty.option("cache") || 60) +
                                 "&_module=" + widgetName + optionParams, function( data ){
 
                                 if ( ! data.error ) {
 
-                                    mightyModule = core.createHTML( data );
+                                    data = core.trim( data );
 
-                                    // This is indeed a mighty module!
-                                    core.addClass( mightyModule, "mighty-module" );
+                                    // If we get back a module, add it to the
+                                    // DOM and initialize.
+                                    if ( data ) {
 
-                                    // Add our mighty-loading class, indicating the module
-                                    // is in the process of being initialized.
-                                    core.addClass( mightyModule, strMighty + strLoading );
+                                        mightyModule = core.createHTML( data );
 
-                                    mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
+                                        // This is indeed a mighty module!
+                                        core.addClass( mightyModule, "mighty-module" );
+
+                                        // Add our mighty-loading class, indicating the module
+                                        // is in the process of being initialized.
+                                        core.addClass( mightyModule, strMighty + strLoading );
+
+                                        mightyAnchorParent.insertBefore( mightyModule, mightyAnchor );
+                                    }
 
                                     isHTMLReady = true;
 
@@ -1859,13 +1872,6 @@ Mighty.require("mighty.core", function( core ){
                         // is valuable, perhaps debugging, validation, etc.
                         // mightyAnchorParent.removeChild( mightyAnchor );
                         mightyAnchor.style.display = "none";
-
-                        // This is indeed a mighty module!
-                        core.addClass( mightyModule, "mighty-module" );
-
-                        // Add our mighty-loading class, indicating the module
-                        // is in the process of being initialized.
-                        core.addClass( mightyModule, strMighty + strLoading );
 
                         // Bring in the modules we need.
                         core.require({ basePath: Mighty.option("basePath"),
@@ -1903,6 +1909,6 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-    basePath: "http://10.66.67.240/Mighty-Modules/src/",
-    cache: 15
+    basePath: "http://localhost/Mighty-Modules/src/",
+    cache: 5
 });

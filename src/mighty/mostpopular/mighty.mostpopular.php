@@ -31,12 +31,13 @@
     array_walk($verticals, 'trim_value');
 
     // Live Data
-    $data = file_get_contents( 'http://www.huffingtonpost.com/api/?t=most_popular_merged' );
+    $Mighty = new Mighty();
+    $data = $Mighty->getJSON('http://www.huffingtonpost.com/api/?t=most_popular_merged');
 
     // Local Data
-    // $data = file_get_contents( '../src/mighty/mostpopular/mighty.mostpopular.json' );
+    // $data = $Mighty->getJSON('mighty.mostpopular.json');
 
-    $data = json_decode( $data );
+//    $data = json_decode( $data );
     $data = $data->response;
 
     // Sort data by verticals

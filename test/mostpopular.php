@@ -12,23 +12,21 @@
 </head>
 <body>
 <h1><b>Mighty</b><b>Module</b> Test Page</h1>
-
 <div class="content">
-    <h2>Amber Alerts Widget (API)</h2>
+    <h2>Most Popular Widget (API)</h2>
     <?php
         require_once("../src/lib/mighty.php");
-        $amber = new MightyModule("mighty.amber", array( "myname" => "Dave" ));
-        $amber->render(array("yourname" => "Dave"));
+        $amber = new MightyModule("mighty.mostpopular");
+        $amber->render();
     ?>
 
-    <h2>Amber Alerts Widget (Embed)</h2>
-    <a name="mighty" class="mighty-amber" data-nohtml data-nojs href="http://www.mightymodules.com/amber/">Get the <b>Amber Alerts Widget</b></a>
+    <h2>Most Popular Widget (Embed)</h2>
+    <a name="mighty" class="mighty-mostpopular" data-nohtml data-nojs href="http://www.mightymodules.com/amber/">Get the <b>Amber Alerts Widget</b></a>
     <script async defer src="../src/mighty/mighty.js"></script>
 
-   <h2>Mighty Maker (Amber Alerts Widget)</h2>
-    <div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="amber" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
+    <h2>Mighty Maker (Most Popular Widget)</h2>
+    <div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
     <script async defer src="../src/mighty/mighty.js"></script>
-
 </div>
 </body>
 </html>

@@ -1,9 +1,11 @@
 <?php
 
 // $amber_response = file_get_contents($_SERVER["DOCUMENT_ROOT"].'ules/src/mighty/amber.json');
-$amber_response = file_get_contents('http://api.socialalerts.aol.com/api/amber');
+// $Mighty->getFile("amber.json");
+$Mighty = new Mighty();
+$amber_response = $Mighty->getJSON('http://api.socialalerts.aol.com/api/amber');
 
-$json = json_decode($amber_response);
+// $json = json_decode($amber_response);
 
 function ago($i){
     $m = time()-$i; $o='just now';
