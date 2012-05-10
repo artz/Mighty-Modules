@@ -1,9 +1,8 @@
 <?php
 
-// $amber_response = file_get_contents($_SERVER["DOCUMENT_ROOT"].'ules/src/mighty/amber.json');
-// $Mighty->getFile("amber.json");
 $Mighty = new Mighty();
 $json = $Mighty->getJSON('http://api.socialalerts.aol.com/api/amber');
+// $json = $Mighty->getJSON('amber.json');
 
 function ago($i){
     $m = time()-$i; $o='just now';
@@ -14,7 +13,7 @@ function ago($i){
     }
     return $o;
 }
-print_r( $json );
+
 if ( count( $json ) > 0 ):
 ?>
 <div class="mighty-amber mighty-reset">
