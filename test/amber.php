@@ -23,11 +23,11 @@
 
     <h2>Amber Alerts Widget (Embed)</h2>
     <a name="mighty" class="mighty-amber" data-nohtml data-nojs href="http://www.mightymodules.com/amber/">Get the <b>Amber Alerts Widget</b></a>
-    <script async defer src="../src/mighty/mighty.js"></script>
+    <script async defer src="../src/mighty.js"></script>
 
    <h2>Mighty Maker (Amber Alerts Widget)</h2>
     <div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="amber" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
-    <script async defer src="../src/mighty/mighty.js"></script>
+    <script async defer src="../src/mighty.js"></script>
 
 </div>
 </body>

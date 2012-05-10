@@ -14,14 +14,15 @@ function ago($i){
     }
     return $o;
 }
-
+print_r( $json );
 if ( count( $json ) > 0 ):
 ?>
 <div class="mighty-amber mighty-reset">
 <h2>Amber Alerts</h2>
 <ul class="alerts">
 <?php
-    foreach( $json[0] as $alert ):
+    foreach( $json as $item ):
+        $alert = $item->Alert;
         if ( $alert->Status == 'Active' ):
             echo '<li>';
             $victims = $alert->Victims;
