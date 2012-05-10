@@ -1909,6 +1909,6 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-    basePath: "http://localhost/Mighty-Modules/src/",
+    basePath: "http://origin.mighty.aol.com/",
     cache: 5
 });
