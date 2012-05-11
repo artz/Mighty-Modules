@@ -23,20 +23,29 @@ if ( count( $json ) > 0 ):
     foreach( $json as $item ):
         $alert = $item->Alert;
         if ( $alert->Status == 'Active' ):
-            echo '<li>';
             $victims = $alert->Victims;
             foreach( $victims as $victim ):
+
+                echo '<li>';
+                if ( $victim->PhysicalDescription && isset($victim->PhysicalDescription->Picture) &&
+                    isset($victim->PhysicalDescription->Picture->ExternalPicture) && isset($victim->PhysicalDescription->Picture->ExternalPicture->HostedImageUrl) ):
+                    $img_src = $victim->PhysicalDescription->Picture->ExternalPicture->HostedImageUrl;
+                    echo '<img height="100" src="' . $img_src . '" alt="Picture of '.
+                        $victim->PersonGivenName . ' ' . $victim->PersonSurName . '">';
+                endif;
+
                 echo '<h3><a target="_blank" href="http://socialalerts.aol.com/amber/alert/' .
                     $alert->AlertId . '">' . $victim->PersonGivenName . ' ' .
                     $victim->PersonSurName . '</a></h3>';
+
                 $incident = $alert->IncidentInformation;
                 $address = $incident->LastSeenAddress;
-                echo '<p>' . $victim->Age . ' ' . $victim->Gender . ' in ' .
-                    $address->AddressCityName . ', ' . $address->AddressStateName . '</p>';
+                echo '<p>' . $victim->Age . ' ' . $victim->Gender . ' in <nobr>' .
+                    $address->AddressCityName . ', ' . $address->AddressStateName . '</nobr></p>';
 
                 echo '<p>Last seen ' . ago( strtotime( $incident->MissingPersonLastSeenDate ) ) . '</p>';
-            endforeach;
             echo "</li>\n";
+            endforeach;
         endif;
     endforeach;
 ?>
