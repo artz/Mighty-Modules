@@ -27,8 +27,7 @@ if ( count( $json ) > 0 ):
             foreach( $victims as $victim ):
 
                 echo '<li>';
-                if ( $victim->PhysicalDescription && isset($victim->PhysicalDescription->Picture) &&
-                    isset($victim->PhysicalDescription->Picture->ExternalPicture) && isset($victim->PhysicalDescription->Picture->ExternalPicture->HostedImageUrl) ):
+                if ( isset( $victim->PhysicalDescription->Picture->ExternalPicture->HostedImageUrl ) ):
                     $img_src = $victim->PhysicalDescription->Picture->ExternalPicture->HostedImageUrl;
                     echo '<img height="100" src="' . $img_src . '" alt="Picture of '.
                         $victim->PersonGivenName . ' ' . $victim->PersonSurName . '">';
