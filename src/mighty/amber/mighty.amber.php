@@ -29,8 +29,9 @@ if ( count( $json ) > 0 ):
                 echo '<li>';
                 if ( isset( $victim->PhysicalDescription->Picture->ExternalPicture->HostedImageUrl ) ):
                     $img_src = $victim->PhysicalDescription->Picture->ExternalPicture->HostedImageUrl;
-                    echo '<img height="100" src="' . $img_src . '" alt="Picture of '.
-                        $victim->PersonGivenName . ' ' . $victim->PersonSurName . '">';
+                    echo '<a target="_blank" href="http://socialalerts.aol.com/amber/alert/' .
+                        $alert->AlertId . '"><img height="100" src="' . $img_src . '" alt="Picture of '.
+                        $victim->PersonGivenName . ' ' . $victim->PersonSurName . '"></a>';
                 endif;
 
                 echo '<h3><a target="_blank" href="http://socialalerts.aol.com/amber/alert/' .
