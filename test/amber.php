@@ -17,8 +17,8 @@
     <h2>Amber Alerts Widget (API)</h2>
     <?php
         require_once("../src/lib/mighty.php");
-        $amber = new MightyModule("mighty.amber", array( "myname" => "Dave" ));
-        $amber->render(array("yourname" => "Dave"));
+        $amber = new MightyModule("mighty.amber");
+        $amber->render();
     ?>
 
     <h2>Amber Alerts Widget (Embed)</h2>

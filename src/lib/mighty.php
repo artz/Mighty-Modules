@@ -40,8 +40,7 @@ class MightyModule {
         }
 
         global $MightyConfig;
-        $url = $MightyConfig->basePath . '?_host=' . $MightyConfig->host . '&_cache=' . $MightyConfig->cache . '&_module=' . $this->name . '&' . $this->param( $options );
-
+        $url = $MightyConfig->basePath . 'api/?_host=' . $MightyConfig->host . '&_cache=' . $MightyConfig->cache . '&_module=' . $this->name . '&' . $this->param( $options );
         $ch = curl_init($url);
         curl_exec($ch);
         curl_close($ch);
