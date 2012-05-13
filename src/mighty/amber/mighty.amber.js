@@ -5,7 +5,21 @@ Mighty.define(["mighty.core"], function( core ){
         .mighty-amber li { padding-top: 20px; overflow: hidden; }\
         .mighty-amber img { clear: left; float: left; margin-right: 10px; }\
         .mighty-amber h3 { font-size: 20px; line-height: 20px; padding-bottom: 4px; }\
-        .mighty-amber p { font-size: 14px; line-height: 18px; }");
+        .mighty-amber p { font-size: 14px; line-height: 18px; }\
+        @-webkit-keyframes border-pulsate {\
+            0%   { border-color: rgba(191, 42, 42, 1); }\
+            50% { border-color: rgba(244, 186, 40, 1); }\
+            100%   { border-color: rgba(191, 42, 42, 1); }\
+        }\
+        @-moz-keyframes border-pulsate {\
+            0%   { border-color: rgba(191, 42, 42, 1); }\
+            50% { border-color: rgba(244, 186, 40, 1); }\
+            100%   { border-color: rgba(191, 42, 42, 1); }\
+        }\
+        .mighty-amber {\
+            -webkit-animation: border-pulsate 5s infinite;\
+            -moz-animation: border-pulsate 5s infinite;\
+        }");
 
     return {
 
