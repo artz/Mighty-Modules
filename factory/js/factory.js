@@ -32,7 +32,7 @@
             selectedWidget = widgetName;
 
             // generate maker in factory
-            $factory.html("<div class=\"mighty-maker\"><a name=\"mighty\" class=\"mighty-maker\" data-module=\"" + widgetName + "\">Loading...</a>");
+            $factory.html("<div class=\"mighty-maker\"><a name=\"mighty\" class=\"mighty-maker\" data-module=\"" + widgetName + "\">Loading...</a></div>");
 
             Mighty.init();
 
