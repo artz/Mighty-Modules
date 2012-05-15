@@ -1074,7 +1074,9 @@
             addClass( elem, instance.name );
 
             // Initialize the widget.
-            instance._create();
+            if ( instance.create ) {
+                instance._create();
+            }
 
             // Save the instance on the element for later access.
             if ( ! elem.widget ) {
@@ -1909,6 +1911,7 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-    basePath: "http://mighty.aol.com/",
+//    basePath: "http://localhost/mighty/src/", // Development path
+    basePath: "http://mighty.aol.com/", // Production path
     cache: 5
 });
