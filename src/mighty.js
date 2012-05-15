@@ -1916,7 +1916,7 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-    basePath: "http://localhost/mighty/src/", // Development path
-//    basePath: "http://mighty.aol.com/", // Production path
+//    basePath: "http://localhost/mighty/src/", // Development path
+    basePath: "http://mighty.aol.com/", // Production path
     cache: 5
 });
