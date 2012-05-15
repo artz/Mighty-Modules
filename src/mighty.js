@@ -1074,7 +1074,7 @@
             addClass( elem, instance.name );
 
             // Initialize the widget.
-            if ( instance.create ) {
+            if ( instance._create ) {
                 instance._create();
             }
 
@@ -1777,7 +1777,6 @@ Mighty.require("mighty.core", function( core ){
         core.inlineCSS(".mighty-reset * { border: 0; margin: 0; padding: 0; list-style-type: none; font-family: inherit; font-size: inherit; font-weight: inherit; font-variant: inherit; font-style: inherit; line-height: inherit; text-align: left; background-color: transparent; color: inherit; } a[name=mighty] { display: none; } .mighty-reset { font-family: arial; font-size: 1em; font-weight: normal; font-variant: normal; font-style: normal; line-height: 1.5em; }");
 
         Mighty.init = function(){
-
             core.each( mightyAnchors, function( mightyAnchor ) {
 
                 // We need to do this so IE6/7 execute things in
@@ -1875,25 +1874,31 @@ Mighty.require("mighty.core", function( core ){
                         // mightyAnchorParent.removeChild( mightyAnchor );
                         mightyAnchor.style.display = "none";
 
-                        // Bring in the modules we need.
-                        core.require({ basePath: Mighty.option("basePath"),
-                            filename: function(str){ return str.toLowerCase().replace(/\./, "/") + "/" + str.toLowerCase(); },
-                            suffix: ".js" }, widgetName, function(){
+                        // If we see a "no JS" attribute, obey.
+                        if ( "nojs" in dataOptions ) {
+                            core.removeClass( mightyModule, strMighty + strLoading );
+                            core.addClass( mightyModule, strMighty + strReady );
+                        } else {
+                            // Bring in the modules we need.
+                            core.require({ basePath: Mighty.option("basePath"),
+                                filename: function(str){ return str.toLowerCase().replace(/\./, "/") + "/" + str.toLowerCase(); },
+                                suffix: ".js" }, widgetName, function(){
 
-                            function moduleReady(){
-                                mightyAnchor.widget = core.widget( widgetName, mightyModule, dataOptions );
-                                core.removeClass( mightyModule, strMighty + strLoading );
-                                core.addClass( mightyModule, strMighty + strReady );
-                            }
+                                function moduleReady(){
+                                    mightyAnchor.widget = core.widget( widgetName, mightyModule, dataOptions );
+                                    core.removeClass( mightyModule, strMighty + strLoading );
+                                    core.addClass( mightyModule, strMighty + strReady );
+                                }
 
-                            if ( isHTMLReady ) {
-                                moduleReady();
-                            } else {
-                                // Let our anchor listen for an event before continuing.
-                                core.subscribe( mightyAnchor, widgetName + strReady, moduleReady );
-                            }
+                                if ( isHTMLReady ) {
+                                    moduleReady();
+                                } else {
+                                    // Let our anchor listen for an event before continuing.
+                                    core.subscribe( mightyAnchor, widgetName + strReady, moduleReady );
+                                }
 
-                        });
+                            });
+                        }
                     }
 
                 }); // end core.defer
@@ -1911,7 +1916,7 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-//    basePath: "http://localhost/mighty/src/", // Development path
-    basePath: "http://mighty.aol.com/", // Production path
+    basePath: "http://localhost/mighty/src/", // Development path
+//    basePath: "http://mighty.aol.com/", // Production path
     cache: 5
 });
