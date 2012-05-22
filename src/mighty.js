@@ -1,19 +1,18 @@
+/*jslint vars: true, browser: true*/
 /*
     BOOT UTILITY LIBRARY
-    Version 0.2
+    Version 0.3
 */
-(function( namespace, window, undefined ) {
+(function(namespace, window, undefined) {
 
-    // Return if global is already defined.
-    if ( window[ namespace ] ) {
+    "use strict";
+
+    // Return if global is already defined. (Optional behavior)
+    if (window[namespace]) {
         return;
     }
 
-        // Initialize the library's namespace.
-        // This is controlled via arguments injected
-        // into the closure at the bottom of this script.
-//        var global = window[ namespace ] || ( window[ namespace ] = {} ),
-    var global = window[ namespace ] = {},
+    var global,
 
         // Localize global objects and functions for better compression.
         document = window.document,
@@ -21,6 +20,8 @@
         encode = encodeURIComponent,
 
 //        slice = Array.prototype.slice,
+        encode = encodeURIComponent,
+        decode = decodeURIComponent,
 
         // String compression optimizations for the library.
         strLoad = "load",
@@ -40,6 +41,14 @@
         strDot = ".";
 
 //        eventNamespace = namespace.toLowerCase() + ".";
+
+    // Initialize the library's namespace.
+    // This is controlled via arguments injected
+    // into the closure at the bottom of this script.
+    if (!window[namespace]) {
+        window[namespace] = {};
+    }
+    global = window[namespace];
 
 /*
     Function: Boot.now
@@ -75,22 +84,24 @@
         startTime = now(),
         logEnabled = 0;
 
-    function log( msg, ul ) {
+    function log(msg, ul) {
 
-        body || (body = document.body);
+        if (!body) {
+            body = document.body;
+        }
 
-        logItems.push( (now() - startTime) + "ms: " + msg );
+        logItems.push((now() - startTime) + "ms: " + msg);
 
-        if ( logEnabled ) {
-            if ( logList ||
-               ( logList = ul ) ||
+        if (logEnabled) {
+            if (logList ||
+               (logList = ul ) ||
                ( body && ( logList = document.createElement("div")) && body.insertBefore( logList, body.firstChild) ) ) {
                 logList.innerHTML = ["<ul><li>", logItems.join("</li><li>"), "</li></ul>"].join('');
             }
         }
     }
 
-    log.init = function( options ) {
+    log.init = function(options) {
         logEnabled = 1;
         logList = options.elem;
     };
@@ -118,8 +129,8 @@
         Do something knowing this value contains it.
     }
 */
-    function contains( haystack, needle ){
-        return haystack && haystack.indexOf( needle ) !== -1;
+    function contains(haystack, needle) {
+        return haystack && haystack.indexOf(needle) !== -1;
     }
 //    global.contains = contains;
 
@@ -198,9 +209,9 @@
     function each( array, callback ) {
     // Anything break if I comment this out?  Dummy protection needed?
     //    if ( array && array.length ) {
-        var i = 0, l = array.length;
-        for (; i < l; i++ ) {
-            callback( array[i], i, array );
+        var i, l;
+        for (i = 0, l = array.length; i < l; i += 1) {
+            callback(array[i], i, array);
         }
     //    }
 
@@ -300,7 +311,6 @@
                 return extend( {}, defaultOptions );
             }
         };
-//      return global;
     }
 //  global.setup = setup;
 
@@ -693,7 +703,7 @@
 
     Fetches a CSS file and appends it to the DOM.
 
-    To Do:
+    TODO:
     Add a callback using Jason's technique:
     http://www.viget.com/inspire/js-201-run-a-function-when-a-stylesheet-finishes-loading/
 */
@@ -882,9 +892,7 @@
         var obj = window;
 
         each( moduleName.split("."), function( name ) {
-//            if ( obj && isObject(obj) && obj.hasOwnProperty( name ) ) {
-//            Cross this bridge when it comes to us.
-            if ( obj.hasOwnProperty( name ) ) {
+            if ( isObject( obj[ name ] ) ) {
                 obj = obj[ name ];
             }
         });
@@ -1264,6 +1272,8 @@
 
     Function for extracting data attributes and storing
     arbitrary data on elements.
+
+    TODO: Add an option for converting hyphenated attributes into camelCase or underscores.
 */
     function data( elem, key, value ) {
         // Return an object of all data attributes.
@@ -1286,8 +1296,6 @@
                 attribute = attributes[ attributesLength ];
                 attributeName = attribute.nodeName;
                 if ( contains( attributeName, strData ) ) {
-                    // Artz: It would be cool to provide camelCase property
-                    // names as an option (or standard).
                     attributesObject[ attributeName.replace( strData, "" ) ] = attribute.nodeValue;
                 }
             }
@@ -1296,6 +1304,82 @@
         return ret;
     }
 //    global.data = data;
+
+
+/*
+ * Boot.cookie
+ * Simple interface for interacting with document.cookie.
+ * https://developer.mozilla.org/en/DOM/document.cookie
+ */
+    function cookie(key, value, options) {
+
+        var cookies = document.cookie.split(";"),
+            cookieObject = {},
+            cookiePair,
+            i, l,
+            expires,
+            date;
+
+        // Create, update, or delete a cookie.
+        if (value !== undefined) {
+
+            // Set up options.
+            options = options || {};
+            extend(options, cookie.option());
+
+            // Set up expiration
+            expires = options.expires;
+
+            if (value === "" || value === null) {
+                // Delete the cookie.
+                expires = -1;
+            }
+
+            if (isNumber(expires)) {
+                date = new Date();
+                // Convert to milliseconds.
+                expires = expires * 24 * 60 * 60 * 1000;
+                // Offset curent time.
+                date.setTime(date.getTime() + expires);
+            }
+
+            // Create, update, or expire the cookie.
+            document.cookie = [
+                encode(key),
+                "=",
+                encode(value), // Ensure an encoded string.
+                date ? "; expires=" + date.toUTCString() : "",
+                options.path    ? "; path=" + options.path : "",
+                options.domain  ? "; domain=" + options.domain : "",
+                options.secure  ? "; secure" : ""
+            ].join("");
+
+            return true;
+
+        // Fetch cookies.
+        } else {
+            // First, populate the cookie object.
+            for (i = 0, l = cookies.length; i < l; i++) {
+                cookiePair = cookies[i].split("=");
+                cookieObject[trim(decode(cookiePair[0]))] = trim(decode(cookiePair[1]));
+            }
+
+            if (key) {
+                return cookieObject[key] || null;
+            } else {
+                return cookieObject;
+            }
+        }
+    }
+    setup(cookie, {
+        // Default to the fully qualified domain name; this
+        // prevents cookie pollution to top-level domain.
+//      path: "/", // Should "/" (sitewide) be default?
+//      domain: location.hostname
+//      expires: 0 // Time in days
+//      secure: false
+    });
+    global.cookie = cookie;
 
 
 /*
@@ -1546,6 +1630,7 @@
 //    global.debounce = debounce;
 */
 
+
 /*
     Returns a new function with "this" (ie, the scope) set to a specified argument
 
@@ -1713,7 +1798,9 @@
         publish: publish,
 
         getCSS: getCSS,
+        // cacheScript: cacheScript,
         getScript: getScript,
+        // getJS: getJS,
 
         modules: modules,
         define: define,
@@ -1724,6 +1811,7 @@
 
         attr: attr,
         data: data,
+        cookie: cookie,
 
         addClass: addClass,
         removeClass: removeClass,
@@ -1732,10 +1820,22 @@
 
         createHTML: createHTML,
 
+        // getFont: getFont,
+
+        // browser: browser,
+        // feature: feature,
+
         disableTextSelect: disableTextSelect,
 
+        // map: map,
+        // delay: delay,
         defer: defer,
+        // limit: limit,
+        // throttle: throttle,
+        // debounce: debounce,
         proxy: proxy,
+
+        globalEval: globalEval,
 
         trim: trim,
         param: param,
@@ -1916,7 +2016,7 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-//    basePath: "http://localhost/mighty/src/", // Development path
-    basePath: "http://mighty.aol.com/", // Production path
+    basePath: "http://localhost/mighty/src/", // Development path
+//    basePath: "http://mighty.aol.com/", // Production path
     cache: 5
 });
