@@ -58,20 +58,18 @@ body {
     line-height: 24px;
     margin: 24px;
     color: #333;
-    width: 980px;
-    margin: 0 auto;
 }
 
 .header > h1 {
     width: 324px;
     height: 185px;
-    padding-top: 24px;
     overflow: hidden;
 }
 
 .chooser {
     margin-top: 24px;
     margin-right: 24px;
+    margin-bottom: 104px;
     width: 288px;
     float: left;
 }
@@ -127,4 +125,20 @@ body {
 }
 .factory > .widgets > li > h3 {
     font-size: 19px;
+}
+
+@media all and (min-width: 1400px) {
+
+    .factory > .mighty-maker {
+        position: relative;
+    }
+    .factory > .mighty-maker > .maker-preview {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: 624px;
+    }
+    .factory > .mighty-maker > .maker-preview > label {
+        display: none;
+    }
 }
