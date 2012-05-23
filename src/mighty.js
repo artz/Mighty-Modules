@@ -1835,7 +1835,7 @@
         // debounce: debounce,
         proxy: proxy,
 
-        globalEval: globalEval,
+        // globalEval: globalEval,
 
         trim: trim,
         param: param,
