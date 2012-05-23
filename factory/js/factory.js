@@ -10,15 +10,16 @@
 
             $logoFruit = $(".logo > b"),
 
-            factoryMakeHTML = $factory.html(), // save original html
+            $selectedMenuItem,
 
-            selectedWidget;
+            factoryMakeHTML = $factory.html(); // save original html
 
         // bind widget clicks
-        $(document).delegate( ".widget", "click", function(){
+        $(document).delegate( ".widget", "click", function(event){
             $Observer.trigger("select-widget", {
                 widgetName: $(this).data("widget")
             });
+            event.preventDefault();
         });
 
         // handle widget selection
@@ -26,10 +27,16 @@
 
             var widgetName = data.widgetName;
 
-            if ( selectedWidget ) {
-                // disable selected widget here
-            }
             selectedWidget = widgetName;
+
+            if ( $selectedMenuItem ) {
+                $selectedMenuItem.removeClass("active");
+            }
+            $selectedMenuItem = $(".chooser > ul > li > a[data-widget='" + selectedWidget + "']");
+            $selectedMenuItem.addClass("active");
+
+            // update location
+            location.href = location.origin + location.pathname + '#' + selectedWidget;
 
             // generate maker in factory
             $factory.html("<div class=\"mighty-maker\"><a name=\"mighty\" class=\"mighty-maker\" data-module=\"" + widgetName + "\">Loading...</a></div>");
@@ -38,19 +45,18 @@
 
         });
 
-        // fancy logo stuff
-        $logoFruit.each(function(){
-            $(this)
-                .addClass("logo-color-" + Math.floor(Math.random()*4))
-                .bind("mouseover", function(){
-                    this.className = "logo-color-" + Math.floor(Math.random()*4);
-                });
-        });
-
         // reset factory
         $(document).delegate(".logo", "click", function(){
+            location.href = location.origin + location.pathname + '#';
             $factory.html( factoryMakeHTML );
         });
+
+        // If we have a hash, select the widget.
+        if (location.hash) {
+            $Observer.trigger("select-widget", {
+                widgetName: location.hash.substr(1)
+            });
+        }
 
     });
 

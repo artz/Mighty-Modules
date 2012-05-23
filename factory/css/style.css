@@ -10,155 +10,121 @@ b, u, i, center,
 dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	outline: 0;
-	font-size: 100%;
-	vertical-align: baseline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
 }
 body {
-	line-height: 1;
+    line-height: 1;
 }
 ol, ul {
-	list-style: none;
+    list-style: none;
 }
 blockquote, q {
-	quotes: none;
+    quotes: none;
 }
 blockquote:before, blockquote:after,
 q:before, q:after {
-	content: '';
-	content: none;
+    content: '';
+    content: none;
 }
 
 /* remember to define focus styles! */
 :focus {
-	outline: 0;
+    outline: 0;
 }
 
 /* remember to highlight inserts somehow! */
 ins {
-	text-decoration: none;
+    text-decoration: none;
 }
 del {
-	text-decoration: line-through;
+    text-decoration: line-through;
 }
 
 /* tables still need 'cellspacing="0"' in the markup */
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 
-/* BEARING FRUIT */
-
+/* MIGHTY MODULES */
 body {
-	font-size: 16px;
-	font-family: helvetica, arial;
-	line-height: 24px;
-	margin: 24px;
-	color: #333;
+    font-size: 16px;
+    font-family: helvetica, arial;
+    line-height: 24px;
+    margin: 24px;
+    color: #333;
+    width: 980px;
+    margin: 0 auto;
 }
 
-.header {
-	border-bottom: 1px solid #ccc;
-	padding-bottom: 24px;
-}
 .header > h1 {
-	background: url(bearing-fruit.png) no-repeat;
-	height: 96px;
-	line-height: 80px;
-	padding-left: 112px;
-	font-size: 60px;
-	font-weight: normal;
-}
-.header > h1 > i {
-	display: block;
-	font-size: 15px;
-	line-height: 15px;
-	margin-top: -6px;
-	padding-left: 2px;
-}
-.header > .logo {
-	width: 350px;
-	cursor: pointer;
-}
-.header > .logo > b {
-	-webkit-transition: color 0.4s ease-out;  
-	-moz-transition: color 0.4s ease-out;  
-	transition: color 0.4s ease-out;  
-}
-.header > .logo > .logo-color-0 {
-	color: #e74612; /* red */
-}
-.header > .logo > .logo-color-1 {
-	color: #f5a410; /* orange */
-}
-.header > .logo > .logo-color-2 {
-	color: #f1ee3f; /* yellow */
-}
-.header > .logo > .logo-color-3 {
-	color: #abe01d; /* green */
+    width: 324px;
+    height: 185px;
+    padding-top: 24px;
+    overflow: hidden;
 }
 
 .chooser {
-	margin-top: 24px;
-	margin-right: 24px;
-	width: 288px;
-	float: left;
+    margin-top: 24px;
+    margin-right: 24px;
+    width: 288px;
+    float: left;
 }
 .chooser > h2 {
-	font-size: 22px;
-	margin-bottom: 24px;
+    font-size: 22px;
+    margin-bottom: 24px;
 }
 .chooser > ul > li {
-	border-bottom: 1px solid #ccc;	
+    border-bottom: 1px solid #ccc;
 }
 .chooser > ul > li:first-child {
-	border-top: 1px solid #ccc;
+    border-top: 1px solid #ccc;
 }
 .chooser > ul > li > a {
-	font-size: 16px;
-	line-height: 16px;
-	padding: 10px 24px 9px;
-	display: block;
-	text-decoration: none;
-	color: #fe5f35;
-	
-	background-color: rgb(255,255,255);
-	
-	-webkit-transition: background-color 0.3s ease-out;  
-	-moz-transition: background-color 0.3s ease-out;  
-	transition: background-color 0.3s ease-out;  
+    font-size: 16px;
+    line-height: 16px;
+    padding: 10px 24px 9px;
+    display: block;
+    text-decoration: none;
+    color: #fe5f35;
+
+    background-color: rgb(255,255,255);
+
+    -webkit-transition: background-color 0.3s ease-out;
+    -moz-transition: background-color 0.3s ease-out;
+    transition: background-color 0.3s ease-out;
 }
-.chooser > ul > li > a:hover {
-	background-color: rgb(241,241,241);
-	
+.chooser > ul > li > a:hover, .chooser > ul > li > a.active {
+    background-color: rgb(241,241,241);
 }
 
 .factory {
-	float: left;
-	margin-top: 12px;
-	width: 600px;
+    float: left;
+    margin-top: -72px;
+    width: 600px;
 }
 .factory > .widgets > li {
-	border-left: 6px solid #fff;
-	padding: 12px 24px;
-  -webkit-transition: all 0.3s ease-out;  
-     -moz-transition: all 0.3s ease-out;  
-          transition: all 0.3s ease-out;  
+    border-left: 6px solid #fff;
+    padding: 12px 24px;
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
 }
 .factory > .widgets > li:hover {
-  -webkit-transition: all 0.3s ease-out;  
-     -moz-transition: all 0.3s ease-out;  
-          transition: all 0.3s ease-out;  
-	
-	background-color: #f1f1f1;
-	border-left: 6px solid #e74612;
-	
-	cursor: pointer;
+  -webkit-transition: all 0.3s ease-out;
+     -moz-transition: all 0.3s ease-out;
+          transition: all 0.3s ease-out;
+
+    background-color: #f1f1f1;
+    border-left: 6px solid #e74612;
+
+    cursor: pointer;
 }
 .factory > .widgets > li > h3 {
-	font-size: 19px;
+    font-size: 19px;
 }
