@@ -60,8 +60,7 @@ Mighty.define(["mighty.core"], function( core ){
 
             core.delegate( element, ".refresh-news", "click", function( event ){
                 element.innerHTML = "loading...";
-                console.log("Refreshed");
-                core.getJSONP( Mighty.option("basePath") + "api/?module=mighty.breakingnews&count="+options.count+"&ads="+options.ads, function( data ){
+                core.getJSONP( Mighty.option("basePath") + "api/?_host=" + location.hostname + "&_module=mighty.breakingnews&count=" + options.count + "&ads=" + options.ads, function( data ){
                     mightyModule = core.createHTML( data );
                     element.innerHTML = mightyModule.innerHTML;
                     self._buildfooter();

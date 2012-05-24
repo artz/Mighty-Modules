@@ -1,65 +1,33 @@
 <?php
+$Mighty = new Mighty();
+$json = $Mighty->getJSON('http://www.huffingtonpost.com/api/?t=featured_news&vertical=home&zone=1,4');
 
-$count = ''; // Declaring the variable for number of items from data-count
-$ads = ''; // Var for ads
-
-$numItems = (isset($_GET['count'])) ? $_GET['count'] : $count;
-
-/*
- * The following curl method should be used on production.
- */
-
-$c = curl_init();
-curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
-curl_setopt($c, CURLOPT_URL, 'http://www.huffingtonpost.com/api/?t=featured_news&vertical=home&zone=1,4');
-//curl_setopt($c, CURLOPT_URL, '../api/hpapi.json');
-
-$content = curl_exec($c);
-curl_close($c);
-
-
-//$content = file_get_contents($_SERVER["DOCUMENT_ROOT"].'/api/hpapi.json'); // This is not for production
-
-$json = json_decode($content);
-
-//print_r($json);
+// Set up count if not supplied.
+$count = 6;
+if (isset($options->count)): $count = $options->count; endif;
 ?>
 <div class="mighty-breakingnews mighty-reset">
     <h2 class="header">Breaking News</h2>
     <div class="articles">
         <ul class="article-list">
 <?php
-    foreach($json->response as $key=>$value){
-        $url = $value->entry_url;
-        $img = $value->entry_image_large;
-        $short_title = ''; //$value->entry_headline;
-        $long_title = $value->entry_title;
-        $comment = $value->entry_comment_count;
+    foreach ($json->response as $number => $article):
+        $short_title = ''; //$article->entry_headline;
+        $long_title = $article->entry_title;
+        $comment = $article->entry_comment_count;
 
-        if ($key == "0"){
-            if ( empty($img) ){
-                $img = "http://i.huffpost.com/gen/360023/thumbs/r-MONEY-medium260.jpg"; // Placeholder image, if first result does not have an image;
-            }
-            ?>
-            <li><a href="<?php echo $url;?>">
-                    <img class="thumb" src="<?php echo $img; ?>" alt="" />
-                    <h2><?php echo $short_title; ?></h2>
-                    <?php echo $long_title; ?>
-                    <span class="comments"><b>Comments</b>(<?php echo $comment; ?>)</span>
-                </a>
+        if ($number === 0):
+?>
+            <li><a href="<?=@$article->entry_url?>">
+                    <img class="thumb" src="<?=@$article->entry_image_large?>" alt="<?=@$article->entry_image_keywords?>" />
+                    <h2><?=@$article->entry_headline?></h2>
+                    <h3><?=@$article->entry_title?></h3></a>
+                    <span class="comments"><b>Comments</b> (<?=@$article->entry_comment_count?>)</span>
             </li>
-            <?php
-            }if($key < $numItems && $key != 0 ) { ?>
-            <li><a href="<?php echo $url;?>">
-                    <?php echo $long_title; ?>
-                </a>
-            </li>
-
-            <?php
-
-            }
-    }
+<?php   elseif ($number > 1 && $number <= $count): ?>
+            <li><a href="<?=@$article->entry_url?>"><?=@$article->entry_title?></a></li>
+<?php   endif;
+    endforeach;
 ?>
         </ul>
     </div>

@@ -1,7 +1,7 @@
 body .mighty-realtime{
-	background: #fff;
-	width:300px;
-	border:1px solid #eaeaea;
+    background: #fff;
+    width:300px;
+    border:1px solid #eaeaea;
 }
 .mighty-realtime h2.header {
     background: none repeat scroll 0 0 #333333;
@@ -12,15 +12,15 @@ body .mighty-realtime{
     padding: 15px;
 }
 .mighty-realtime .mighty-realtime-li {
-	margin: 5px;
+    margin: 5px;
     overflow: hidden;
     -moz-transition: margin-left .5s ease;
     -webkit-transition: margin-left .5s ease;
     transition: margin-left .5s ease;
 }
 .mighty-realtime .mighty-realtime-title {
-	filter: alpha(opacity=70);
-	float: left;
+    filter: alpha(opacity=70);
+    float: left;
     height: 60px;
     line-height: 16px;
     opacity: 0.7;
@@ -30,16 +30,16 @@ body .mighty-realtime{
     z-index: 2;
 }
 .mighty-realtime .mighty-realtime-title a {
-	display: inline-block;
-	padding: 10px;
-	width: 190px;	
+    display: inline-block;
+    padding: 10px;
+    width: 190px;
 }
 .mighty-realtime .mighty-realtime-li a.arrow {
-	border-color: transparent transparent transparent #3BD512;
+    border-color: transparent transparent transparent #3BD512;
     border-style: solid;
     border-width: 35px;
     content: " ";
-	filter: alpha(opacity=70);
+    filter: alpha(opacity=70);
     float: left;
     height: 0;
     left: 100%;
@@ -49,7 +49,7 @@ body .mighty-realtime{
     z-index: 2;
 }
 .mighty-realtime .mighty-realtime-views {
-	bottom: 45px;
+    bottom: 45px;
     float: right;
     font-size: 45px;
     margin-bottom: -45px;
@@ -57,9 +57,9 @@ body .mighty-realtime{
     z-index: 1;
 }
 .mighty-realtime .mighty-realtime-li a {
-	color: #fff;
-	font-weight: bold;
-	text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: none;
 }
 .mighty-realtime .huffpost-logo {
   background: url(../../images/mostpopular/huffpost.png);
@@ -70,16 +70,16 @@ body .mighty-realtime{
   float: left;
 }
 .mighty-realtime .footer-links {
-	margin: 15px 10px 5px;
-	overflow: hidden;
+    margin: 15px 10px 5px;
+    overflow: hidden;
 }
 .mighty-realtime .footer-links a.logo {
-	float: left;
+    float: left;
 }
 .mighty-realtime .footer-links a.link {
-	color: #333;
-	float: right;
-	font-size: 11px;
-	margin-top: -3px;
+    color: #333;
+    float: right;
+    font-size: 11px;
+    margin-top: -3px;
     text-decoration: none;
 }

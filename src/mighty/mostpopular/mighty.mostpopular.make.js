@@ -1,7 +1,7 @@
 Mighty.define({
     id: "mighty.mostpopular",
-    name: "Mighty Most Popular",
-    description: "This module allows you to customize the Most Popular Widget.",
+    name: "Most Popular Stories",
+    description: "This module displays the most viral content across the AOL family of brands.",
     href: "http://mightymodules.com/mighty-mostpopular/",
     options: [
         {
