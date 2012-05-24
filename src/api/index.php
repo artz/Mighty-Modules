@@ -2,7 +2,7 @@
 
 class Mighty {
 
-    public $cacheTTL = 5;
+    public $cacheTTL = 60;
 
     public function get( $url ) {
 
