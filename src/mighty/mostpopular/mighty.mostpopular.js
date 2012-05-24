@@ -1,5 +1,5 @@
 /*global Mighty*/
-/*jslint nomen: true*/
+/*jslint browser: true, nomen: true*/
 Mighty.define(["mighty.core"], function (core) {
 
     "use strict";
@@ -29,7 +29,8 @@ Mighty.define(["mighty.core"], function (core) {
 
                 articles = ui.articles,
 
-                i, l,
+                i,
+                l,
 
                 showMore,
 

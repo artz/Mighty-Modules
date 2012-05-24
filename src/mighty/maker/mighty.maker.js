@@ -225,7 +225,7 @@ Mighty.define(["mighty.core"], function( core ){
                             window.console.log("Warning: Minimum is greater than Maximum in " + makeOptions.name + " option.");
                         }
                     } else {
-                        if (newValue > minValue && newValue <= maxValue) {
+                        if (newValue >= minValue && newValue <= maxValue) {
                             originalValue = newValue;
                         }
                         input.value = originalValue;
