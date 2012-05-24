@@ -1,34 +1,70 @@
-Mighty.define(["mighty.core", "mighty.tabs"], function( core ){
+/*global Mighty*/
+/*jslint nomen: true*/
+Mighty.define(["mighty.core"], function (core) {
 
-	return {
+    "use strict";
 
-		// These options will be used as defaults
-		options: {
-			selected: 0,
-			width: 300
-			// These selectors will automatically run inside
-			// the module and grab the resulting elements.
-		},
+    core.getCSS(Mighty.option("basePath") + "mighty/mostpopular/mighty.mostpopular.css");
 
-		// Set up the widget
-		_create: function () {
+    return {
 
-			var self = this,
-				options = self.options,
-				ui = options.ui,
-				element = self.element,
+        // These options will be used as defaults
+        options: {
+            count: 8,
+            moreCount: 8,
+            // These selectors will automatically run inside
+            // the module and grab the resulting elements.
+            ui: {
+                "articles": "li"
+            }
+        },
 
-				width = options.width;
+        // Set up the widget
+        _create: function () {
 
+            var self = this,
+                options = self.options,
+                ui = self.ui,
+                element = self.element,
 
-			core.getCSS( Mighty.option("basePath") + "mighty/mostpopular/mighty.mostpopular.css");
+                articles = ui.articles,
 
-            //console.log( 'Self:', self, 'Element:', element );
-			core.attr( element, "style", "width: " + width + "px" );
+                i, l,
 
-			// Initialize tabs.
-			core.widget( "mighty.tabs", element, { selected: options.selected } );
+                showMore,
 
-		}
-	};
+                count = parseInt(options.count, 10),
+                moreCount = parseInt(options.more_count, 10);
+
+            function moreStories(event) {
+                for (i = 0; i < moreCount; i += 1) {
+                    count += 1;
+                    if (count === l) {
+                        showMore.style.display = "none";
+                        break;
+                    } else {
+                        articles[count].style.display = "block";
+                    }
+                }
+                event.preventDefault();
+            }
+
+            // If count is specified, hide stories.
+            if (articles[count]) {
+                for (i = count, l = articles.length; i < l; i += 1) {
+                    articles[i].style.display = "none";
+                }
+
+                // Create showMore link
+                showMore = document.createElement("a");
+                showMore.innerHTML = "More Stories ▾";
+                showMore.className = "show-more";
+                showMore.href = "#";
+
+                element.appendChild(showMore);
+
+                core.bind(showMore, "click", moreStories);
+            }
+        }
+    };
 });

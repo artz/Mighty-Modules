@@ -1,0 +1,137 @@
+/*
+	Mighty Most Popular Core
+*/
+.mighty-mostpopular {
+    background-color: #e9e9e9;
+    padding: 10px;
+}
+.mighty-mostpopular h2 {
+    background: no-repeat url( "../../images/mostpopular/huffpost.png" ) 50% 50%;
+	color: #296a5a;
+    height: 21px;
+	font-size: 22px;
+    margin: 0;
+	padding-top: 12px;
+	text-align: center;
+    text-indent: -9999px;
+	text-transform: uppercase;
+}
+
+.mighty-mostpopular h3 {
+    border-bottom: 1px dashed #b4b4b4;
+    color: #333;
+    font-weight: normal;
+    line-height: 1;
+    margin-bottom: 10px;
+    margin-top: 0;
+    padding-bottom: 10px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.mighty-mostpopular li {
+    line-height: 1;
+    overflow: hidden;
+}
+
+.mighty-mostpopular li img {
+    float: left;
+    height: 58px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    width: 72px;
+}
+
+.mighty-mostpopular li a {
+    color: #626262;
+    font-size: 12px;
+    line-height: 1;
+    text-decoration: none;
+}
+
+
+
+/*
+    Most Popular Tabs Skin
+*/
+
+.mighty-mostpopular.mighty-tabs > .tabs {
+	border-bottom: 0;
+}
+
+.mighty-mostpopular.mighty-tabs > .tabs > .tab {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    color: #9a9a9a;
+	cursor: pointer;
+    font-family: Helvetica Neue, Helvetica, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	line-height: 14px;
+    margin-left: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	padding: 6px 10px;
+}
+
+.mighty-mostpopular.mighty-tabs > .tabs > .selected {
+	background-color: #fff;
+	border-bottom: 0;
+    color: #4a4a4a;
+}
+
+.mighty-mostpopular.mighty-tabs > .panel {
+    background: #fff;
+    padding: 10px 10px 0;
+}
+
+.mighty-mostpopular.mighty-tabs > .panel.selected {
+    opacity: 1;
+}
+
+
+/*
+	Mighty Tabs Skin
+.mighty-tabs {
+  -webkit-transition: height 0.3s ease-out;  
+     -moz-transition: height 0.3s ease-out;  
+      -ms-transition: height 0.3s ease-out;  
+       -o-transition: height 0.3s ease-out;  
+          transition: height 0.3s ease-out;  
+}
+.mighty-tabs > .tabs {
+	border-bottom: 2px solid #000;
+	line-height: 13px;
+}
+.mighty-mostpopular .mighty-tabs > .tabs > .tab {
+    border: 10px solid red;
+	padding: 6px 12px;
+	cursor: pointer;
+	margin-left: 12px;
+	margin-bottom: -2px;
+    font-family: Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 14px;
+	font-weight: bold;
+	background-color: #fff;
+}
+.mighty-tabs > .tabs > .selected {
+	background-color: #fff;
+	border-bottom: 2px solid #fff;
+}
+.mighty-tabs > .panel {
+	padding: 12px;
+	border-radius: 0 0 3px 3px;
+
+	background-color: #ffffff;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#e3ffab)); 
+	background-image: -webkit-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:    -moz-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:     -ms-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:      -o-linear-gradient(top, #ffffff, #e3ffab); 
+	background-image:         linear-gradient(top, #ffffff, #e3ffab);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffffff', EndColorStr='#e3ffab'); 
+}
+
+*/

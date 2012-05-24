@@ -127,6 +127,30 @@ body {
     font-size: 19px;
 }
 
+/* Inherited styles for maker preview. */
+.maker-widget a {
+    text-decoration: none;
+}
+.maker-widget h2 {
+    font-size: 20px;
+}
+
+/* Widget specific styles */
+.maker-widget .mighty-mostpopular a {
+    color: #000;
+}
+.maker-widget .mighty-mostpopular a:hover,
+.maker-widget .mighty-mostpopular .show-more {
+    color: #1D61F2;
+}
+.maker-widget .mighty-mostpopular .show-more {
+    font-size: 14px;
+    font-weight: bold;
+}
+.maker-widget .mighty-mostpopular .show-more:hover {
+    text-decoration: underline;
+}
+
 @media all and (min-width: 1400px) {
 
     .factory > .mighty-maker {
@@ -137,6 +161,7 @@ body {
         top: 0;
         left: 0;
         margin-left: 624px;
+        width: 300px;
     }
     .factory > .mighty-maker > .maker-preview > label {
         display: none;
