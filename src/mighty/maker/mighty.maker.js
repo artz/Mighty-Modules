@@ -81,7 +81,7 @@ Mighty.define(["mighty.core"], function( core ){
                     '"' + dataOptions() + href + '>' + make.name + '</a>';
 
             if (script) {
-                snippet += '<script async defer src="' + basePath + 'mighty/mighty.js"></script>';
+                snippet += '<script async defer src="' + basePath + 'mighty.js"></script>';
             }
 
             return entities ? htmlEntities(snippet) : snippet;
@@ -289,13 +289,13 @@ Mighty.define(["mighty.core"], function( core ){
                         elm.title + '</option>';
                 });
 
-                select.innerHTML=optionsHTML;
+                select.innerHTML = optionsHTML;
 
-                newOption.appendChild( select );
+                newOption.appendChild(select);
 
-                self.element.appendChild( newOption );
+                self.element.appendChild(newOption);
 
-                core.bind( select, "blur", function(){
+                core.bind(select, "blur", function () {
                     self.ui.snippet.innerHTML = self._getCode(true, true);
                     self._preview();
                 });
@@ -310,11 +310,10 @@ Mighty.define(["mighty.core"], function( core ){
                     self = this;
 
                 newOption.className = "maker-option";
-                newOption.innerHTML = '<label for="' + this.options.module +
-                    '-option-' + makeOptions.option + '">' + makeOptions.name +
+                newOption.innerHTML = '<label> ' + makeOptions.name +
                     ' <b class="help">' + makeOptions.description + '</b></label>';
 
-                core.attr( input, 'name', makeOptions.option );
+                core.attr( input, 'name', this.options.module + '-option-' + makeOptions.option );
                 core.attr( input, 'type', 'checkbox' );
 
                 if ( makeOptions.value ) {
@@ -330,7 +329,7 @@ Mighty.define(["mighty.core"], function( core ){
                 core.attr( input, 'data-option', makeOptions.option );
                 input.className = "input-checkbox";
 
-                newOption.appendChild( input );
+                newOption.firstChild.insertBefore( input, newOption.firstChild.firstChild );
 
                 self.element.appendChild( newOption );
 
