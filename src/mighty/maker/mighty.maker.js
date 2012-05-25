@@ -81,7 +81,7 @@ Mighty.define(["mighty.core"], function( core ){
                     '"' + dataOptions() + href + '>' + make.name + '</a>';
 
             if (script) {
-                snippet += '<script async defer src="' + basePath + 'mighty.js"></script>';
+                snippet += '<script async defer src="' + basePath + 'mighty.min.js"></script>';
             }
 
             return entities ? htmlEntities(snippet) : snippet;
