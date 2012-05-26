@@ -79,11 +79,11 @@ Mighty.define(["mighty.core"], function( core ){
 					modelSelects[that.textContent] = that.textContent
 					modelSelect = document.createElement('select');
 					modelSelect.setAttribute('name', 'model');
+					modelSelect.appendChild(new Option('Please Select a Model', ''));
 					modelSelects[currentMake] = modelSelect;
 					that.style.display = 'none';
 				} else if (that.nodeName === 'LABEL') {
 					modelSelect = modelSelects[currentMake];
-					modelSelect.options[0] = new Option('Please Select a Model', '');
 					modelSelect.appendChild(new Option(that.textContent, that.textContent));
 					that.style.display = 'none';
 				}
