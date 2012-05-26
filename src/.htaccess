@@ -1,1 +1,17 @@
-Header set Cache-Control "max-age=60, public, must-revalidate"
+# Header set Cache-Control "max-age=60, public, must-revalidate"
+# ExpiresDefault "access plus 60 seconds"
+# Cache
+# http://wiki.office.aol.com/wiki/Web_Caching
+Header set Cache-Control "max-age=60, public"
+Header set Edge-Control "downstream-ttl=60"
+
+# GZIP 
+# http://html5boilerplate.com/docs/htaccess/
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json 
+  AddOutputFilterByType DEFLATE text/xml application/xml text/x-component
+
+  <FilesMatch "\.(ttf|otf|eot|svg)$" >
+    SetOutputFilter DEFLATE
+  </FilesMatch>
+</IfModule>
