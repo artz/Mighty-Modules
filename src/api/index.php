@@ -179,4 +179,7 @@ class Mighty {
         $data = $jsonp . '("' . addslashes( str_replace( "\n", "", $data ) ) . '")';
     }
 
+    // Generate Etag
+    header("Etag: " . md5($data));
+
     echo $data;
