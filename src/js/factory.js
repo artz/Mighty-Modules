@@ -1,3 +1,4 @@
+/*jslint browser: true*/
 (function(window, document, undefined){
 
     // Artz: Eventually add jQuery to required dependencies.
@@ -35,10 +36,10 @@
             $selectedMenuItem = $(".chooser > ul > li > a[data-widget='" + selectedWidget + "']");
             $selectedMenuItem.addClass("active");
 
-            // update location
-            location.href = location.origin + location.pathname + '#' + selectedWidget;
+            // Update location.
+            window.location.href = Mighty.option("basePath") + '#' + selectedWidget;
 
-            // generate maker in factory
+            // Generate maker in factory
             $factory.html("<div class=\"mighty-maker\"><a name=\"mighty\" class=\"mighty-maker\" data-module=\"" + widgetName + "\">Loading...</a></div>");
 
             Mighty.init();
