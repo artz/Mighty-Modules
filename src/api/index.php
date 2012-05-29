@@ -4,6 +4,15 @@ class Mighty {
 
     public $cacheTTL = 60;
 
+    public function option($key = NULL) {
+        $mightyOptions = json_decode(file_get_contents('../mighty-options.json'));
+        if (isset($key)) {
+            return $mightyOptions->$key;
+        } else {
+            return $mightyOptions;
+        }
+    }
+
     public function get( $url ) {
 
         if ( function_exists( 'apc_exists' ) && apc_exists( $url ) ) {
