@@ -5,7 +5,7 @@ $json = $Mighty->getJSON('http://autos.aol.com/cars-js/global/get_new_data.jsp')
 
 ?>
 <div class="mighty-autos mighty-autos_lifestyle mighty-reset">
-	<h2>Find the <em>Right Car</em></h2>
+	<h2 class="header">Find the <em>Right Car</em></h2>
 	<form action="http://autos.aol.com/lifestyle-listings/" enctype="application/x-www-form-urlencoded" method="post">
 		<select name="life">
 			<option>Choose Your Lifestyle</option>

@@ -21,12 +21,12 @@ Mighty.define(["mighty.core"], function( core ){
 		font-weight:normal;\
 		font-style:normal;\
 	}\
-	.mighty-autos h2 {\
+	.mighty-autos h2.header {\
 		font-family:BebasNeue;\
 		font-size:32px;\
 		margin-bottom:15px;\
 	}\
-	.mighty-autos h2 em {color:#2a65b3;}\
+	.mighty-autos h2.header em {color:#2a65b3;}\
 	.mighty-autos select {\
 		border: 1px solid #ccc;\
 		border-radius: 4px;\

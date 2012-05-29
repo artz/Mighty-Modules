@@ -19,7 +19,7 @@ $json = object2array($json);
 ksort(&$json);
 ?>
 <div class="mighty-autos mighty-autos_newcar mighty-reset">
-	<h2>Research <em>A New Car</em></h2>
+	<h2 class="header">Research <em>A New Car</em></h2>
 	<form action="http://autos.aol.com/ymm-overview-redir.jsp" method="post">
 		<div>
 		<?php
