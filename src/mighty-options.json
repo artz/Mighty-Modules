@@ -1,5 +1,5 @@
 {
-    "host": "www.artzstudio.com",
-    "basePath": "http://localhost/mighty/src/",
-    "cache": 5
+    "host": "mighty.aol.com",
+    "basePath": "http://mighty.aol.com/",
+    "cache": 30
 }
