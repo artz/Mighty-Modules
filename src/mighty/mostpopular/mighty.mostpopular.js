@@ -15,7 +15,8 @@ Mighty.define(["mighty.core"], function (core) {
             // These selectors will automatically run inside
             // the module and grab the resulting elements.
             ui: {
-                "articles": "li"
+                "articles": "li",
+                "photos": "img"
             }
         },
 
@@ -28,6 +29,7 @@ Mighty.define(["mighty.core"], function (core) {
                 element = self.element,
 
                 articles = ui.articles,
+                photos = ui.photos,
 
                 i,
                 l,
@@ -45,9 +47,15 @@ Mighty.define(["mighty.core"], function (core) {
                         break;
                     } else {
                         articles[count].style.display = "block";
+                        photos[count].src = core.data(photos[count], "src");
                     }
                 }
                 event.preventDefault();
+            }
+
+            // Display the photos for the visible stories.
+            for (i = 0, l = count; i < l; i += 1) {
+                photos[i].src = core.data(photos[i], "src");
             }
 
             // If count is specified, hide stories.

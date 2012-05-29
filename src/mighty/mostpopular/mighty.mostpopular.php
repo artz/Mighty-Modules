@@ -38,7 +38,7 @@ if (count($articles) > 0):
         // If source option is set, show source site.
         if (isset($options->source)): $source = '<i><a href="' . $article->vertical_link . '">' . ($article->source === 'HuffPo' ? 'HuffPost ' : '') . $article->vertical_name . '</a></i>'; endif;
 ?>      <li>
-        <a href="<?=@$article->entry_url?>"><img alt="<?=@$article->entry_image_keywords?>" src="<?=@$article->entry_image?>"></a>
+        <a href="<?=@$article->entry_url?>"><img width="74" height="58" alt="<?=@$article->entry_image_keywords?>" src="<?=$Mighty->option("basePath").'images/x.gif'?>" data-src="<?=@$article->entry_image?>"></a>
         <?=@$source?>
         <b><a href="<?=@$article->entry_url?>"><?=@$title?></a></b>
         </li>
