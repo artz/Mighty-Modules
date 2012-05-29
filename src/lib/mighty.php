@@ -6,8 +6,7 @@
 
 // Super simple example of JSON configuration.
 global $MightyConfig;
-$MightyConfig = json_decode( file_get_contents( realpath( dirname( __FILE__ ) ) . '/mighty-conf.json' ) );
-
+$MightyConfig = json_decode( file_get_contents( realpath( dirname(dirname( __FILE__ )) ) . '/mighty-options.json' ) );
 // Super simple example of a widget API :D
 class MightyModule {
 

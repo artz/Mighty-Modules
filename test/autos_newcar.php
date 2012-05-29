@@ -22,11 +22,11 @@
     ?>
 
     <h2>Autos New Car Widget (Embed)</h2>
-    <a name="mighty" class="mighty-autos_newcar" data-nohtml data-nojs href="http://www.mightymodules.com/amber/">Get the <b>Autos New Car Widget</b></a>
+    <a name="mighty" class="mighty-autos_newcar" data-nohtml data-nojs href="http://autos.aol.com/new-cars/">Get the <b>Autos New Car Widget</b></a>
     <script async defer src="../src/mighty.js"></script>
 
    <h2>Mighty Maker (Autos New Car Widget)</h2>
-    <div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="autos_newcar" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
+    <div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="autos_newcar" href="http://autos.aol.com/new-cars/">Get the <b>Maker Widget</b></a></div>
     <script async defer src="../src/mighty.js"></script>
 
 </div>
