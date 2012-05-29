@@ -1,9 +1,8 @@
-# Header set Cache-Control "max-age=60, public, must-revalidate"
-# ExpiresDefault "access plus 60 seconds"
 # Cache
 # http://wiki.office.aol.com/wiki/Web_Caching
 Header set Cache-Control "max-age=60, public"
 Header set Edge-Control "downstream-ttl=60"
+ExpiresDefault "access plus 1 minute" 
 
 # GZIP 
 # http://html5boilerplate.com/docs/htaccess/
