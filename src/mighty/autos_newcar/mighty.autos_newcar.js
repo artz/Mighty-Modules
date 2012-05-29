@@ -11,10 +11,9 @@ Mighty.define(["mighty.core"], function (core) {
 		border:5px solid #0069b5;\
 		clear:both;\
 		min-height: 160px;\
-		min-width: 220px;\
-		max-width: 300px;\
 		overflow: hidden;\
 		padding:22px 15px;\
+		width: 260px;\
 	}\
 	@font-face{\
 		font-family:'BebasNeue';\

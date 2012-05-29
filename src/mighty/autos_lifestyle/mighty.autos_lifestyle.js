@@ -3,14 +3,13 @@ Mighty.define(["mighty.core"], function( core ){
     // This saves an HTTP request for the CSS.
     // This module may be a great example of a no JS widget, loading only CSS.
     core.inlineCSS(".mighty-autos_lifestyle {\
-		background:url(" + Mighty.option("basePath") + "mighty/autos_lifestyle/aol-autos-logo.png) no-repeat right bottom #fff;\
+		background:url(" + Mighty.option("basePath") + "mighty/autos_lifestyle/aol-autos-logo.png) no-repeat left bottom #fff;\
 		border:5px solid #0069b5;\
 		clear:both;\
 		min-height:110px;\
-		min-width:220px;\
-		max-width:300px;\
 		overflow:hidden;\
 		padding:22px 15px;\
+		width: 260px;\
 	}\
 	@font-face{\
 		font-family:'BebasNeue';\
