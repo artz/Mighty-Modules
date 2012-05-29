@@ -189,6 +189,6 @@ class Mighty {
     }
 
     // Generate Etag
-    header("Etag: " . md5($data));
+    header('Etag: "' . md5($data) . '"');
 
     echo $data;
