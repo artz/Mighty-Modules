@@ -39,6 +39,12 @@ Mighty.define(["mighty.core"], function (core) {
                 count = parseInt(options.count, 10),
                 moreCount = parseInt(options.more_count, 10);
 
+            // If our count is greater than the number of articles,
+            // reduce the count.
+            if (count > articles.length) {
+                count = articles.length;
+            }
+
             function moreStories(event) {
                 for (i = 0; i < moreCount; i += 1) {
                     count += 1;

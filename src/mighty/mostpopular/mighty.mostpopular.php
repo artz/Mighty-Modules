@@ -20,6 +20,9 @@ if ($options->sort === 'viral'): $sort = '&viral_sort=1'; endif;
 // Call API
 $Mighty = new Mighty();
 $json = $Mighty->getJSON('http://www.huffingtonpost.com/api/?t=most_popular_merged' . $sort);
+
+if (isset($json)):
+
 $articles = $json->response;
 // print_r($articles);
 
@@ -46,4 +49,5 @@ if (count($articles) > 0):
     </ol>
 </div>
 <?php
+endif;
 endif;
