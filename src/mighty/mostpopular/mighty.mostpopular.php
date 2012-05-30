@@ -12,10 +12,10 @@
 */
 if (isset($options->heading)): $heading = '<h2>' . $options->heading . '</h2>'; endif;
 if (isset($options->sub_heading)): $sub_heading = '<h3>' . $options->sub_heading . '</h3>'; endif;
+
 // Set up sorting.
-if (!isset($options->sort)): $options->sort = 'viral'; endif;
 $sort = '';
-if ($options->sort === 'viral'): $sort = '&viral_sort=1'; endif;
+if (isset($options->sort) && $options->sort === 'viral'): $sort = '&viral_sort=1'; endif;
 
 // Call API
 $Mighty = new Mighty();
