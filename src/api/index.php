@@ -2,7 +2,7 @@
 
 class Mighty {
 
-    public $cacheTTL = 60;
+    public $cache_ttl = 60;
 
     public function option($key = NULL) {
         $mightyOptions = json_decode(file_get_contents('../mighty-options.json'));
@@ -20,7 +20,7 @@ class Mighty {
         } else {
 
             if ( ! isset( $ttl ) ) {
-                $ttl = $this->cacheTTL;
+                $ttl = $this->cache_ttl;
             }
 
             // If this is an HTTP request, cURL it.
@@ -191,9 +191,43 @@ class Mighty {
     // Leverage Etags to only return content when it updates.
     // http://www.php.net/manual/en/function.header.php#85146
     $etag = '"' . md5($data) . '"';
+
+/*
+    // Send proper Etag in hopes of one day Akamai is updated.
     if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) === $etag) {
         header("HTTP/1.1 304 Not Modified");
+        exit;
     } else {
         header('Etag: ' . $etag);
-        echo $data;
     }
+ */
+
+    // Hack: If your CDN does not support Etags (like AOL's Akamai config).
+    // Calculate Last-Modified date and save it in memory.
+    if (function_exists('apc_exists')) {
+        $cache_key = $cache_key . '_last_modified';
+        // If we have an etag and last modified date for this URL.
+        if (apc_exists($cache_key) ) {
+            $cache_info = explode('|', apc_fetch($cache_key));
+            $etag_cache = $cache_info[0];
+            $last_modified_cache = $cache_info[1];
+        } else {
+            $etag_cache = "";
+        }
+
+        if ($etag !== $etag_cache) {
+            // Generate new Last-Modified date.
+            $last_modified_cache = gmdate("D, d M Y H:i:s", time()) . ' GMT';
+            // Store cache info for a month.
+            apc_store($cache_key, $etag . '|' . $last_modified_cache, 2629743);
+        }
+
+        if (@$_SERVER['HTTP_IF_MODIFIED_SINCE'] === $last_modified_cache) {
+            header("HTTP/1.1 304 Not Modified");
+            exit;
+        } else {
+            header("Last-Modified: " . $last_modified_cache);
+        }
+    }
+
+    echo $data;
