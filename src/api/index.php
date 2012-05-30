@@ -188,7 +188,12 @@ class Mighty {
         $data = $jsonp . '("' . addslashes( str_replace( "\n", "", $data ) ) . '")';
     }
 
-    // Generate Etag
-    header('Etag: "' . md5($data) . '"');
-
-    echo $data;
+    // Leverage Etags to only return content when it updates.
+    // http://www.php.net/manual/en/function.header.php#85146
+    $etag = '"' . md5($data) . '"';
+    if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) === $etag) {
+        header("HTTP/1.1 304 Not Modified");
+    } else {
+        header('Etag: ' . $etag);
+        echo $data;
+    }
