@@ -1,5 +1,10 @@
 <?php
 
+// Exit if there are no parameters.
+if (!$_SERVER['QUERY_STRING']) {
+    exit;
+}
+
 class Mighty {
 
     public $cache_ttl = 60;
@@ -140,7 +145,7 @@ class Mighty {
         unset( $value );
         unset( $params );
 
-        $cache_key = $_SERVER['QUERY_STRING'];
+        $cache_key = '/' . $_SERVER['QUERY_STRING'];
         $cache_key = preg_replace( '/[&]*_host=[^&]*/', '', $cache_key ); // Strip out host
         $cache_key = preg_replace( '/&_jsonp.*/', '', $cache_key ); // Strip out JSONP
 
