@@ -48,8 +48,9 @@
 
         // reset factory
         $(document).delegate(".logo", "click", function(){
-            location.href = location.origin + location.pathname + '#';
+            location.href = Mighty.option("basePath") + '#';
             $factory.html( factoryMakeHTML );
+            event.preventDefault();
         });
 
         // If we have a hash, select the widget.
