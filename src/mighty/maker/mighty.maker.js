@@ -3,10 +3,34 @@
 Mighty.define(["mighty.core"], function( core ){
 
     // This should run only once, even if multiple maker modules are on the page. (let's verify!).
-    core.inlineCSS(".mighty-maker { background-color: #efefef; padding: 12px; } .mighty-maker .maker-name { font-size: 23px; font-weight: bold; } .mighty-maker .maker-description { margin-top: 12px; font-size: 13px; } .mighty-maker input, .mighty-maker .select-options { background-color: #fff; } .mighty-maker .help { display: none; } .mighty-maker .input-text, .mighty-maker .input-number, .mighty-maker .select-options { border: 1px solid #d7d7d7; line-height: 15px; padding: 3px 3px 4px; } .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; } .mighty-maker .input-number { width: 60px; } .mighty-maker .input-text { width: 120px; } .mighty-maker .maker-snippet { border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida sans'; font-size: 11px; line-height: 18px; } ");
+    core.inlineCSS("\
+        .mighty-maker {\
+            background-color: #efefef; padding: 12px;\
+        }\
+        .mighty-maker .maker-name { font-size: 23px; font-weight: bold; }\
+        .mighty-maker .maker-description { margin-top: 12px; font-size: 14px; }\
+        .mighty-maker input, .mighty-maker .select-options { background-color: #fff; }\
+        .mighty-maker .help { display: none; }\
+        .mighty-maker .input-text, .mighty-maker .input-number, .mighty-maker .select-options {\
+            border: 1px solid #d7d7d7; font-size: 13px; padding: 3px;\
+        }\
+        .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; }\
+        .mighty-maker .input-number { width: 60px; }\
+        .mighty-maker .input-text { width: 250px; }\
+        .mighty-maker .maker-snippet {\
+            cursor: pointer; border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida console'; font-size: 11px; line-height: 18px;\
+        }\
+        .mighty-maker .maker-snippet:hover {\
+            border-color: red;\
+            color: #000;\
+            background-color: yellow;\
+        }");
 
-    function htmlEntities(str) {
+    function toHTMLEntities(str) {
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function fromHTMLEntities(str) {
+        return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
     }
 
     var snippetCache;
@@ -84,7 +108,7 @@ Mighty.define(["mighty.core"], function( core ){
                 snippet += '<script async defer src="' + basePath + 'mighty.min.js"></script>';
             }
 
-            return entities ? htmlEntities(snippet) : snippet;
+            return entities ? toHTMLEntities(snippet) : snippet;
         },
 
         _preview: function () {
@@ -116,7 +140,9 @@ Mighty.define(["mighty.core"], function( core ){
 
                 previewSection,
 
-                widget = ui.widget = document.createElement('a');
+                widget = ui.widget = document.createElement('a'),
+
+                codeTextArea = document.createElement("textarea");
 
             widget.name = 'mighty';
             widget.className = 'mighty-' + options.make;
@@ -163,10 +189,35 @@ Mighty.define(["mighty.core"], function( core ){
             }
 
             ui.code = core.createHTML('<div class="maker-code"><label>Get the Code</label></div>');
-            ui.snippet = core.createHTML('<div class="maker-snippet"></div>"');
+            ui.snippet = core.createHTML('<div class="maker-snippet"><textarea disabled></textarea></div>"');
+
+            function copyToClipboard() {
+
+                var code = fromHTMLEntities(ui.snippet.innerHTML),
+                    isMac,
+                    ctrl = "Ctrl";
+
+                if (window.clipboardData && window.clipboardData.setData) {
+                    window.clipboardData.setData("Text", code);
+                    window.alert(make.name + ' code snippet copied to clipboard.');
+                } else {
+                    isMac = /Macintosh/.test(navigator.userAgent);
+                    if (isMac) {
+                        ctrl = "Command";
+                    }
+                    window.prompt("Copy to clipboard: " + ctrl + "+C, Enter", code);
+                }
+            }
+
+            core.bind(ui.snippet, "click", copyToClipboard);
 
             ui.code.appendChild(ui.snippet);
             element.appendChild(ui.code);
+
+            // Set the snippet to the textarea.
+            // Figure out if we can createText selections on <div first. play
+            // with overflow hidden to fix shading issue.
+            // ui.snippet = ui.snippet.firstChild;
 
             ui.snippet.innerHTML = self._getCode(true, true);
 
@@ -274,7 +325,9 @@ Mighty.define(["mighty.core"], function( core ){
                 var newOption = document.createElement( 'div' ),
                     select = document.createElement( 'select' ),
                     optionsHTML = '',
-                    self = this;
+                    self = this,
+                    values = makeOptions.value,
+                    x;
 
                 newOption.className = "maker-option";
                 newOption.innerHTML = '<label for="' + this.options.module +
@@ -284,10 +337,11 @@ Mighty.define(["mighty.core"], function( core ){
                 core.attr( select, 'data-option', makeOptions.option );
                 select.className = "select-options";
 
-                core.each(makeOptions.value, function (elm, i, array) {
-                    optionsHTML += '<option value="' + elm.slug + '">' +
-                        elm.title + '</option>';
-                });
+                for (x in values) {
+                    if (values.hasOwnProperty(x)) {
+                        optionsHTML += '<option value="' + x + '">' + values[x] + '</option>';
+                    }
+                }
 
                 select.innerHTML = optionsHTML;
 
@@ -303,7 +357,32 @@ Mighty.define(["mighty.core"], function( core ){
                 return select;
             },
 
-            checkbox: function( makeOptions ) {
+            radio: function (makeOptions) {
+
+                var newOption = document.createElement( 'div' ),
+                    input,
+                    self = this,
+
+                    x,
+                    values = makeOptions.value,
+
+                    optionsHTML = "";
+
+                newOption.className = "maker-option";
+                newOption.innerHTML = '<label> ' + makeOptions.name +
+                    ' <b class="help">' + makeOptions.description + '</b></label>';
+
+                for (x in values) {
+                    if (values.hasOwnProperty(x)) {
+                        optionsHTML += '<input class="input-radio" name="' + makeOptions.option + '" value="' + x + '"> ' + values[x];
+                    }
+                }
+
+                return false;
+
+            },
+
+            checkbox: function (makeOptions) {
 
                 var newOption = document.createElement( 'div' ),
                     input = document.createElement( 'input' ),

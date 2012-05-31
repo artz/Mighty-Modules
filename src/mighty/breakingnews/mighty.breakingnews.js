@@ -8,7 +8,7 @@ Mighty.define(["mighty.core"], function( core ){
         options: {
             foo: 'bar',
             count: 6, // Setting this to 6 for now. This option will help when we build the customize widget feature.
-            ads: 2  // 1 = Show Ads, 2 = No Ads..
+            ads: "off"  // "on" = Show Ads, "off" = No Ads..
         },
 
         // Set up the widget
@@ -26,7 +26,7 @@ Mighty.define(["mighty.core"], function( core ){
 
             core.getCSS( Mighty.option("basePath") + "mighty/breakingnews/mighty.breakingnews.css" );
 
-            if( options.ads == 1 ){
+            if( options.ads == "on" ){
                 self._adInclude();
             }
 
@@ -64,7 +64,7 @@ Mighty.define(["mighty.core"], function( core ){
                     mightyModule = core.createHTML( data );
                     element.innerHTML = mightyModule.innerHTML;
                     self._buildfooter();
-                    if ( options.ads == 1 ) {
+                    if ( options.ads == "on" ) {
                         self._adInclude();
                         adsReloadAd( AdId );
                     }
