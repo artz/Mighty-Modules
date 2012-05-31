@@ -64,6 +64,7 @@ body {
     width: 324px;
     height: 185px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .chooser {
@@ -105,6 +106,13 @@ body {
     float: left;
     margin-top: -72px;
     width: 600px;
+}
+.factory > h1 {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+.factory > .widgets {
+    margin-top: 24px;
 }
 .factory > .widgets > li {
     border-left: 6px solid #fff;
