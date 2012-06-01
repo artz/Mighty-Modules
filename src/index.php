@@ -1,3 +1,24 @@
+<?php
+
+    $url = "https://github.com/artzstudio/Mighty-Modules/commits/master.atom";
+    $ch = curl_init($url);
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+    $response = simplexml_load_string(curl_exec($ch));
+    curl_close($ch);
+    $commits = $response->entry;
+
+    // http://www.php.net/manual/en/function.time.php#91864
+    function ago($tm,$rcs = 0) {
+        $cur_tm = time(); $dif = $cur_tm-$tm;
+        $pds = array('second','minute','hour','day','week','month','year','decade');
+        $lngh = array(1,60,3600,86400,604800,2630880,31570560,315705600);
+        for($v = sizeof($lngh)-1; ($v >= 0)&&(($no = $dif/$lngh[$v])<=1); $v--); if($v < 0) $v = 0; $_tm = $cur_tm-($dif%$lngh[$v]);
+
+        $no = floor($no); if($no <> 1) $pds[$v] .='s'; $x=sprintf("%d %s ",$no,$pds[$v]);
+        if(($rcs == 1)&&($v >= 1)&&(($cur_tm-$_tm) > 0)) $x .= time_ago($_tm);
+        return $x;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,7 +108,35 @@
             <p>Description coming soon! Cough, Andy.</p>
         </li>
     </ul>
+
+    <div class="commits">
+    <h2>Recent Code Updates</h2>
+<?
+    $day = '';
+    foreach ($commits as $commit) {
+
+        $commit_day = date('M j, Y', strtotime($commit->updated));
+
+        if ($commit_day !== $day) {
+            if ($day !== '') {
+                echo '</ul>';
+            }
+            echo '<h3>' . $commit_day . '</h3><ul>';
+            $day = $commit_day;
+        }
+
+        echo '<li><a class="title" href="' . $commit->link->attributes()->href . '">' .
+        $commit->title . '</a> <i><a href="' . $commit->author->uri . '">' .
+        $commit->author->name . '</a> authored ' .
+        /*date('M j \a\t g:i A T', strtotime($commit->updated))*/
+        ago(strtotime($commit->updated)) . ' ago</i></li>';
+    }
+?>
+    </ul>
+    <p><b><a href="https://github.com/artzstudio/Mighty-Modules/commits/master">Mighty Module Update History</a></b> ☛</p>
+    </div>
 </div>
+
 <script src="mighty.js"></script>
 <script src="js/jquery.min.js"></script>
 <script src="js/factory.js"></script>

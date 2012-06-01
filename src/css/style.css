@@ -134,6 +134,9 @@ body {
 .factory > .widgets > li > h3 {
     font-size: 19px;
 }
+.widgets {
+    margin-bottom: 24px;
+}
 
 /* Inherited styles for maker preview. */
 .maker-widget a {
@@ -159,8 +162,52 @@ body {
     text-decoration: underline;
 }
 
-@media all and (min-width: 1400px) {
+.commits > h2 {
+    font-size: 22px;
+}
+.commits > h3 {
+    font-size: 18px;
+    margin-top: 24px;
+}
+.commits > ul {
+    font-size: 13px;
+    line-height: 18px;
+}
+.commits > ul > li {
+    padding-top: 12px;
+}
+.commits a {
+    text-decoration: none;
+    color: inherit;
+}
+.commits a:hover {
+    text-decoration: underline;
+    color: #FE5F35;
+}
+.commits > ul > li > a {
+    display: block;
+    font-weight: bold;
+}
+.commits > ul > li > i {
+    display: block;
+    font-size: 12px;
+    font-style: normal;
+}
+.commits > p {
+    margin-top: 24px;
+    }
 
+@media all and (min-width: 1400px) {
+    .factory {
+        position: relative;
+    }
+    .factory > .commits {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-left: 624px;
+        width: 300px;
+    }
     .factory > .mighty-maker {
         position: relative;
     }
