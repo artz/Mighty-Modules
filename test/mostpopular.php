@@ -17,16 +17,16 @@
     <?php
         require_once("../src/lib/mighty.php");
         $amber = new MightyModule("mighty.mostpopular");
-        $amber->render();
+        $amber->render(array('heading' => 'Dave Artz', 'sort' => 'viral'));
     ?>
 
     <h2>Most Popular Widget (Embed)</h2>
-    <a name="mighty" class="mighty-mostpopular" data-nohtml data-nojs href="http://www.mightymodules.com/amber/">Get the <b>Amber Alerts Widget</b></a>
-    <script async defer src="../src/mighty/mighty.js"></script>
+    <a name="mighty" class="mighty-mostpopular" href="http://www.mightymodules.com/mostpopular/">Get the <b>Most Popular Widget</b></a>
+    <script async defer src="../src/mighty.js"></script>
 
     <h2>Mighty Maker (Most Popular Widget)</h2>
     <div class="mighty-maker"><a name="mighty" class="mighty-maker" data-module="mostpopular" href="http://www.mightymodules.com/source/">Get the <b>Maker Widget</b></a></div>
-    <script async defer src="../src/mighty/mighty.js"></script>
+    <script async defer src="../src/mighty.js"></script>
 </div>
 </body>
 </html>

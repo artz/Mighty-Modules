@@ -11,7 +11,7 @@ Mighty.define(["mighty.core"], function (core) {
         // These options will be used as defaults
         options: {
             count: 8,
-            moreCount: 8,
+            more_count: 8,
             // These selectors will automatically run inside
             // the module and grab the resulting elements.
             ui: {
