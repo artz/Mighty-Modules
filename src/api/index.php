@@ -60,7 +60,7 @@ class Mighty {
 
     public function getXML( $url ) {
         $response = $this->get( $url );
-        return xmlrpc_decode( $response );
+        return simplexml_load_string( $response );
     }
 }
 
