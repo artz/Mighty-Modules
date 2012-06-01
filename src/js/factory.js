@@ -26,28 +26,32 @@
         // handle widget selection
         $Observer.bind("select-widget", function( event, data ) {
 
-            var widgetName = data.widgetName;
+            var selectedWidget,
+                widgetName = data.widgetName;
 
-            selectedWidget = widgetName;
+            if (widgetName) {
 
-            if ( $selectedMenuItem ) {
-                $selectedMenuItem.removeClass("active");
+                selectedWidget = widgetName;
+
+                if ( $selectedMenuItem ) {
+                    $selectedMenuItem.removeClass("active");
+                }
+                $selectedMenuItem = $(".chooser > ul > li > a[data-widget='" + selectedWidget + "']");
+                $selectedMenuItem.addClass("active");
+
+                // Update location.
+                window.location.href = Mighty.option("basePath") + '#' + selectedWidget;
+
+                // Generate maker in factory
+                $factory.html("<div class=\"mighty-maker\"><a name=\"mighty\" class=\"mighty-maker\" data-module=\"" + widgetName + "\">Loading...</a></div>");
+
+                Mighty.init();
             }
-            $selectedMenuItem = $(".chooser > ul > li > a[data-widget='" + selectedWidget + "']");
-            $selectedMenuItem.addClass("active");
-
-            // Update location.
-            window.location.href = Mighty.option("basePath") + '#' + selectedWidget;
-
-            // Generate maker in factory
-            $factory.html("<div class=\"mighty-maker\"><a name=\"mighty\" class=\"mighty-maker\" data-module=\"" + widgetName + "\">Loading...</a></div>");
-
-            Mighty.init();
 
         });
 
         // reset factory
-        $(document).delegate(".logo", "click", function(){
+        $(document).delegate(".logo", "click", function(event){
             location.href = Mighty.option("basePath") + '#';
             $factory.html( factoryMakeHTML );
             event.preventDefault();

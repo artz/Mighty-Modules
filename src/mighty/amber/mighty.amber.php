@@ -2,6 +2,7 @@
 
 $Mighty = new Mighty();
 $json = $Mighty->getJSON('http://api.socialalerts.aol.com/api/amber');
+// $json = $Mighty->getJSON('http://socialalerts.aol.com/test/api/amber');
 // $json = $Mighty->getJSON('amber.json');
 
 function ago($i){

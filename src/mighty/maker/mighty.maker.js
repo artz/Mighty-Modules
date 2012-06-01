@@ -9,7 +9,6 @@ Mighty.define(["mighty.core"], function( core ){
         }\
         .mighty-maker .maker-name { font-size: 23px; font-weight: bold; }\
         .mighty-maker .maker-description { margin-top: 12px; font-size: 14px; }\
-        .mighty-maker input, .mighty-maker .select-options { background-color: #fff; }\
         .mighty-maker .help { display: none; }\
         .mighty-maker .input-text, .mighty-maker .input-number, .mighty-maker .select-options {\
             border: 1px solid #d7d7d7; font-size: 13px; padding: 3px;\
@@ -287,7 +286,7 @@ Mighty.define(["mighty.core"], function( core ){
                     input = document.createElement('input'),
                     self = this;
 
-                newOption.className = "maker-option";
+                newOption.className = 'maker-option';
                 newOption.innerHTML = '<label for="' + this.options.module +
                     '-option-' + makeOptions.option + '">' + makeOptions.name +
                     ' <b class="help">' + makeOptions.description + '</b></label>';
@@ -315,37 +314,45 @@ Mighty.define(["mighty.core"], function( core ){
 
             select: function (makeOptions) {
 
-                var newOption = document.createElement('div'),
-                    select = document.createElement('select'),
-                    optionsHTML = '',
+                // Internet Explorer has issues creating options
+                // with innerHTML, requiring us to create the entire
+                // <div> in one go.
+                // http://support.microsoft.com/kb/276228
+                var optionHTML = [],
                     self = this,
                     values = makeOptions.value,
-                    x;
+                    x,
 
-                newOption.className = "maker-option";
-                newOption.innerHTML = '<label for="' + this.options.module +
-                    '-option-' + makeOptions.option + '">' + makeOptions.name +
-                    ' <b class="help">' + makeOptions.description + '</b></label>';
+                    forId = self.options.module + '-option-' + makeOptions.option,
+                    select;
 
-                core.attr(select, 'data-option', makeOptions.option);
-                select.className = "select-options";
+                optionHTML.push('<div class="maker-option"><label for="' + forId + '">' +
+                        makeOptions.name +
+                        ' <b class="help">' + makeOptions.description +
+                        '</b></label><select id="' + forId +
+                        '" class="maker-option select" data-option="' +
+                        makeOptions.option + '">'
+                );
 
                 for (x in values) {
                     if (values.hasOwnProperty(x)) {
-                        optionsHTML += '<option value="' + x + '">' + values[x] + '</option>';
+                        optionHTML.push('<option value="' + x + '">' +
+                            values[x] + '</option>');
                     }
                 }
 
-                select.innerHTML = optionsHTML;
+                optionHTML.push('</select></div>');
 
-                newOption.appendChild(select);
+                optionHTML = core.createHTML(optionHTML.join(''));
 
-                self.element.appendChild(newOption);
+                select = core.query("select", optionHTML)[0];
 
                 core.bind(select, "change", function () {
                     self.ui.snippet.innerHTML = self._getCode(true, true);
                     self._preview();
                 });
+
+                self.element.appendChild(optionHTML);
 
                 return select;
             },
