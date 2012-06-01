@@ -87,7 +87,8 @@ Mighty.define(["mighty.core"], function( core ){
 
                     for (module in inputs) {
                         if (inputs.hasOwnProperty(module) && inputs[module].value !== undefined && inputs[module].value !== "") {
-                            dataOptionsStr += " data-" + module + '="' + inputs[module].value + '"';
+                            // console.log(inputs[module].value);
+                            dataOptionsStr += " data-" + module + '="' + toHTMLEntities(inputs[module].value) + '"';
                         }
                     }
 

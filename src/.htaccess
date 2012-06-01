@@ -25,3 +25,6 @@ AddCharset UTF-8 .html
 AddCharset UTF-8 .xml
 AddCharset UTF-8 .js
 AddCharset UTF-8 .css
+
+# Turn off Magic Quotes
+php_flag magic_quotes_gpc Off

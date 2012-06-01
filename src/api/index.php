@@ -190,7 +190,24 @@ class Mighty {
     // Set up JSONP
     if ( isset( $jsonp ) ) {
         header( 'content-type: application/javascript; charset=utf-8' );
-        $data = $jsonp . '("' . addslashes( str_replace( "\n", "", $data ) ) . '")';
+
+        // Remove carriage returns
+        $data = str_replace("\n", "", $data);
+
+        // Escape backslashes
+        $data = str_replace("\\", "\\\\", $data);
+
+        // Remove duplicate whitespace
+        $data = preg_replace('/[\s]+/', ' ', $data);
+
+        // Remove trailing whitespace from closing tags
+        $data = preg_replace('/[\s]*<\//', '</', $data);
+
+        // Escape quotes
+        $data = str_replace("'", "\'", $data);
+
+        // Add padding
+        $data = $jsonp . "('" . $data .  "');";
     }
 
     // Leverage Etags to only return content when it updates.
