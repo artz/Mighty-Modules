@@ -19,19 +19,22 @@ Mighty.define({
             value: ""
         },
         {
+            option: "sort",
+            name: "Sort Stories",
+            description: "The method of popularity to sort by.",
+            type: "select",
+            value: {
+                "viral": "Viral Traffic",
+                "total": "Total Traffic"
+            }
+        },
+        {
             option: "source",
             name: "Show Source",
             description: "Show the source website of the story.",
             type: "checkbox",
             value: "on"
         },
-//      {
-//          option: "sort",
-//          name: "Sort",
-//          description: "The order to sort the most popular stories.",
-//          type: "radio",
-//          value: ""
-//      }
         {
             option: "count",
             name: "Stories Count",

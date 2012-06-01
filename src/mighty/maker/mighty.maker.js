@@ -209,17 +209,10 @@ Mighty.define(["mighty.core"], function( core ){
                 }
             }
 
-            core.bind(ui.snippet, "click", copyToClipboard);
-
             ui.code.appendChild(ui.snippet);
             element.appendChild(ui.code);
-
-            // Set the snippet to the textarea.
-            // Figure out if we can createText selections on <div first. play
-            // with overflow hidden to fix shading issue.
-            // ui.snippet = ui.snippet.firstChild;
-
             ui.snippet.innerHTML = self._getCode(true, true);
+            core.bind(ui.snippet, "click", copyToClipboard);
 
             if (options.preview) {
                 previewSection = core.createHTML('<div class="maker-preview"><label>Preview</label></div>');
@@ -271,7 +264,7 @@ Mighty.define(["mighty.core"], function( core ){
                 // Update snippet.
                 core.bind(input, "blur", function () {
                     var newValue = parseInt(input.value, 10);
-                    if (minValue > maxValue ) {
+                    if (minValue > maxValue) {
                         if (window.console) {
                             window.console.log("Warning: Minimum is greater than Maximum in " + makeOptions.name + " option.");
                         }
@@ -288,10 +281,10 @@ Mighty.define(["mighty.core"], function( core ){
                 return input;
             },
 
-            text: function( makeOptions ) {
+            text: function (makeOptions) {
 
-                var newOption = document.createElement( 'div' ),
-                    input = document.createElement( 'input' ),
+                var newOption = document.createElement('div'),
+                    input = document.createElement('input'),
                     self = this;
 
                 newOption.className = "maker-option";
@@ -299,20 +292,20 @@ Mighty.define(["mighty.core"], function( core ){
                     '-option-' + makeOptions.option + '">' + makeOptions.name +
                     ' <b class="help">' + makeOptions.description + '</b></label>';
 
-                core.attr( input, 'type', 'text' );
+                core.attr(input, 'type', 'text');
 
                 // Artz: Should be able to use core.data instead.
                 // core.data( input, "option", options.option );
-                core.attr( input, 'data-option', makeOptions.option );
+                core.attr(input, 'data-option', makeOptions.option);
                 input.className = "input-text";
 
-                core.attr( input, 'value', makeOptions.value );
+                core.attr(input, 'value', makeOptions.value);
 
-                newOption.appendChild( input );
+                newOption.appendChild(input);
 
-                self.element.appendChild( newOption );
+                self.element.appendChild(newOption);
 
-                core.bind( input, "blur", function(){
+                core.bind(input, "blur", function () {
                     self.ui.snippet.innerHTML = self._getCode(true, true);
                     self._preview();
                 });
@@ -320,10 +313,10 @@ Mighty.define(["mighty.core"], function( core ){
                 return input;
             },
 
-            select: function( makeOptions ) {
+            select: function (makeOptions) {
 
-                var newOption = document.createElement( 'div' ),
-                    select = document.createElement( 'select' ),
+                var newOption = document.createElement('div'),
+                    select = document.createElement('select'),
                     optionsHTML = '',
                     self = this,
                     values = makeOptions.value,
@@ -334,7 +327,7 @@ Mighty.define(["mighty.core"], function( core ){
                     '-option-' + makeOptions.option + '">' + makeOptions.name +
                     ' <b class="help">' + makeOptions.description + '</b></label>';
 
-                core.attr( select, 'data-option', makeOptions.option );
+                core.attr(select, 'data-option', makeOptions.option);
                 select.className = "select-options";
 
                 for (x in values) {
@@ -349,7 +342,7 @@ Mighty.define(["mighty.core"], function( core ){
 
                 self.element.appendChild(newOption);
 
-                core.bind(select, "blur", function () {
+                core.bind(select, "change", function () {
                     self.ui.snippet.innerHTML = self._getCode(true, true);
                     self._preview();
                 });
@@ -359,7 +352,9 @@ Mighty.define(["mighty.core"], function( core ){
 
             radio: function (makeOptions) {
 
-                var newOption = document.createElement( 'div' ),
+                window.console && window.console.log("Making radio option for: " + makeOptions.option);
+
+                var newOption = document.createElement('div'),
                     input,
                     self = this,
 
