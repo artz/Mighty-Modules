@@ -32,8 +32,6 @@ Mighty.define(["mighty.core"], function( core ){
         return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
     }
 
-    var snippetCache;
-
     return {
 
         // These options will be used as defaults
@@ -49,6 +47,8 @@ Mighty.define(["mighty.core"], function( core ){
             preview: true
       // basePath - if needed, you can override the basePath for maker.
         },
+
+        _snippetCache: '',
 
         // Set up the widget
         _create: function () {
@@ -116,8 +116,8 @@ Mighty.define(["mighty.core"], function( core ){
             var self = this,
                 snippet = self._getCode();
 
-            if (snippet !== snippetCache) {
-                snippetCache = snippet;
+            if (snippet !== self._snippetCache) {
+                self._snippetCache = snippet;
                 self.ui.preview.innerHTML = self._getCode();
                 Mighty.init();
             }
