@@ -743,7 +743,10 @@
         defer(function(){
 
             var script = document.createElement( strScript ),
-                done = 0; // Probably don't need this; jQuery no longer uses it.
+
+                // IE 8 and below need to poll the readyState property, while
+                // Chrome, Safari, Firefox and IE 10 can use the onload handler.
+                isNormal = !script.readyState || document.documentMode > 8;
 
             // Set the source of the script.
             script.src = src;
@@ -752,23 +755,37 @@
             // bad browsers, for consistency.
             script.async = "async";
 
-            // Attach handlers for all browsers
-            script[ strOnLoad ] = script[ strOnReadyStateChange ] = function(){
+            function loadHandler() {
+                if (isNormal || /loaded|complete/.test(script.readyState)) {
 
-                if ( ! done && ! script[ strReadyState ] ||
-                    /loaded|complete/.test( script[ strReadyState ] ) ) {
+//                  log( "Boot.getJS (getScript): Done loading <b>" + src + "</b>. " + script.type );
 
-                    done = 1;
+                    // Emit an event indicating this script has just executed.
+                    // if ( ! script.type ) {
+                    //      publish( eventNamespace + "js-done", { src: src } );
+                    //      console.log( "Script executed: " + src );
+                    // }
 
                     // Handle memory leak in IE
                     script[ strOnLoad ] = script[ strOnReadyStateChange ] = null;
 
+                    // Remove this script in the next available UI thread.
+                    // * Removing this to reduce KB.  If people really care, we will add back.
+//                  SetTimeout(function(){
+//                      firstScriptParent.removeChild( script );
+//                  }, 0);
+
                     if ( callback ) {
                         callback( src );
                     }
-
                 }
-            };
+            }
+
+            if (isNormal) {
+                script[strOnLoad] = loadHandler;
+            } else {
+                script[strOnReadyStateChange] = loadHandler;
+            }
 
             // This is the safest insertion point to assume.
             head.insertBefore( script, head.firstChild );
@@ -1745,23 +1762,28 @@
     var jsonpId = 0;
     function getJSONP( url, callback ) {
 
-        var callbackId = "JSONP_" + jsonpId++;
+        // If URL contains a question mark, replace it
+        // with our special callback.
+        if (contains(url, "=?")) {
 
-        url += "&_jsonp=" + namespace + "." + callbackId;
+            jsonpId += 1;
+            var callbackId = "_JSONP_" + jsonpId;
+            url = url.replace("=?", "=" + namespace + "." + callbackId);
 
-        global[ callbackId ] = function( data ) {
+            global[ callbackId ] = function( data ) {
 
-            // Pass data to the callback.
-            callback && callback.call( window, data );
+                // Pass data to the callback.
+                callback && callback.call( window, data );
 
-            // Cleanup function reference.
-            delete global[ callbackId ];
-        };
+                // Cleanup function reference.
+                delete global[ callbackId ];
+            };
 
-        getScript( url );
+        }
 
+        return getScript( url );
     }
-//    global.getJSONP = getJSONP;
+    global.getJSONP = getJSONP;
 
 
     // Expose our internal utilities through a module definition.
