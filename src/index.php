@@ -115,7 +115,7 @@
     $day = '';
     foreach ($commits as $commit) {
 
-        $commit_day = date('M j, Y', strtotime($commit->updated));
+        $commit_day = date('F j, Y', strtotime($commit->updated));
 
         if ($commit_day !== $day) {
             if ($day !== '') {
