@@ -702,26 +702,45 @@
     Function: Boot.getCSS
 
     Fetches a CSS file and appends it to the DOM.
-
-    TODO:
-    Add a callback using Jason's technique:
-    http://www.viget.com/inspire/js-201-run-a-function-when-a-stylesheet-finishes-loading/
 */
     var head = document.head || document.getElementsByTagName( "head" )[0] || document.documentElement,
         cssLoading = {};
 
-    function getCSS( src ) {
-        defer(function(){
-            if ( ! cssLoading[ src ] ) {
-                cssLoading[ src ] = 1;
-                var styleSheet = document.createElement("link");
+    function getCSS( src, callback ) {
+
+        if ( ! cssLoading[ src ] ) {
+
+            cssLoading[ src ] = 1;
+
+            defer(function(){
+
+                function loadHandler() {
+                    // Append is used to maintain CSS cascade order.
+                    head.appendChild(styleSheet);
+                    callback();
+                }
+
+                var styleSheet = document.createElement("link"),
+                    image;
+
                 styleSheet.rel = "stylesheet";
                 styleSheet.href = src;
-                head.insertBefore( styleSheet, head.firstChild );
-            }
-        });
+
+                // If there's a callback, load as image first then
+                // reload to parse styles.
+                if (callback) {
+                    image = new Image();
+                    image.onerror = loadHandler;
+                    image.src = src;
+                } else {
+                    head.appendChild(styleSheet);
+                }
+            });
+        } else if (callback) {
+            callback();
+        }
     }
-//    global.getCSS = getCSS;
+    global.getCSS = getCSS;
 
 
 /*
@@ -1959,7 +1978,7 @@ Mighty.require("mighty.core", function( core ){
                             // Make this configurable, or a function of the module eventually.
                             core.getJSONP( Mighty.option("basePath") + "api/?_host=" +
                                 Mighty.option("host") + "&_cache=" + (Mighty.option("cache") || 60) +
-                                "&_module=" + widgetName + optionParams, function( data ){
+                                "&_module=" + widgetName + optionParams + "&_jsonp=?", function( data ){
 
                                 if ( ! data.error ) {
 
@@ -2038,7 +2057,7 @@ Mighty.require("mighty.core", function( core ){
 
 })(Mighty, document, {
     host: location.hostname,
-//    basePath: "http://localhost/mighty/src/", // Development path
-    basePath: "http://mighty.aol.net/", // Production path
+    basePath: "http://localhost/mighty/src/", // Development path
+//    basePath: "http://mighty.aol.net/", // Production path
     cache: 5
 });
