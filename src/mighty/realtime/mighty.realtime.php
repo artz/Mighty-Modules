@@ -3,6 +3,8 @@
 $Mighty = new Mighty();
 $json = $Mighty->getJSON('http://www.huffingtonpost.com/api/?t=most_popular_merged&viral_sort=1&i=1h');
 
+if (!isset($json->response)): exit; endif;
+
 // Set up count if not supplied.
  $count = 6;
  if (isset($options->count)): $count = $options->count; endif;

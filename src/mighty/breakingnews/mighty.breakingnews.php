@@ -5,6 +5,7 @@ $json = $Mighty->getJSON('http://www.huffingtonpost.com/api/?t=featured_news&ver
 // Set up count if not supplied.
 $count = 6;
 if (isset($options->count)): $count = $options->count; endif;
+if (!$json->response): exit; endif;
 ?>
 <div class="mighty-breakingnews mighty-reset">
     <h2 class="header">Breaking News</h2>

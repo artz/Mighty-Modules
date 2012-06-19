@@ -21,23 +21,13 @@ $count = ( !empty($count) ) ? $count : 7;
 $vertical = ( !empty($vertical) ) ? $vertical : "chicago";
 $vname = ( !empty($vname) ) ? $vname : "Chicago";
 
-
 /*
  * The following curl method should be used on production.
  */
 
-$c = curl_init();
-curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
-curl_setopt($c, CURLOPT_URL, 'http://www.huffingtonpost.com/api/?t=featured_news&limit=7&vertical='.$vertical);
-
-$content = curl_exec($c);
-curl_close($c);
-
-
-//$content = file_get_contents($_SERVER["DOCUMENT_ROOT"].'/api/hpapi.json'); // This is not for production
-
-$json = json_decode($content);
+$Mighty = new Mighty();
+$json = $Mighty->getJSON('http://www.huffingtonpost.com/api/?t=featured_news&limit=7&vertical=' . $vertical);
+if (!isset($json->response)): exit; endif;
 
 $vname = $json->response[0]->vertical_name;
 $vcolor = $json->response[0]->vertical_color;

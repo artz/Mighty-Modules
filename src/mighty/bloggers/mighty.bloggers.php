@@ -30,20 +30,9 @@ function slugify ($string) {
   return utf8_encode($string);
 }
 
-/*
- * The following curl method should be used on production.
- */
-
-$c = curl_init();
-curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($c, CURLOPT_HTTPHEADER, array('Accept: application/json', 'Content-Type: application/json'));
-curl_setopt($c, CURLOPT_URL, 'http://www.huffingtonpost.com/api/?t=featured_news&vertical=aol&zone=4&limit=7');
-
-$content = curl_exec($c);
-curl_close($c);
-
-$json = json_decode($content);
-
+$Mighty = new Mighty();
+$json = $Mighty->getJSON('http://www.huffingtonpost.com/api/?t=featured_news&vertical=aol&zone=4&limit=7');
+if (!isset($json->response)): exit; endif;
 ?>
 <div class="mighty-bloggers mighty-reset">
     <h2 class="header">Featured Bloggers</h2>
