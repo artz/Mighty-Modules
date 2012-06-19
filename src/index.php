@@ -5,7 +5,11 @@
     curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
     $response = simplexml_load_string(curl_exec($ch));
     curl_close($ch);
-    $commits = $response->entry;
+    if (isset($response->entry)) {
+        $commits = $response->entry;
+    } else {
+        $commits = array();
+    }
 
     // http://www.php.net/manual/en/function.time.php#91864
     function ago($tm,$rcs = 0) {
