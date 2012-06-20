@@ -1,4 +1,8 @@
-Mighty.define(["mighty.core"], function( core ){
+/*global Mighty*/
+/*jslint browser: true*/
+Mighty.define(["mighty.core", "mighty/localnews/mighty.localnews.css"], function (core) {
+
+    "use strict";
 
     return {
 
@@ -19,8 +23,6 @@ Mighty.define(["mighty.core"], function( core ){
 
             self._buildFooter();
 
-            core.getCSS( Mighty.option("basePath") + "mighty/localnews/mighty.localnews.css" );
-
             self._bindEvents();
         },
 
@@ -32,22 +34,22 @@ Mighty.define(["mighty.core"], function( core ){
                 vertical,
                 ui = this.ui = {};
 
-            core.delegate( element, ".change-city-button", "click", function( event ){
-                changeCity = core.query(".change-city", element);
-                changeCity[0].style.display="block";
+            core.delegate(element, ".change-city-button", "click", function (event) {
+                var changeCity = core.query(".change-city", element);
+                changeCity[0].style.display = "block";
 
-                    core.delegate( element, '.change-city-submit', "click", function( event ) {
-                        vertical = core.query(".city-dropdown", element);
-                        vertical = vertical[0].value;
-                        element.innerHTML = "loading...";
-                        core.getJSONP( Mighty.option("basePath") + "api/?module=mighty.localnews&count="+options.count+"&vertical="+vertical, function( data ){
-                            mightyModule = core.createHTML( data );
-                            element.innerHTML = mightyModule.innerHTML;
-                            self._buildFooter();
-                        });
-
-                        event.preventDefault();
+                core.delegate(element, '.change-city-submit', "click", function (event) {
+                    vertical = core.query(".city-dropdown", element);
+                    vertical = vertical[0].value;
+                    element.innerHTML = "loading...";
+                    core.getJSONP(Mighty.option("basePath") + "api/?module=mighty.localnews&count=" + options.count + "&vertical=" + vertical, function (data) {
+                        var mightyModule = core.createHTML(data);
+                        element.innerHTML = mightyModule.innerHTML;
+                        self._buildFooter();
                     });
+                    event.preventDefault();
+                });
+
                 event.preventDefault();
             });
 
@@ -59,20 +61,18 @@ Mighty.define(["mighty.core"], function( core ){
                 element = self.element,
                 ui = this.ui = {};
 
-                ui.localnewsFooter = document.createElement( 'div' );
-                ui.localnewsFooter.className = 'mighty-localnews-footer';
-                ui.localnewsFooter.innerHTML = '<a class="more-news" href="http://www.huffingtonpost.com/local" title="Click here for More Local News">MORE NEWS</a><a class="change-city-button">Change City</a>';
+            ui.localnewsFooter = document.createElement('div');
+            ui.localnewsFooter.className = 'mighty-localnews-footer';
+            ui.localnewsFooter.innerHTML = '<a class="more-news" href="http://www.huffingtonpost.com/local" title="Click here for More Local News">MORE NEWS</a><a class="change-city-button">Change City</a>';
 
-                ui.changeCity = document.createElement( 'div' );
-                ui.changeCity.className = "change-city";
-                ui.changeCity.innerHTML = '<select class="city-dropdown"><option value="new-york">New York</option><option value="los-angeles">Los Angeles</option><option value="dc">DC</option><option value="chicago">Chicago</option><option value="san-francisco">San Fransisco</option><option value="denver">Denver</option></select><a class="change-city-submit">Change</a>';
-                ui.changeCity.style.display="none";
+            ui.changeCity = document.createElement('div');
+            ui.changeCity.className = "change-city";
+            ui.changeCity.innerHTML = '<select class="city-dropdown"><option value="new-york">New York</option><option value="los-angeles">Los Angeles</option><option value="dc">DC</option><option value="chicago">Chicago</option><option value="san-francisco">San Fransisco</option><option value="denver">Denver</option></select><a class="change-city-submit">Change</a>';
+            ui.changeCity.style.display = "none";
 
-                element.appendChild( ui.localnewsFooter );
-                element.appendChild( ui.changeCity );
-
-        },
-
+            element.appendChild(ui.localnewsFooter);
+            element.appendChild(ui.changeCity);
+        }
     };
 
 });

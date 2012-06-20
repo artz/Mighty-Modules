@@ -1,10 +1,8 @@
 /*global Mighty*/
 /*jslint browser: true, nomen: true*/
-Mighty.define(["mighty.core"], function (core) {
+Mighty.define(["mighty.core", "mighty/mostpopular/mighty.mostpopular.css"], function (core) {
 
     "use strict";
-
-    core.getCSS(Mighty.option("basePath") + "mighty/mostpopular/mighty.mostpopular.css");
 
     return {
 
