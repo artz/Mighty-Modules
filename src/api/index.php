@@ -200,10 +200,10 @@ class Mighty {
         // Remove duplicate whitespace
         $data = preg_replace('/[\s]+/', ' ', $data);
 
-        // Remove trailing whitespace from closing tags
+        // Remove trailing whitespace before tags
         $data = preg_replace('/[\s]*<\//', '</', $data);
 
-        // Escape quotes
+        // Escape single quotes
         $data = str_replace("'", "\'", $data);
 
         // Add padding

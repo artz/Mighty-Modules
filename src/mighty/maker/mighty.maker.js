@@ -16,20 +16,21 @@ Mighty.define(["mighty.core"], function( core ){
         .mighty-maker label { display: block; font-weight: bold; padding-top: 12px; }\
         .mighty-maker .input-number { width: 60px; }\
         .mighty-maker .input-text { width: 250px; }\
+        .mighty-maker .maker-code > p { font-size: 13px; margin-top: 6px; margin-bottom: 3px;}\
         .mighty-maker .maker-snippet {\
             cursor: pointer; border: 1px solid #d7d7d7; background-color: #fff; padding: 0 3px; font-family: monaco, 'lucida console'; font-size: 11px; line-height: 18px;\
         }\
         .mighty-maker .maker-snippet:hover {\
-            border-color: red;\
+            border-color: #FE5F35;\
             color: #000;\
-            background-color: yellow;\
+            background-color: #FFFF69;\
         }");
 
     function toHTMLEntities(str) {
-        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
     }
     function fromHTMLEntities(str) {
-        return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+        return String(str).replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/<br>/g, '\n').replace(/&nbsp;/g, ' ');
     }
 
     return {
@@ -104,9 +105,15 @@ Mighty.define(["mighty.core"], function( core ){
                 snippet = '<a name="mighty" class="mighty-' + options.module +
                     '"' + dataOptions() + href + '>' + make.name + '</a>';
 
-            if (script) {
-                snippet += '<script async defer src="' + basePath + 'mighty.min.js"></script>';
-            }
+//          if (script) {
+//                snippet += '<script async defer src="' + basePath + 'mighty.min.js"></script>';
+//              snippet += '<script>(function(d, s, id){\
+//                  if (!d.getElementById(id)){\
+//                      var js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];\
+//                      js.id = id;\
+//                      js.src = "' + basePath + 'mighty.min.js";\
+//                  }}(document, "script", "mighty-jssdk"));</script>';
+//          }
 
             return entities ? toHTMLEntities(snippet) : snippet;
         },
@@ -188,12 +195,23 @@ Mighty.define(["mighty.core"], function( core ){
 
             }
 
-            ui.code = core.createHTML('<div class="maker-code"><label>Get the Code</label></div>');
-            ui.snippet = core.createHTML('<div class="maker-snippet"><textarea disabled></textarea></div>"');
+            ui.code = core.createHTML('<div class="maker-code"><label>Get the Code</label>\
+                    <p>1. Include the JavaScript SDK once, ideally right after the opening <code>&lt;body&gt;</code> tag:</p>\
+                    <div class="maker-snippet">' +
+                    toHTMLEntities('<script>(function (d, s, id) {\n\
+if (!d.getElementById(id)) {\n\
+  var js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];\n\
+  js.id = id; js.src = "' + Mighty.option("basePath") + 'mighty.min.js";\n\
+  fjs.parentNode.insertBefore(js, fjs);\n\
+}}(document, "script", "mighty-jssdk"));</script>') + '</div>\
+                    <p>2. Place the code for your widget where you want it to appear on your page.</p>');
 
-            function copyToClipboard() {
+            ui.snippet = core.createHTML('<div class="maker-snippet"></div>"');
 
-                var code = fromHTMLEntities(ui.snippet.innerHTML),
+            function copyToClipboard(event) {
+
+                var snippet = event.target,
+                    code = fromHTMLEntities(snippet.innerHTML),
                     isMac,
                     ctrl = "Ctrl";
 
@@ -212,7 +230,8 @@ Mighty.define(["mighty.core"], function( core ){
             ui.code.appendChild(ui.snippet);
             element.appendChild(ui.code);
             ui.snippet.innerHTML = self._getCode(true, true);
-            core.bind(ui.snippet, "click", copyToClipboard);
+
+            core.delegate(element, ".maker-snippet", "click", copyToClipboard);
 
             if (options.preview) {
                 previewSection = core.createHTML('<div class="maker-preview"><label>Preview</label></div>');

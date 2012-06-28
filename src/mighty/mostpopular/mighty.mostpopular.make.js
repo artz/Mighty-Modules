@@ -13,8 +13,8 @@ Mighty.define({
         },
         {
             option: "sub_heading",
-            name: "Sub Heading",
-            description: "Add a subheading (optional)",
+            name: "Secondary Heading",
+            description: "Add a secondary heading (optional)",
             type: "text",
             value: ""
         },
