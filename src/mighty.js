@@ -2839,7 +2839,30 @@
             }; // end Mighty.init()
 
             // Run Mighty.init() on DOM Ready (or immediately).
-            core.ready(Mighty.init);
+            var mightyReady = false;
+            core.ready(function () {
+                Mighty.init();
+                mightyReady = true;
+            });
+
+            // If live polling is enabled, poll the anchors and
+            // initialize when we see a change in length.
+            if (Mighty.option("live")) {
+
+                var anchorLength = 0,
+                    timer;
+
+                timer = setInterval(function () {
+                    if (mightyAnchors.length !== anchorLength) {
+                        anchorLength = mightyAnchors.length;
+                        Mighty.init();
+                    }
+                    if (mightyReady) {
+                        clearInterval(timer);
+                    }
+                }, 100);
+            }
+
         }
 
         // Initialize Mighty!
@@ -2849,7 +2872,8 @@
 
 }(Mighty, document, {
     host: location.hostname,
-//    basePath: "http://localhost/mighty/src/", // Development path
-    basePath: "http://mighty.aol.net/", // Production path
-    cache: 5
+    live: true,
+    cache: 30,
+//    basePath: "http://localhost/mighty/src/" // Development path
+    basePath: "http://mighty.aol.net/" // Production path
 }));
