@@ -26,7 +26,7 @@ ksort(&$json);
 		foreach( $json as $make => $value ):
 			echo '<h3>' . $make . '</h3>';
 			foreach( $json[$make] as $model ):
-				echo '<label><input type="radio" name="make" value="'. $make .'"> ' . $model . '</label>';
+				echo '<label><input type="radio" name="make" value="'. $make .'"><span>' . $model . '</span></label>';
 			endforeach;
 		endforeach;
 		?>
