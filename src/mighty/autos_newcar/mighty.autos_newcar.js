@@ -104,8 +104,8 @@ Mighty.define(["mighty.core"], function (core) {
             while (form.childNodes[i]) {
                 that = form.childNodes[i];
                 if (that.nodeName === 'H3') {
-                    makeSelect.appendChild(new Option(that.innerText, that.innerText));
-                    currentMake = that.innerText;
+                    makeSelect.appendChild(new Option(that.innerHTML, that.innerHTML));
+                    currentMake = that.innerHTML;
                     modelSelect = document.createElement('select');
                     modelSelect.setAttribute('name', 'model');
                     modelSelect.appendChild(new Option('Please Select a Model', ''));
@@ -113,7 +113,7 @@ Mighty.define(["mighty.core"], function (core) {
                     that.style.display = 'none';
                 } else if (that.nodeName === 'LABEL') {
                     modelSelect = modelSelects[currentMake];
-                    modelSelect.appendChild(new Option(that.innerText, that.innerText));
+                    modelSelect.appendChild(new Option(that.childNodes[1].innerHTML, that.childNodes[1].innerHTML));
                     that.style.display = 'none';
                 }
 
