@@ -15,7 +15,6 @@
     overflow: hidden;
 }
 .mighty-mostpopular > ol > li > a {
-    margin-right: 1em;
     float: left;
     width: 74px;
     height: 58px;
@@ -30,9 +29,13 @@
     line-height: 11px;
     margin-top: -1px;
     margin-bottom: 2px;
+    margin-left: 90px;
     font-style: normal;
+    display: block;
 }
 .mighty-mostpopular > ol > li > b {
     font-size: 13px;
     line-height: 16px;
+    margin-left: 90px;
+    display: block;
 }
