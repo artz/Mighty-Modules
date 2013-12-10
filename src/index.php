@@ -48,6 +48,7 @@
 <div class="chooser">
     <h2>Pick a Module</h2>
     <ul>
+        <li><a class="widget" data-widget="mini" href="#">Mini</a></li>
         <li><a class="widget" data-widget="mostpopular" href="#">Most Popular
             Stories</a></li>
         <li><a class="widget" data-widget="breakingnews" href="#">Breaking News</a></li>
@@ -71,6 +72,10 @@
     <a href="https://trello.com/board/mighty-modules/4fc7d67b578636997b45e9e7">Trello
         board</a> to see what we&rsquo;re up to, or paruse our modules below. </p>
     <ul class="widgets">
+        <li class="widget" data-widget="mini">
+            <h3>Mini</h3>
+            <p>Displays the Mini cards feed.</p>
+        </li>
         <li class="widget" data-widget="mostpopular">
             <h3>Most Popular Stories</h3>
             <p>Surfaces the most popular content in a vertical or keyword, ensuring your visitors are a click away from the hottest stories on the web.</p>
