@@ -1,0 +1,41 @@
+.mighty-mostpopular h2,
+.mighty-mostpopular h3,
+.mighty-mostpopular h4,
+.mighty-mostpopular h5,
+.mighty-mostpopular ol {
+    margin: 0;
+    padding: 0;
+}
+.mighty-mostpopular > ol {
+    list-style-type: none;
+}
+.mighty-mostpopular > ol > li {
+    clear: left;
+    margin: 1em 0;
+    overflow: hidden;
+}
+.mighty-mostpopular > ol > li > a {
+    float: left;
+    width: 74px;
+    height: 58px;
+}
+.mighty-mostpopular > ol > li > i > a,
+.mighty-mostpopular > ol > li > b > a {
+    display: block;
+}
+.mighty-mostpopular > ol > li > i {
+    text-transform: uppercase;
+    font-size: 11px;
+    line-height: 11px;
+    margin-top: -1px;
+    margin-bottom: 2px;
+    margin-left: 90px;
+    font-style: normal;
+    display: block;
+}
+.mighty-mostpopular > ol > li > b {
+    font-size: 13px;
+    line-height: 16px;
+    margin-left: 90px;
+    display: block;
+}
