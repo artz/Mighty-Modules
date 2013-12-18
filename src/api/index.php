@@ -176,6 +176,9 @@ class Mighty {
             }
         }
 
+        // Wrap the widget in a <div> with standardized class
+        $data = '<div class="mighty-module ' . str_replace('.', '-', $name) . '">' . $data . '</div>';
+
         // Inject Mighty Anchor if not JSONP
         if ( ! isset( $jsonp ) ) {
             $anchor = '<a name="mighty" class="' . str_replace( '.', '-', $name ) . '"' . $dataOptions . ' href="#">Get the <b>Mighty Module</b></a>';

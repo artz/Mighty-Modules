@@ -2721,7 +2721,7 @@
                             // Remember we initialized this widget already.
                             mightyAnchor.widget = true;
 
-                            var className = mightyAnchor.className,
+                            var className = mightyAnchor.className.match(/mighty-[a-z0-9]+/)[0],
                                 widgetName = className.replace(/-/g, "."),
                                 mightyAnchorParent = mightyAnchor.parentNode,
                                 mightyModule,
@@ -2737,6 +2737,7 @@
 
                                 optionParams;
 
+
                             // If the element's parent has the same class name
                             // as the Mighty Anchor, we already have the HTML and
                             // do not need to swap in the <div>.
@@ -2746,9 +2747,6 @@
 
                                 // Set the elem to the parent.
                                 mightyModule = mightyAnchorParent;
-
-                                // This is indeed a mighty module!
-                                core.addClass(mightyModule, "mighty-module");
 
                                 // Add our mighty-loading class, indicating the module
                                 // is in the process of being initialized.
