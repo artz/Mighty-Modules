@@ -2768,8 +2768,7 @@
                                 }
                                 // Ajax in the module's content.
                                 // Make this configurable, or a function of the module eventually.
-                                core.getJSONP(Mighty.option("basePath") + "api/?_host=" +
-                                    Mighty.option("host") + "&_cache=" + (Mighty.option("cache") || 60) +
+                                core.getJSONP(Mighty.option("basePath") + "api/?_host=" + Mighty.option("host") +
                                     "&_module=" + widgetName + optionParams + "&_jsonp=?", function (data) {
 
                                         if (!data.error) {
@@ -2873,7 +2872,6 @@
 }(Mighty, document, {
     host: location.hostname,
     live: true,
-    cache: 30,
 //    basePath: "http://localhost/mighty/src/" // Development path
     basePath: "http://mighty.aol.net/" // Production path
 }));
