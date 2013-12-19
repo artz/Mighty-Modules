@@ -20,15 +20,15 @@ Mighty.define({
 			description: 'Enter the number of cards to show.',
 			type: 'integer',
 			value: 10,
-			minimum: 4,
-			maximum: 25
+			minimum: 2,
+			maximum: 10
 		}, {
 			option: 'more_count',
 			name: 'More Cards Count',
 			description: 'Number of cards to display when window is scrolled.',
 			type: 'integer',
-			value: 5,
-			minimum: 4,
-			maximum: 50
+			value: 10,
+			minimum: 0,
+			maximum: 20
 		}]
 	});

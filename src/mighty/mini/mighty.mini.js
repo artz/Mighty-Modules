@@ -8,76 +8,74 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 		// These options will be used as defaults
 		options: {
-			count: 8,
-			more_count: 8,
 		// These selectors will automatically run inside
 		// the module and grab the resulting elements.
 			ui: {
-				'articles': 'li',
-				'photos': 'img'
+				cardsList: '.cards-list',
+				articles: 'article'
+				//'photos': 'img'
 			}
 		},
 
 		// Set up the widget
 		_create: function () {
 
-			var self = this,
-				options = self.options,
-				ui = self.ui,
-				element = self.element,
+			var self = this;
+			var options = self.options;
+			var ui = self.ui;
+			var element = self.element;
+			var loading = false;
+			var ended = false;
 
-				articles = ui.articles,
-				photos = ui.photos,
+			ui.cardsList = ui.cardsList[0];
 
-				i,
-				l,
+			// console.log(ui.cardsList);
+			// console.log('create', ui.cardsList.getAttribute('data-continuation'));
 
-				showMore,
+			var addNewCards = function (event) {
+				// console.log(event);
+				var continuation = ui.cardsList.getAttribute('data-continuation');
+				var path = Mighty.option('basePath') +
+					'api/?_host=' + location.hostname +
+					'&_module=mighty.mini&continuation=' +
+					continuation +
+					'&_jsonp=?';
 
-				count = parseInt(options.count, 10),
-				moreCount = parseInt(options.more_count, 10);
+				// Use the fanciest word available for fifth-from-last
+				var ultrapreantepenultimate = ui.cardsList.children[ui.cardsList.children.length - 5];
 
-			// If our count is greater than the number of articles,
-			// reduce the count.
-			if (count > articles.length) {
-				count = articles.length;
-			}
+				// console.log('scroll');
 
-			function moreStories(event) {
-				for (i = 0; i < moreCount; i += 1) {
-					count += 1;
-					if (count === l) {
-						showMore.style.display = 'none';
-						break;
-					} else {
-						articles[count].style.display = 'block';
-						photos[count].src = core.data(photos[count], 'src');
-					}
+				if (event.target.scrollTop >= ultrapreantepenultimate.offsetTop && !loading && !ended) {
+					loading = true;
+					core.getJSONP(path, function (html) {
+						if (html) {
+							// Turn string of html into parsed html
+							html = core.createHTML(html);
+
+							var newCardsList = core.query('.cards-list', html)[0];
+							var newContinuation = newCardsList.getAttribute('data-continuation');
+
+							// Set the new continuation key
+							ui.cardsList.setAttribute('data-continuation', newContinuation);
+
+							// console.log('first child?', newCardsList.firstChild.length, (newCardsList.firstChild.length) ? true : false);
+
+							// Add the new cards
+							while (newCardsList.firstChild) {
+								// console.log('adding child', newCardsList.firstChild);
+								ui.cardsList.appendChild(newCardsList.firstChild);
+								// console.log(newCardsList.children.length);
+							}
+						} else {
+							ended = true;
+						}
+
+						loading = false;
+					});
 				}
-				event.preventDefault();
-			}
-
-			// Display the photos for the visible stories.
-			for (i = 0, l = count; i < l; i += 1) {
-				photos[i].src = core.data(photos[i], 'src');
-			}
-
-			// If count is specified, hide stories.
-			if (articles[count]) {
-				for (i = count, l = articles.length; i < l; i += 1) {
-					articles[i].style.display = 'none';
-				}
-
-				// Create showMore link
-				showMore = document.createElement('a');
-				showMore.innerHTML = 'More Stories ▾';
-				showMore.className = 'show-more';
-				showMore.href = '#';
-
-				element.appendChild(showMore);
-
-				core.bind(showMore, 'click', moreStories);
-			}
+			};
+			core.bind(element, 'scroll', core.throttle(addNewCards, 100));
 		}
 	};
 });

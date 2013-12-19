@@ -1,41 +1,370 @@
-.mighty-mostpopular h2,
-.mighty-mostpopular h3,
-.mighty-mostpopular h4,
-.mighty-mostpopular h5,
-.mighty-mostpopular ol {
-    margin: 0;
-    padding: 0;
+.mighty-mini {
+  height: 400px;
+  overflow: scroll;
+  position: relative;
+  border: solid 1px #cecece;
 }
-.mighty-mostpopular > ol {
-    list-style-type: none;
+
+.card {
+/*  margin: 10px; */
+  background: #fff;
+  color: #666;
+  position: relative;
+  overflow: hidden;
 }
-.mighty-mostpopular > ol > li {
-    clear: left;
-    margin: 1em 0;
-    overflow: hidden;
+.card.card-list {
+  width: 298px;
+  float: left;
+  cursor: pointer;
+  -webkit-transition: box-shadow 0.2s linear, border-color 0.2s linear;
+  transition: box-shadow 0.2s linear, border-color 0.2s linear;
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
 }
-.mighty-mostpopular > ol > li > a {
-    float: left;
-    width: 74px;
-    height: 58px;
+.card.card-list:hover {
+  -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-color: #b5b5b5;
 }
-.mighty-mostpopular > ol > li > i > a,
-.mighty-mostpopular > ol > li > b > a {
-    display: block;
+.card.card-admin {
+  cursor: pointer;
 }
-.mighty-mostpopular > ol > li > i {
-    text-transform: uppercase;
-    font-size: 11px;
-    line-height: 11px;
-    margin-top: -1px;
-    margin-bottom: 2px;
-    margin-left: 90px;
-    font-style: normal;
-    display: block;
+.card.card-full,
+.card.card-standalone {
+  width: 440px;
 }
-.mighty-mostpopular > ol > li > b {
-    font-size: 13px;
-    line-height: 16px;
-    margin-left: 90px;
-    display: block;
+.card.card-full .card-image,
+.card.card-standalone .card-image,
+.card.card-full .card-video-poster,
+.card.card-standalone .card-video-poster {
+  height: 300px;
+}
+.card.card-standalone {
+  margin: auto;
+}
+.card.card-empty h4 {
+  margin: 10px;
+}
+.card .card-state {
+  font-family: 'Roboto Condensed', "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: inline-block;
+  line-height: 16px;
+  font-size: 14px;
+  padding: 0 1px 5px 10px;
+  border-bottom: solid 1px #000;
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+.card .card-state.card-state-breaking {
+  color: #cd4d52;
+  border-bottom-color: #cd4d52;
+}
+.card .card-state.card-state-sponsored {
+  color: #e08b47;
+  border-bottom-color: #e08b47;
+}
+.card .headline {
+  font-family: 'Roboto Condensed', "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  color: #333333;
+  margin: 10px;
+}
+.card .card-quote {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 300;
+  color: #555555;
+  margin: 10px;
+  font-style: italic;
+}
+.card .card-quote span {
+  color: #a8a8a8;
+}
+.card .card-quote-source {
+  margin: 10px;
+  font-size: 12px;
+  line-height: 24px;
+  color: #888888;
+}
+.card .card-meta {
+  margin: 10px;
+  font-size: 12px;
+  line-height: 24px;
+  color: #a8a8a8;
+  position: relative;
+  border-top: solid 1px #e2e2e2;
+  padding-top: 10px;
+}
+.card .card-meta .icon-chevron {
+  margin-left: 10px;
+  margin-top: 7px;
+}
+.card .card-meta a,
+.card .card-meta a:hover,
+.card .card-meta a:visited,
+.card .card-meta a:active {
+  text-decoration: none;
+  color: #a8a8a8;
+}
+.card .card-author-name,
+.card .card-source-name {
+  color: #606060;
+}
+.card .card-meta-content {
+  margin-right: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+.card.card-full .card-meta-content {
+  margin-right: 70px;
+}
+.card .card-meta-end {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.card .card-icon {
+  display: inline-block;
+  border-radius: 24px;
+  height: 24px;
+  width: 24px;
+  vertical-align: middle;
+  margin-right: 10px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 5px rbga(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rbga(0, 0, 0, 0.1);
+}
+.card .card-icon img {
+  height: 100%;
+  display: block;
+}
+.card .card-icon.card-icon-twitter {
+  margin-left: -20px;
+}
+.card .card-comment {
+  margin: 10px 10px -10px;
+  padding: 10px;
+  color: #4c6770;
+  border-top: solid 1px #b4dae8;
+  border-bottom: solid 1px #b4dae8;
+  position: relative;
+  font-size: 14px;
+  line-height: 18px;
+}
+.card .card-comment:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  content: "";
+  bottom: -6px;
+  left: 6px;
+  border-width: 6px 6px 0;
+  border-top-color: #b4dae8;
+}
+.card .card-comment + .card-meta {
+  border-top: none;
+}
+.card .card-image,
+.card .card-video-poster {
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  position: relative;
+  text-align: center;
+}
+.card .card-image.card-image-full,
+.card .card-video-poster.card-image-full {
+  height: auto;
+}
+.card .card-image.card-image-full img,
+.card .card-video-poster.card-image-full img {
+  display: block;
+  width: 100%;
+}
+.card .card-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -30px 0 0 -40px;
+  padding: 20px 40px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.card .card-video video {
+  width: 100%;
+}
+.card iframe {
+  margin: 0;
+  display: block;
+  height: 260px;
+  width: 438px;
+}
+.card .card-video-container {
+  width: 438px;
+  height: 260px;
+  background: #000;
+}
+.card .card-video-container.card-video-instagram {
+  height: 535px;
+}
+.card .card-video-container.card-video-instagram iframe {
+  height: 535px;
+}
+.card .card-video-container.card-video-vine {
+  height: 438px;
+}
+.card .card-video-container.card-video-vine iframe {
+  height: 438px;
+}
+.card .btn-group {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: solid 1px #cecece;
+}
+.card .btn-group .btn {
+  border-radius: 0;
+  padding: 4px 10px;
+}
+.card:hover .btn-group {
+  display: block;
+}
+.card-comments {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  background: #fff;
+}
+.card-comments .card-comments-header {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 10px;
+  background: #f5f5f5;
+  border-bottom: solid 1px #cecece;
+}
+.card-comments .card-comments-header h2 {
+  font-size: 13px;
+  line-height: 20px;
+  color: #888;
+  text-align: center;
+  margin: 0;
+}
+.card-comments .card-comments-input-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px;
+  background: #f5f5f5;
+  border-top: solid 1px #cecece;
+}
+.card-comments .card-comments-list {
+  list-style: none;
+  margin: 0;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  left: 0;
+  bottom: 55px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0;
+}
+.card-comments .card-comments-list li {
+  padding: 5px 0;
+  margin: 0 10px;
+  border-bottom: solid 1px #cecece;
+}
+.modal.modal-card {
+  top: 70px;
+  z-index: 49;
+}
+.modal.modal-card .modal-dialog {
+  width: 480px;
+  margin-top: 10px;
+}
+.modal.modal-card .modal-content {
+  border: 0;
+  background: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.modal.modal-card .modal-body {
+  padding: 0;
+  position: relative;
+}
+.modal-backdrop.card-backdrop {
+  top: 70px;
+  background-color: #e6e6e6;
+  z-index: 49;
+}
+.modal-backdrop.card-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.modal-backdrop.card-backdrop.in {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.tweet {
+  background: #fff;
+  border-bottom: solid 1px #e2e2e2;
+  position: relative;
+}
+.tweet .tweet-image {
+  display: inline-block;
+  border-radius: 24px;
+  height: 24px;
+  width: 24px;
+  margin: 10px 0 0 10px;
+  vertical-align: middle;
+  margin-right: 10px;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 5px rbga(0, 0, 0, 0.1);
+  box-shadow: 0 0 5px rbga(0, 0, 0, 0.1);
+}
+.tweet .tweet-image img {
+  height: 100%;
+  display: block;
+}
+.tweet .twitter-author {
+  color: #444;
+}
+.tweet .twitter-author span {
+  color: #999999;
+  font-weight: 300;
+}
+.tweet .tweet-content {
+  margin: 10px 10px 10px 50px;
+  font-size: 13px;
+  color: #777;
+  line-height: 16px;
+}
+.tweet .tweet-ago {
+  color: #999;
+  font-size: 12px;
+}
+.tweet .btn-group {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.tweet:hover .btn-group {
+  display: block;
 }
