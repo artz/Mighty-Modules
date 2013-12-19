@@ -1,8 +1,8 @@
 .mighty-mini {
 	/*height: 400px;*/
 	/*overflow: scroll;*/
+	/*border: solid 1px #cecece;*/
 	position: relative;
-  border: solid 1px #cecece;
 }
 
 .mighty-mini .pull-left {
@@ -31,7 +31,7 @@
 }
 
 .card {
-	margin: 10px;
+  margin: 10px 0;
   border: solid 1px #cecece;
   background: #fff;
   color: #666;
