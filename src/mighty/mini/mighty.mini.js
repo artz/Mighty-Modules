@@ -37,6 +37,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				var continuation = ui.cardsList.getAttribute('data-continuation');
 				var path = Mighty.option('basePath') +
 					'api/?_host=' + location.hostname +
+					'&more_count=' + options.more_count +
 					'&_module=mighty.mini&continuation=' +
 					continuation +
 					'&_jsonp=?';
@@ -52,20 +53,21 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 						if (html) {
 							// Turn string of html into parsed html
 							html = core.createHTML(html);
-
 							var newCardsList = core.query('.cards-list', html)[0];
-							var newContinuation = newCardsList.getAttribute('data-continuation');
+							if (newCardsList) {
+								var newContinuation = newCardsList.getAttribute('data-continuation');
 
-							// Set the new continuation key
-							ui.cardsList.setAttribute('data-continuation', newContinuation);
+								// Set the new continuation key
+								ui.cardsList.setAttribute('data-continuation', newContinuation);
 
-							// console.log('first child?', newCardsList.firstChild.length, (newCardsList.firstChild.length) ? true : false);
+								// console.log('first child?', newCardsList.firstChild.length, (newCardsList.firstChild.length) ? true : false);
 
-							// Add the new cards
-							while (newCardsList.firstChild) {
-								// console.log('adding child', newCardsList.firstChild);
-								ui.cardsList.appendChild(newCardsList.firstChild);
-								// console.log(newCardsList.children.length);
+								// Add the new cards
+								while (newCardsList.firstChild) {
+									// console.log('adding child', newCardsList.firstChild);
+									ui.cardsList.appendChild(newCardsList.firstChild);
+									// console.log(newCardsList.children.length);
+								}
 							}
 						} else {
 							ended = true;
@@ -75,7 +77,10 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 					});
 				}
 			};
-			core.bind(element, 'scroll', core.throttle(addNewCards, 100));
+
+			if (options.more_count !== '0') {
+				core.bind(element, 'scroll', core.throttle(addNewCards, 100));
+			}
 		}
 	};
 });
