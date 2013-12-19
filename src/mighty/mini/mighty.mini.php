@@ -12,7 +12,7 @@
 date_default_timezone_set('UTC');
 
 if (!isset($options->count)) {
-	$options->count = '20';
+	$options->count = '2';
 }
 
 // Call API
@@ -36,7 +36,9 @@ if (isset($json)):
 
 	if (count($cards) > 0):
 ?>
-<div class="cards-list" data-continuation="<?=$json->data->continuation?>">
+<div class="cards-list"
+	data-continuation="<?=$json->data->continuation?>"
+>
 <? foreach ($cards as $card):
 	$type_class = "card-type-" . $card->card_type->name;
 	$source = $card->source;
@@ -47,8 +49,18 @@ if (isset($json)):
 	$now = date_create();
 	$diff = date_diff($updated, $now);
 	$ago = $diff->format("%h") . "h";
+
+	$text = preg_replace(
+		"#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie",
+		"'<a href=\"$1\" target=\"_blank\">$3</a>$4'",
+		$card->content->text
+	);
 ?>
-	<article class="card card-list <?=$type_class?>">
+	<article class="card card-list <?=$type_class?>"
+		data-brand="<?=$card->brand?>"
+		data-url="<?=$card->card_url?>"
+		data-seo-url="<?=$card->seo_card_url?>"
+	>
 
 		<? switch ($card->card_type->name) {
 		case "headline": ?>
@@ -59,9 +71,11 @@ if (isset($json)):
 		<? break; ?>
 		<? case "video": ?>
 
-		<div class="card-video-poster" style="background-image:url('<?=@$card->content->media[1]->url?>')">
-			<div class="card-play"><i class="icon-play"></i></div>
-		</div>
+		<a href="<?=@$card->seo_card_url?>">
+			<div class="card-video-poster" style="background-image:url('<?=@$card->content->media[1]->url?>')">
+					<div class="card-play"><i class="icon-play"></i></div>
+			</div>
+		</a>
 
 		<? break; ?>
 		<? case "image": ?>
@@ -73,12 +87,15 @@ if (isset($json)):
 		<h4 class="card-state card-state-<?=$card->state?>"><?=ucfirst($card->state)?></h4>
 		<? } ?>
 
-		<h2 class="headline"><?=$card->content->text?></h2>
+		<h2 class="headline"><?=@$text?></h2>
+
+		<? if (!empty($card->content->comment)) { ?>
 		<p class="card-comment"><?=$card->content->comment?></p>
+		<? } ?>
 
 		<p class="card-meta">
 			<span class="card-icon pull-left">
-				<img src="http://pbs.twimg.com/profile_images/378800000833708794/2e214d2fde9f61190b1ffa5d601d762c_normal.png">
+				<img src="http://pbs.twimg.com/profile_images/378800000833708794/2e214d2fde9f61190b1ffa5d601d762c_normal.png" />
 			</span>
 
 			<span class="card-meta-content">
@@ -92,6 +109,14 @@ if (isset($json)):
 			<span class="card-meta-end">
 				<span class="card-ago"><?=$ago?></span>
 			</span>
+
+			<div class="card-meta-share">
+				<ul>
+					<li class="share facebook">Facebook</li>
+					<li class="share twitter">Twitter</li>
+					<li class="share email">Email</li>
+				</ul>
+			</div>
 		</p>
 
 	</article>

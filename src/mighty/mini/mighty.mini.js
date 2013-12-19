@@ -8,12 +8,14 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 		// These options will be used as defaults
 		options: {
-		// These selectors will automatically run inside
-		// the module and grab the resulting elements.
+			more_count: 0,
+
+			// These selectors will automatically run inside
+			// the module and grab the resulting elements.
 			ui: {
 				cardsList: '.cards-list',
-				articles: 'article'
-				//'photos': 'img'
+				articles: 'article',
+				shareLinks: '.share'
 			}
 		},
 
@@ -32,6 +34,21 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			// console.log(ui.cardsList);
 			// console.log('create', ui.cardsList.getAttribute('data-continuation'));
 
+			var getCardData = function (card) {
+				var attributes = card.attributes;
+				var data = {};
+
+				for (var i = 0, length = attributes.length; i < length; i += 1) {
+
+					if (/^data-/.test(attributes[i].nodeName)) {
+						var key = attributes[i].nodeName.replace('data-', '');
+						data[key] = attributes[i].nodeValue;
+					}
+				}
+
+				return data;
+			};
+
 			var addNewCards = function (event) {
 				// console.log(event);
 				var continuation = ui.cardsList.getAttribute('data-continuation');
@@ -44,8 +61,6 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 				// Use the fanciest word available for fifth-from-last
 				var ultrapreantepenultimate = ui.cardsList.children[ui.cardsList.children.length - 5];
-
-				// console.log('scroll');
 
 				if (event.target.scrollTop >= ultrapreantepenultimate.offsetTop && !loading && !ended) {
 					loading = true;
@@ -80,6 +95,30 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 			if (options.more_count !== '0') {
 				core.bind(element, 'scroll', core.throttle(addNewCards, 100));
+			}
+
+			for (var i = 0, length = ui.shareLinks.length; i < length; i += 1) {
+				core.bind(ui.shareLinks[i], 'click', function (event) {
+					var type = event.target.className.replace('share ', '');
+					var card = core.closest(event.target, '.card');
+					var cardData = getCardData(card);
+					var text = 'via Mini ' + cardData.brand.charAt(0).toUpperCase() + cardData.brand.slice(1);
+					var url = cardData.url;
+
+					switch (type) {
+					case 'facebook':
+						window.open('http://www.facebook.com/share.php?u=' + encodeURIComponent(url),
+							'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600'
+						);
+						break;
+					case 'twitter':
+						window.open('http://twitter.com/share?text='+ encodeURIComponent(text) + '&url='+ encodeURIComponent(url) ,'', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=600');
+						break;
+					case 'email':
+						window.open('mailto:?subject=' + encodeURIComponent(text)  + '&body='+encodeURIComponent(text + '\r\n' + url + '\r\n\r\n via Mini'));
+						break;
+					}
+				});
 			}
 		}
 	};

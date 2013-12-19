@@ -1,12 +1,38 @@
 .mighty-mini {
-  height: 400px;
-  overflow: scroll;
-  position: relative;
+	/*height: 400px;*/
+	/*overflow: scroll;*/
+	position: relative;
   border: solid 1px #cecece;
 }
 
+.mighty-mini .pull-left {
+	float: left;
+}
+
+.mighty-mini .card-meta-share {
+	font-size: 10px;
+	margin: 10px;
+}
+
+.mighty-mini .share {
+	cursor: pointer;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.mighty-mini:before,
+.mighty-mini:after {
+	content: " "; /* 1 */
+	display: table; /* 2 */
+}
+
+.mighty-mini:after {
+	clear: both;
+}
+
 .card {
-/*  margin: 10px; */
+	margin: 10px;
+  border: solid 1px #cecece;
   background: #fff;
   color: #666;
   position: relative;
@@ -15,7 +41,6 @@
 .card.card-list {
   width: 298px;
   float: left;
-  cursor: pointer;
   -webkit-transition: box-shadow 0.2s linear, border-color 0.2s linear;
   transition: box-shadow 0.2s linear, border-color 0.2s linear;
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
@@ -367,4 +392,19 @@
 }
 .tweet:hover .btn-group {
   display: block;
+}
+
+.icon-play {
+	border-style: solid;
+	border-top-color: transparent;
+	border-top-width: 6px;
+	border-right-color: transparent;
+	border-right-width: 0;
+	border-bottom-color: transparent;
+	border-bottom-width: 6px;
+	border-left-color: #fff;
+	border-left-width: 10px;
+	display: block;
+	height: 0;
+	width: 0;
 }
