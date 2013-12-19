@@ -28,26 +28,24 @@ $articles = $json->response;
 
 if (count($articles) > 0):
 ?>
-<div class="mighty-mostpopular">
-    <?=@$heading?>
-    <?=@$sub_heading?>
-    <ol>
+<?=@$heading?>
+<?=@$sub_heading?>
+<ol>
 <?  foreach ($articles as $article):
 
-        // Title falls back to entry title.
-        $title = $article->entry_front_page_title;
-        if (!$title): $title = $article->entry_title; endif;
+    // Title falls back to entry title.
+    $title = $article->entry_front_page_title;
+    if (!$title): $title = $article->entry_title; endif;
 
-        // If source option is set, show source site.
-        if (isset($options->source)): $source = '<i><a href="' . $article->vertical_link . '">' . ($article->source === 'HuffPo' ? 'HuffPost ' : '') . $article->vertical_name . '</a></i>'; endif;
+    // If source option is set, show source site.
+    if (isset($options->source)): $source = '<i><a href="' . $article->vertical_link . '">' . ($article->source === 'HuffPo' ? 'HuffPost ' : '') . $article->vertical_name . '</a></i>'; endif;
 ?>      <li>
-        <a href="<?=@$article->entry_url?>"><img width="74" height="58" alt="<?=@$article->entry_image_keywords?>" src="<?=$Mighty->option("basePath").'images/x.gif'?>" data-src="<?=@$article->entry_image?>"></a>
-        <?=@$source?>
-        <b><a href="<?=@$article->entry_url?>"><?=@$title?></a></b>
-        </li>
+    <a href="<?=@$article->entry_url?>"><img width="74" height="58" alt="<?=@$article->entry_image_keywords?>" src="<?=$Mighty->option("basePath").'images/x.gif'?>" data-src="<?=@$article->entry_image?>"></a>
+    <?=@$source?>
+    <b><a href="<?=@$article->entry_url?>"><?=@$title?></a></b>
+    </li>
 <?  endforeach; ?>
-    </ol>
-</div>
+</ol>
 <?php
 endif;
 endif;
