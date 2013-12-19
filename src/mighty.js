@@ -340,9 +340,11 @@
 
         return function () {
 
+          var args = arguments;
+
             function throttler() {
                 timeout = undefined;
-                func.call(this);
+                func.apply(this, args);
             }
 
             if (debounce) {
