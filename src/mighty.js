@@ -340,11 +340,12 @@
 
         return function () {
 
+          var context = this;
           var args = arguments;
 
             function throttler() {
                 timeout = undefined;
-                func.apply(this, args);
+                func.apply(context, args);
             }
 
             if (debounce) {
@@ -1829,6 +1830,24 @@
     }
     global.query = query;
 
+    function closest(elem, selector) {
+
+      var matchesSelector = elem.matches
+        || elem.webkitMatchesSelector
+        || elem.mozMatchesSelector
+        || elem.msMatchesSelector;
+
+      while (elem) {
+        if (matchesSelector.bind(elem)(selector)) {
+          return elem;
+        } else {
+          elem = elem.parentNode;
+        }
+      }
+      return false;
+    }
+    global.closest = closest;
+
 
 /*
     Simple add/remove classname functions.
@@ -2652,6 +2671,7 @@
         require: require,
 
         query: query,
+        closest: closest,
 
         addClass: addClass,
         removeClass: removeClass,
@@ -2872,6 +2892,8 @@
 }(Mighty, document, {
     host: location.hostname,
     live: true,
-//    basePath: "http://localhost/mighty/src/" // Development path
-    basePath: "http://mighty.aol.net/" // Production path
+    cache: 30,
+    basePath: "http://mighty.aol.net/"
+    //basePath: "/" // Development path
+    //basePath: "http://mighty.aol.net/" // Production path
 }));
