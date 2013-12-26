@@ -9,10 +9,12 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 		// These options will be used as defaults
 		options: {
 			more_count: 0,
+			autoRefresh: true,
 
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.
 			ui: {
+				reload: '.reload',
 				cardsList: '.cards-list',
 				articles: 'article',
 				shareLinks: '.share'
@@ -26,8 +28,6 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			var options = self.options;
 			var ui = self.ui;
 			var element = self.element;
-			var loading = false;
-			var ended = false;
 
 			ui.cardsList = ui.cardsList[0];
 
@@ -49,52 +49,47 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				return data;
 			};
 
-			var addNewCards = function (event) {
-				// console.log(event);
-				var continuation = ui.cardsList.getAttribute('data-continuation');
+			var getCards = function (event, highlight) {
 				var path = Mighty.option('basePath') +
 					'api/?_host=' + location.hostname +
 					'&more_count=' + options.more_count +
-					'&_module=mighty.mini&continuation=' +
-					continuation +
+					'&_module=mighty.mini' +
 					'&_jsonp=?';
 
-				// Use the fanciest word available for fifth-from-last
-				var ultrapreantepenultimate = ui.cardsList.children[ui.cardsList.children.length - 5];
+				highlight = highlight || false;
 
-				if (event.target.scrollTop >= ultrapreantepenultimate.offsetTop && !loading && !ended) {
-					loading = true;
-					core.getJSONP(path, function (html) {
-						if (html) {
-							// Turn string of html into parsed html
-							html = core.createHTML(html);
-							var newCardsList = core.query('.cards-list', html)[0];
-							if (newCardsList) {
-								var newContinuation = newCardsList.getAttribute('data-continuation');
+				ui.reload[0].className += ' loading';
 
-								// Set the new continuation key
-								ui.cardsList.setAttribute('data-continuation', newContinuation);
+				core.getJSONP(path, function (html) {
+					ui.reload[0].className = ui.reload[0].className.replace(' loading', ' ');
 
-								// console.log('first child?', newCardsList.firstChild.length, (newCardsList.firstChild.length) ? true : false);
-
-								// Add the new cards
-								while (newCardsList.firstChild) {
-									// console.log('adding child', newCardsList.firstChild);
-									ui.cardsList.appendChild(newCardsList.firstChild);
-									// console.log(newCardsList.children.length);
-								}
-							}
-						} else {
-							ended = true;
+					if (html) {
+						if (highlight) {
+							ui.cardsList.className += ' highlight';
+							setTimeout(function () {
+								ui.cardsList.className = ui.cardsList.className.replace(' highlight', '');
+							}, 1000);
 						}
-
-						loading = false;
-					});
-				}
+						// Turn string of html into parsed html
+						html = core.createHTML(html);
+						var newCardsList = core.query('.cards-list', html)[0];
+						if (newCardsList) {
+							ui.cardsList.innerHTML = '';
+							// Add the new cards
+							while (newCardsList.firstChild) {
+								ui.cardsList.appendChild(newCardsList.firstChild);
+							}
+						}
+					}
+				});
 			};
 
-			if (options.more_count !== '0') {
-				core.bind(element, 'scroll', core.throttle(addNewCards, 100));
+			core.bind(ui.reload[0], 'click', function (event) {
+				getCards(event, true);
+			});
+
+			if (options.autoRefresh) {
+				setInterval(getCards, 10000);
 			}
 
 			for (var i = 0, length = ui.shareLinks.length; i < length; i += 1) {

@@ -1,8 +1,82 @@
+@keyframes mighty-highlight {
+	from {
+		background-color: hsla(60, 100%, 70%, 0.3);
+	}
+
+	to {
+	}
+}
+
+@keyframes mighty-spin {
+	from {
+		transform: rotate(0turn);
+	}
+
+	to {
+		transform: rotate(1turn);
+	}
+}
+
 .mighty-mini {
 	/*height: 400px;*/
 	/*overflow: scroll;*/
 	/*border: solid 1px #cecece;*/
 	position: relative;
+}
+
+.mighty-mini .reload {
+	background-color: transparent;
+	background-color: white;
+	border-radius: 50%;
+	border: 2px solid #2b98ce;
+	cursor: pointer;
+	display: block;
+	height: 16px;
+	position: relative;
+	width: 16px;
+}
+
+.mighty-mini .reload.loading {
+	animation-name: mighty-spin;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+.mighty-mini .reload:before {
+	border-color: transparent transparent white transparent;
+	border-style: solid;
+	border-width: 0 0 8px 7px;
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	position: absolute;
+	right: -2px;
+	top: 0;
+}
+
+.mighty-mini .reload:after {
+	border-color: transparent transparent #2b98ce transparent;
+	border-style: solid;
+	border-width: 0 0 6px 6px;
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	position: absolute;
+	right: -2px;
+	top: 0;
+}
+
+.mighty-mini .cards-list {
+	overflow: hidden;
+}
+
+.mighty-mini .cards-list.highlight .card {
+	animation-name: mighty-highlight;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
 }
 
 .mighty-mini .pull-left {
@@ -51,6 +125,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-color: #b5b5b5;
 }
+
 .card.card-admin {
   cursor: pointer;
 }

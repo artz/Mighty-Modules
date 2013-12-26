@@ -36,6 +36,12 @@ if (isset($json)):
 
 	if (count($cards) > 0):
 ?>
+
+<div class="mini-header">
+	<h1><?=ucfirst($cards[0]->brand)?> Mini</h1>
+	<span class="reload"></span>
+</div>
+
 <div class="cards-list"
 	data-continuation="<?=$json->data->continuation?>"
 >
@@ -95,7 +101,7 @@ if (isset($json)):
 
 		<p class="card-meta">
 			<span class="card-icon pull-left">
-				<img src="http://pbs.twimg.com/profile_images/378800000833708794/2e214d2fde9f61190b1ffa5d601d762c_normal.png" />
+				<img src="<?=@$card->author->profile_image_url?>" />
 			</span>
 
 			<span class="card-meta-content">
