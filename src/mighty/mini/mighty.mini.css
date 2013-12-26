@@ -1,3 +1,12 @@
+@-webkit-keyframes mighty-highlight {
+	from {
+		background-color: hsla(60, 100%, 70%, 0.3);
+	}
+
+	to {
+	}
+}
+
 @keyframes mighty-highlight {
 	from {
 		background-color: hsla(60, 100%, 70%, 0.3);
@@ -7,12 +16,28 @@
 	}
 }
 
-@keyframes mighty-spin {
+@-webkit-keyframes mighty-spin {
 	from {
+		-webkit-transform: rotate(0turn);
 		transform: rotate(0turn);
 	}
 
 	to {
+		-webkit-transform: rotate(1turn);
+		transform: rotate(1turn);
+	}
+}
+
+@keyframes mighty-spin {
+	from {
+		-webkit-transform: rotate(0turn);
+		-ms-transform: rotate(0turn);
+		transform: rotate(0turn);
+	}
+
+	to {
+		-webkit-transform: rotate(1turn);
+		-ms-transform: rotate(1turn);
 		transform: rotate(1turn);
 	}
 }
@@ -37,9 +62,13 @@
 }
 
 .mighty-mini .reload.loading {
+	-webkit-animation-name: mighty-spin;
 	animation-name: mighty-spin;
+	-webkit-animation-duration: 1s;
 	animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
 	animation-iteration-count: infinite;
+	-webkit-animation-timing-function: linear;
 	animation-timing-function: linear;
 }
 
@@ -74,8 +103,11 @@
 }
 
 .mighty-mini .cards-list.highlight .card {
+	-webkit-animation-name: mighty-highlight;
 	animation-name: mighty-highlight;
+	-webkit-animation-duration: 1s;
 	animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
 	animation-iteration-count: infinite;
 }
 
@@ -115,7 +147,7 @@
 .card.card-list {
   width: 298px;
   float: left;
-  -webkit-transition: box-shadow 0.2s linear, border-color 0.2s linear;
+  -webkit-transition: -webkit-box-shadow 0.2s linear, border-color 0.2s linear;
   transition: box-shadow 0.2s linear, border-color 0.2s linear;
   -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0);
@@ -273,6 +305,7 @@
 .card .card-image,
 .card .card-video-poster {
   height: 200px;
+  -webkit-background-size: cover;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50% 50%;
