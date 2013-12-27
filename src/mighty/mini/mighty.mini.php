@@ -14,6 +14,7 @@ date_default_timezone_set('UTC');
 if (!isset($options->count)) {
 	$options->count = '2';
 }
+	$options->count = '50';
 
 // Call API
 $Mighty = new Mighty();
@@ -56,11 +57,15 @@ if (isset($json)):
 	$diff = date_diff($updated, $now);
 	$ago = $diff->format("%h") . "h";
 
-	$text = preg_replace(
-		"#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie",
-		"'<a href=\"$1\" target=\"_blank\">$3</a>$4'",
-		$card->content->text
-	);
+	if (!empty($card->content->text)) {
+		$text = preg_replace(
+			"#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie",
+			"'<a href=\"$1\" target=\"_blank\">$3</a>$4'",
+			$card->content->text
+		);
+	} else {
+		$text = '';
+	}
 ?>
 	<article class="card card-list <?=$type_class?>"
 		data-brand="<?=$card->brand?>"
@@ -77,11 +82,14 @@ if (isset($json)):
 		<? break; ?>
 		<? case "video": ?>
 
-		<a href="<?=@$card->seo_card_url?>">
-			<div class="card-video-poster" style="background-image:url('<?=@$card->content->media[1]->url?>')">
-					<div class="card-play"><i class="icon-play"></i></div>
-			</div>
-		</a>
+		<div
+			class="card-video-poster"
+			style="background-image:url('<?=@$card->content->media[1]->url?>')"
+			data-content-source="<?=@$card->content->media[0]->content_source?>"
+			data-url="<?=@$card->content->media[0]->url?>"
+		>
+				<div class="card-play"><i class="icon-play"></i></div>
+		</div>
 
 		<? break; ?>
 		<? case "image": ?>
