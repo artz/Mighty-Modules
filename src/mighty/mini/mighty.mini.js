@@ -9,9 +9,9 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 		// These options will be used as defaults
 		options: {
 			more_count: 0,
-			autoRefresh: true,
-			autoRefreshInterval: 60000,
-			onRender: null,
+			auto_refresh: true,
+			auto_refresh_interval: 60000,
+			on_render: null,
 
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.

@@ -30,5 +30,17 @@ Mighty.define({
 			value: 10,
 			minimum: 0,
 			maximum: 20
+		}, {
+			option: 'auto_refresh',
+			name: 'Auto Refresh',
+			description: 'Whether to automatically refresh the widget to display new content.',
+			type: 'checkbox',
+			value: 1
+		}, {
+			option: 'auto_refresh_interval',
+			name: 'Auto Refresh Interval',
+			description: 'If auto_refresh is set to true, how often (in milliseconds) to refresh the content.',
+			type: 'integer',
+			value: 60000
 		}]
 	});
