@@ -103,6 +103,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 								ui.cardsList.appendChild(newCardsList.firstChild);
 							}
 						}
+						core.publish(element, 'render', element);
 						if (typeof options.onRender === 'function') {
 							options.onRender(element);
 						}
