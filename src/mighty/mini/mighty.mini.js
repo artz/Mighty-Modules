@@ -11,7 +11,6 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			more_count: 0,
 			auto_refresh: true,
 			auto_refresh_interval: 60000,
-			on_render: null,
 
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.
@@ -104,9 +103,6 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 							}
 						}
 						core.publish(element, 'render', element);
-						if (typeof options.onRender === 'function') {
-							options.onRender(element);
-						}
 					}
 				});
 			};

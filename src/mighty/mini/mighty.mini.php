@@ -134,6 +134,18 @@ if (isset($json)):
 
 	</article>
 	<? endforeach; ?>
+
+	<?
+	$root = parse_url($cards[0]->card_url);
+	$root_url = $root['scheme'] . '://' . $root['host'];
+	?>
+	<div class="more">
+		<a href="<?=@$root_url?>">More from Mini &rarr;</a>
+	</div>
+	<div class="download">
+		<a class="apple" href="#"></a>
+		<a class="google" href="#"></a>
+	</div>
 </div>
 <?php
 endif;
