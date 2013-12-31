@@ -8,6 +8,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 		// These options will be used as defaults
 		options: {
+			count: 3,
 			more_count: 0,
 			auto_refresh: true,
 			auto_refresh_interval: 60000,
@@ -39,8 +40,10 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 					url: video.getAttribute('data-url')
 				});
 
+				var dimensions = (embedCode.type === 'iframe') ? ' width="298" height="200"' : '';
+
 				var videoHTML = core.createHTML('<' + embedCode.type +
-					' src="' + embedCode.src + '"><' + embedCode.type + '>');
+					' src="' + embedCode.src + '"' + dimensions + '></' + embedCode.type + '>');
 
 				video.parentNode.insertBefore(videoHTML, video.nextSibling);
 				video.parentNode.removeChild(video);

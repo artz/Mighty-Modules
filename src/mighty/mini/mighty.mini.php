@@ -12,7 +12,7 @@
 date_default_timezone_set('UTC');
 
 if (!isset($options->count)) {
-	$options->count = '2';
+	$options->count = '3';
 }
 
 // Call API

@@ -19,10 +19,12 @@ Mighty.define({
 			name: 'Cards Count',
 			description: 'Enter the number of cards to show.',
 			type: 'integer',
-			value: 10,
+			value: 3,
 			minimum: 2,
 			maximum: 10
-		}, {
+		},
+		/*
+		{
 			option: 'more_count',
 			name: 'More Cards Count',
 			description: 'Number of cards to display when window is scrolled.',
@@ -30,7 +32,9 @@ Mighty.define({
 			value: 10,
 			minimum: 0,
 			maximum: 20
-		}, {
+		},
+	 */
+		{
 			option: 'auto_refresh',
 			name: 'Auto Refresh',
 			description: 'Whether to automatically refresh the widget to display new content.',
