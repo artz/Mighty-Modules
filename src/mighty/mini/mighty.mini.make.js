@@ -3,7 +3,7 @@ Mighty.define({
 	id: 'mighty.mini',
 	name: 'Mini Cards',
 	description: 'This module displays a feed of cards from a selected brand.',
-	href: 'http://mini.aol.com',
+	href: 'http://mini.engadget.com',
 	options: [{
 		option: 'brand',
 		name: 'Brand',
@@ -13,6 +13,13 @@ Mighty.define({
 				'engadget': 'Engadget',
 				'stylelist': 'Stylelist'
 			}
+		},
+		{
+			option: 'qa',
+			name: 'QA',
+			description: 'Whether to use the live feed or the QA feed.',
+			type: 'checkbox',
+			value: 0
 		},
 		{
 			option: 'count',

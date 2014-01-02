@@ -15,10 +15,19 @@ if (!isset($options->count)) {
 	$options->count = '3';
 }
 
+if (!isset($options->qa)) {
+	$options->qa = false;
+}
+
 // Call API
 $Mighty = new Mighty();
 
-$path = 'http://qa.mini.aol.com/api/1.0/cards?';
+if ($options->qa) {
+	$path = 'http://qa.mini.aol.com/api/1.0/cards?';
+} else {
+	$path = 'http://mini.engadget.com/api/1.0/cards?';
+}
+
 if (isset($options->continuation)) {
 	$path .= 'limit=' . $options->more_count;
 	$path .= '&continuation=' . $options->continuation;
@@ -143,7 +152,7 @@ if (isset($json)):
 		<a href="<?=@$root_url?>">More from Mini &rarr;</a>
 	</div>
 	<div class="download">
-		<a class="apple" href="#"></a>
+		<a class="apple" href="https://itunes.apple.com/us/app/engadget-mini-real-time-updates/id739969887?ls=1&mt=8"></a>
 		<a class="google" href="#"></a>
 	</div>
 </div>
