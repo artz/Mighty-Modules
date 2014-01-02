@@ -153,7 +153,7 @@ if (isset($json)):
 	</div>
 	<div class="download">
 		<a class="apple" href="https://itunes.apple.com/us/app/engadget-mini-real-time-updates/id739969887?ls=1&mt=8"></a>
-		<a class="google" href="#"></a>
+		<a class="google" href="https://play.google.com/store/apps/details?id=com.aol.mini.engadget&hl=en"></a>
 	</div>
 </div>
 <?php
