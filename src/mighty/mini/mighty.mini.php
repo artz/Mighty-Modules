@@ -64,7 +64,11 @@ if (isset($json)):
 	$now = date_create();
 	$diff = date_diff($updated, $now);
 	if ($diff->format('%h') < 1) {
-		$ago = $diff->format('%i') . 'm';
+		if ($diff->format('%i') < 1) {
+			$ago = 'just now';
+		} else {
+			$ago = $diff->format('%i') . 'm';
+		}
 	} else {
 		$ago = $diff->format('%h') . 'h';
 	}
@@ -123,33 +127,38 @@ if (isset($json)):
 
 		<h2 class="headline"><?=@$text?></h2>
 
+		<? if ($card->card_type->name === 'twitter') { ?>
+		<p class="card-meta">
+			<span class="card-icon pull-left">
+				<img src="<?=@$card->source->favicon?>" />
+			</span>
+			<span class="card-meta-content">
+				<span class="card-author-name">@<?=@$card->source->name?>
+					via <span class="card-source-name">Twitter</span>
+				</span>
+			</span>
+		</p>
+		<? } ?>
+
 		<? if (!empty($card->content->comment)) { ?>
 		<p class="card-comment"><?=$card->content->comment?></p>
 		<? } ?>
 
 		<p class="card-meta">
-			<? if ($card->card_type->name === 'twitter') { ?>
-			<span class="card-icon pull-left">
-				<img src="<?=@$card->source->favicon?>" />
-			</span>
-			<span class="card-meta-content">
-				<span class="card-author-name">@<?=$card->source->name?>
-						via <span class="card-source-name">Twitter</span>
-				</span>
-			</span>
-
-			<? } else { ?>
+			<? if (
+				$card->card_type->name !== 'twitter'
+				|| ($card->card_type->name === 'twitter' && !empty($card->content->comment))
+			) { ?>
 			<span class="card-icon pull-left">
 				<img src="<?=@$card->author->profile_image_url?>" />
 			</span>
 			<span class="card-meta-content">
 				<span class="card-author-name"><?=$card->author->display_name?>
-						<? if ($source->name) { ?>
+						<? if ($source->name && $card->card_type->name !== 'twitter') { ?>
 						via <span class="card-source-name"><?=$source->name?></span>
 						<? } ?>
 				</span>
 			</span>
-
 			<? } ?>
 
 			<span class="card-meta-end">
