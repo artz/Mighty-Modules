@@ -63,13 +63,25 @@ if (isset($json)):
 
 	$now = date_create();
 	$diff = date_diff($updated, $now);
-	$ago = $diff->format("%h") . "h";
+	if ($diff->format('%h') < 1) {
+		$ago = $diff->format('%i') . 'm';
+	} else {
+		$ago = $diff->format('%h') . 'h';
+	}
 
 	if (!empty($card->content->text)) {
+		// Wrap Links with anchor tags
 		$text = preg_replace(
 			"#((http|https|ftp)://(\S*?\.\S*?))(\s|\;|\)|\]|\[|\{|\}|,|\"|'|:|\<|$|\.\s)#ie",
 			"'<a href=\"$1\" target=\"_blank\">$3</a>$4'",
 			$card->content->text
+		);
+
+		// Wrap hash tags with links to a search
+		$text = preg_replace(
+			'/#([A-z_]\w+)/',
+			"<a href=\"https://twitter.com/search?q=%23$1&src=hash\" target=\"_blank\">$1</a>",
+			$text
 		);
 	} else {
 		$text = '';
@@ -116,10 +128,20 @@ if (isset($json)):
 		<? } ?>
 
 		<p class="card-meta">
+			<? if ($card->card_type->name === 'twitter') { ?>
+			<span class="card-icon pull-left">
+				<img src="<?=@$card->source->favicon?>" />
+			</span>
+			<span class="card-meta-content">
+				<span class="card-author-name">@<?=$card->source->name?>
+						via <span class="card-source-name">Twitter</span>
+				</span>
+			</span>
+
+			<? } else { ?>
 			<span class="card-icon pull-left">
 				<img src="<?=@$card->author->profile_image_url?>" />
 			</span>
-
 			<span class="card-meta-content">
 				<span class="card-author-name"><?=$card->author->display_name?>
 						<? if ($source->name) { ?>
@@ -127,6 +149,8 @@ if (isset($json)):
 						<? } ?>
 				</span>
 			</span>
+
+			<? } ?>
 
 			<span class="card-meta-end">
 				<span class="card-ago"><?=$ago?></span>
