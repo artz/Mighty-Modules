@@ -80,7 +80,7 @@ if (isset($json)):
 		// Wrap hash tags with links to a search
 		$text = preg_replace(
 			'/#([A-z_]\w+)/',
-			"<a href=\"https://twitter.com/search?q=%23$1&src=hash\" target=\"_blank\">$1</a>",
+			"<a href=\"https://twitter.com/search?q=%23$1&src=hash\" target=\"_blank\">#$1</a>",
 			$text
 		);
 	} else {
