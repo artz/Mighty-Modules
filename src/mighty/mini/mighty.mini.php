@@ -103,6 +103,31 @@ if (isset($json)):
 		<? break; ?>
 		<? case "quote": ?>
 
+		<div class="card-quote">
+			<span>&ldquo;</span>
+				<?=@$card->content->text?>
+			<span>&rdquo;</span>
+			<p class="card-quote-source">&ndash; <?=@$card->content->text_author?></p>
+		</div>
+
+		<p class="card-meta">
+			<span class="card-meta-content">
+				<span class="card-source-name"><?=@$card->source->name?></span>
+			</span>
+
+			<span class="card-meta-end">
+				<span class="card-ago"><?=$ago?></span>
+			</span>
+
+			<div class="card-meta-share">
+				<ul>
+					<li class="share facebook">Facebook</li>
+					<li class="share twitter">Twitter</li>
+					<li class="share email">Email</li>
+				</ul>
+			</div>
+		</p>
+
 		<? break; ?>
 		<? case "video": ?>
 
@@ -125,54 +150,58 @@ if (isset($json)):
 		<h4 class="card-state card-state-<?=$card->state?>"><?=ucfirst($card->state)?></h4>
 		<? } ?>
 
-		<h2 class="headline"><?=@$text?></h2>
+		<? if ($card->card_type->name !== 'quote') { ?>
+			<h2 class="headline"><?=@$text?></h2>
 
-		<? if ($card->card_type->name === 'twitter') { ?>
-		<p class="card-meta">
-			<span class="card-icon pull-left">
-				<img src="<?=@$card->source->favicon?>" />
-			</span>
-			<span class="card-meta-content">
-				<span class="card-author-name">@<?=@$card->source->name?>
-					via <span class="card-source-name">Twitter</span>
+			<? if ($card->card_type->name === 'twitter') { ?>
+			<p class="card-meta">
+				<span class="card-icon pull-left">
+					<img src="<?=@$card->source->favicon?>" />
 				</span>
-			</span>
-		</p>
+				<span class="card-meta-content">
+					<span class="card-author-name">@<?=@$card->source->name?>
+						via <span class="card-source-name">Twitter</span>
+					</span>
+				</span>
+			</p>
+			<? } ?>
 		<? } ?>
 
 		<? if (!empty($card->content->comment)) { ?>
 		<p class="card-comment"><?=$card->content->comment?></p>
 		<? } ?>
 
-		<p class="card-meta">
-			<? if (
-				$card->card_type->name !== 'twitter'
-				|| ($card->card_type->name === 'twitter' && !empty($card->content->comment))
-			) { ?>
-			<span class="card-icon pull-left">
-				<img src="<?=@$card->author->profile_image_url?>" />
-			</span>
-			<span class="card-meta-content">
-				<span class="card-author-name"><?=$card->author->display_name?>
-						<? if ($source->name && $card->card_type->name !== 'twitter') { ?>
-						via <span class="card-source-name"><?=$source->name?></span>
-						<? } ?>
+		<? if ($card->card_type->name !== 'quote') { ?>
+			<p class="card-meta">
+				<? if (
+					$card->card_type->name !== 'twitter'
+					|| ($card->card_type->name === 'twitter' && !empty($card->content->comment))
+				) { ?>
+				<span class="card-icon pull-left">
+					<img src="<?=@$card->author->profile_image_url?>" />
 				</span>
-			</span>
-			<? } ?>
+				<span class="card-meta-content">
+					<span class="card-author-name"><?=@$card->author->display_name?>
+							<? if ($source->name && $card->card_type->name !== 'twitter') { ?>
+							via <span class="card-source-name"><?=$source->name?></span>
+							<? } ?>
+					</span>
+				</span>
+				<? } ?>
 
-			<span class="card-meta-end">
-				<span class="card-ago"><?=$ago?></span>
-			</span>
+				<span class="card-meta-end">
+					<span class="card-ago"><?=$ago?></span>
+				</span>
 
-			<div class="card-meta-share">
-				<ul>
-					<li class="share facebook">Facebook</li>
-					<li class="share twitter">Twitter</li>
-					<li class="share email">Email</li>
-				</ul>
-			</div>
-		</p>
+				<div class="card-meta-share">
+					<ul>
+						<li class="share facebook">Facebook</li>
+						<li class="share twitter">Twitter</li>
+						<li class="share email">Email</li>
+					</ul>
+				</div>
+			</p>
+		<? } ?>
 
 	</article>
 	<? endforeach; ?>
