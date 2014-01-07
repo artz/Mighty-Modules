@@ -10,8 +10,9 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 		options: {
 			count: 3,
 			more_count: 0,
-			auto_refresh: true,
+			auto_refresh: false,
 			auto_refresh_interval: 60000,
+            qa: false,
 
 			// These selectors will automatically run inside
 			// the module and grab the resulting elements.
@@ -31,6 +32,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			var options = self.options;
 			var ui = self.ui;
 			var element = self.element;
+            var continuation = ui.cardsList[0].getAttribute('data-continuation');;
 
 			ui.cardsList = ui.cardsList[0];
 
@@ -50,7 +52,12 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			}
 
 			for (var i = 0, length = ui.videos.length; i < length; i += 1) {
-				renderVideo(ui.videos[i]);
+                var video = ui.videos[i];
+                var contentSource = video.getAttribute('data-content-source');
+
+                if (contentSource !== 'vine') {
+                    renderVideo(video);
+                }
 			}
 
 			var getCardData = function (card) {
@@ -71,6 +78,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			var getCards = function (event, highlight) {
 				var path = Mighty.option('basePath') +
 					'api/?_host=' + location.hostname +
+                    '&qa=' + options.qa +
 					'&count=' + options.count +
 					'&more_count=' + options.more_count +
 					'&_module=mighty.mini' +
@@ -92,20 +100,29 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 						}
 						// Turn string of html into parsed html
 						html = core.createHTML(html);
-						var videos = core.query('.card-video-poster', html);
-						for (var i = 0, length = videos.length; i < length; i += 1) {
-							renderVideo(videos[i]);
-						}
+                        var newContinuation = core.query('.cards-list', html)[0].getAttribute('data-continuation');
+                        if (newContinuation !== continuation) {
+                            continuation = newContinuation;
+                            var videos = core.query('.card-video-poster', html);
+                            for (var i = 0, length = videos.length; i < length; i += 1) {
+                                var video = ui.videos[i];
+                                var contentSource = video.getAttribute('data-content-source');
 
-						var newCardsList = core.query('.cards-list', html)[0];
-						if (newCardsList) {
-							ui.cardsList.innerHTML = '';
-							// Add the new cards
-							while (newCardsList.firstChild) {
-								ui.cardsList.appendChild(newCardsList.firstChild);
-							}
-						}
-						core.publish(element, 'render', element);
+                                if (contentSource !== 'vine') {
+                                    renderVideo(videos[i]);
+                                }
+                            }
+
+                            var newCardsList = core.query('.cards-list', html)[0];
+                            if (newCardsList) {
+                                ui.cardsList.innerHTML = '';
+                                // Add the new cards
+                                while (newCardsList.firstChild) {
+                                    ui.cardsList.appendChild(newCardsList.firstChild);
+                                }
+                            }
+                            core.publish(element, 'render', element);
+                        }
 					}
 				});
 			};
@@ -190,8 +207,18 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				getCards(event, true);
 			});
 
-			if (options.autoRefresh) {
-				setInterval(getCards, options.autoRefreshInterval);
+            function playVideo(event) {
+                var video = core.closest(event.target, '.card-video-poster');
+                renderVideo(video);
+            }
+
+            // TODO: Why doesn't core.delegate capture click events on descendants?
+            core.delegate(ui.cardsList, '.card-play', 'click', playVideo);
+            core.delegate(ui.cardsList, '.card-video-poster', 'click', playVideo);
+            core.delegate(ui.cardsList, '.icon-play', 'click', playVideo);
+
+			if (options.auto_refresh) {
+				setInterval(getCards, options.auto_refresh_interval);
 			}
 
 			for (var i = 0, length = ui.shareLinks.length; i < length; i += 1) {

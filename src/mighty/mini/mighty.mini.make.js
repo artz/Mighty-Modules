@@ -52,6 +52,8 @@ Mighty.define({
 			name: 'Auto Refresh Interval',
 			description: 'If auto_refresh is set to true, how often (in milliseconds) to refresh the content.',
 			type: 'integer',
-			value: 60000
+			value: 60000,
+            minimum: 0,
+            maximum: 60 * 60 * 1000
 		}]
 	});
