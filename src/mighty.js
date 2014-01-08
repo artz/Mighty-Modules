@@ -2159,6 +2159,13 @@
     }
     global.data = data;
 
+    // Thanks to http://stackoverflow.com/a/6743966/399077
+    function text(elem) {
+        // innerText for IE, textContent for other browsers
+        return elem.innerText || elem.textContent;
+    }
+    global.text = text;
+
 
 /*
  * Boot.cookie
@@ -2719,6 +2726,7 @@
 
         attr: attr,
         data: data,
+        text: text,
         // cookie: cookie,
 
         // getFont: getFont,
@@ -2928,7 +2936,7 @@
     host: location.hostname,
     live: true,
     cache: 30,
-    basePath: "@@basePath"
+    basePath: "http://mighty.aol.net/"
     //basePath: "/" // Development path
     //basePath: "http://mighty.aol.net/" // Production path
 }));
