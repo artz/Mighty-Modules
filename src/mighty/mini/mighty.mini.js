@@ -94,9 +94,9 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
                 }
 
                 if (headline.length > 0) {
-                    cardDescription = headline[0].innerHTML;
+                    cardDescription = core.text(headline[0]);
                 } else if (comment.length > 0) {
-                    cardDescription = comment.innerHTML;
+                    cardDescription = core.text(comment[0]);
                 }
 
                 switch (element.className) {
