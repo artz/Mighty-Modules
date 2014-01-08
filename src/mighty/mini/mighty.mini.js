@@ -19,7 +19,7 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 			ui: {
 				reload: '.reload',
 				cardsList: '.cards-list',
-				articles: 'article',
+				cards: '.card',
 				shareLinks: '.share',
 				videos: '.card-video-poster'
 			}
@@ -36,6 +36,91 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 
 			ui.cardsList = ui.cardsList[0];
 
+            function addShare(item) {
+                var shareLink = core.createHTML('<a href="#" class="share-group">' +
+                    '<i class="s-share-this"></i> Share ' +
+                    '<i class="arrow s-icn-arw-bl-down"></i></a>'
+                );
+
+                var shareHTML = core.createHTML('<div class="card-meta-share">' +
+                    '<ul>' +
+                    '<li class="share facebook">Facebook</li>' +
+                    '<li class="share twitter">Twitter</li>' +
+                    '<li class="share googleplus">Google+</li>' +
+                    '<li class="share pinterest">Pinterest</li>' +
+                    '<li class="share stumbleupon">Stumble Upon</li>' +
+                    '<li class="share reddit">Reddit</li>' +
+                    '</ul>' +
+                    '</div>'
+                );
+
+                core.bind(shareLink, 'click', toggleShare);
+                core.query('.card-meta-end', item)[0].appendChild(shareLink);
+                core.delegate(shareHTML, '.share', 'click', shareHandler);
+                item.appendChild(shareHTML);
+            }
+
+            function toggleShare(event) {
+                var element = event.target;
+                var article = core.closest(event.target, 'article');
+                var share = core.query('.card-meta-share', article)[0];
+
+                if (core.hasClass(share, 'visible')) {
+                    core.removeClass(share, 'visible');
+                } else {
+                    core.addClass(share, 'visible');
+                }
+
+                event.preventDefault();
+            }
+
+            function shareHandler(event) {
+                event.preventDefault();
+                var cardMedia = '';
+                var cardDescription = '';
+                var element = event.target;
+                var article = core.closest(event.target, 'article');
+                var cardUrl = article.getAttribute('data-url');
+                var cardImage = core.query('.card-image', article);
+                var headline = core.query('.headline', article);
+                var comment = core.query('.card-comment', article);
+
+                if (cardImage.length > 0) {
+                    for (var i = 0, length = cardImage.length; i < length; i += 1) {
+                        cardMedia = cardImage[i].getAttribute('style')
+                            .replace(/background-image:url\('/gi, '')
+                            .replace(/'\);/, '');
+                    }
+                }
+
+                if (headline.length > 0) {
+                    cardDescription = headline[0].innerHTML;
+                } else if (comment.length > 0) {
+                    cardDescription = comment.innerHTML;
+                }
+
+                switch (element.className) {
+                    case 'share facebook':
+                        window.open('http://www.facebook.com/sharer.php?u='+cardUrl+'&t='+cardDescription,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');
+                        break;
+                    case 'share twitter':
+                        window.open('https://twitter.com/intent/tweet?text='+cardDescription+'&url='+encodeURIComponent(cardUrl)+'&related=engadget' ,'targetWindow','toolbar=no,location=1,status=1,statusbar=1,menubar=no,scrollbars=yes,resizable=yes,width=1024,height=580');return false;
+                        break;
+                    case 'share googleplus':
+                        window.open('https://plus.google.com/share?url='+encodeURIComponent(cardUrl), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=1024,height=580');
+                        break;
+                    case 'share pinterest':
+                        window.open('http://www.pinterest.com/pin/create/button/?url='+encodeURIComponent(cardUrl)+'&media='+cardMedia+'&description='+cardDescription, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=1024,height=580');
+                        break;
+                    case 'share stumbleupon':
+                        window.open('http://www.stumbleupon.com/badge/?url='+encodeURIComponent(cardUrl), '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=1024,height=580');
+                        break;
+                    case 'share reddit':
+                        window.open('http://www.reddit.com/submit?url='+encodeURIComponent(cardUrl),'','menubar=no,toolbar=no,resizable=yes,scrollbars=yes,width=1024,height=580');
+                        break;
+                }
+            }
+
 			function renderVideo(video) {
 				var embedCode = getEmbedCode({
 					contentSource: video.getAttribute('data-content-source'),
@@ -50,6 +135,11 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
 				video.parentNode.insertBefore(videoHTML, video.nextSibling);
 				video.parentNode.removeChild(video);
 			}
+
+            for (var i = 0, length = ui.cards.length; i < length; i += 1) {
+                var card = ui.cards[i];
+                addShare(card);
+            }
 
 			for (var i = 0, length = ui.videos.length; i < length; i += 1) {
                 var video = ui.videos[i];
@@ -103,6 +193,12 @@ Mighty.define(['mighty.core', 'mighty/mini/mighty.mini.css'], function (core) {
                         var newContinuation = core.query('.cards-list', html)[0].getAttribute('data-continuation');
                         if (newContinuation !== continuation) {
                             continuation = newContinuation;
+                            var cards = core.query('.card', html);
+                            for (var i = 0, length = cards.length; i < length; i += 1) {
+                                var card = cards[i];
+                                addShare(card);
+                            }
+
                             var videos = core.query('.card-video-poster', html);
                             for (var i = 0, length = videos.length; i < length; i += 1) {
                                 var video = ui.videos[i];

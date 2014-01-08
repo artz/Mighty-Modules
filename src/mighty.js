@@ -174,7 +174,7 @@
     }
 
     function isArray(obj) {
-        return obj && contains(obj.constructor.toString(), "rray");
+        return obj && contains(obj.constructor.toString(), "Array");
     }
     global.isArray = isArray;
 
@@ -1862,6 +1862,27 @@
     global.closest = closest;
 
 
+    function hasClass(elem, classNames) {
+        if (typeof classNames === 'string') {
+            classNames = classNames.split(' ');
+        }
+        if (global.isArray(classNames)) {
+            for (var i = 0, length = classNames.length; i < length; i += 1) {
+                // class is a reserved word
+                var classString = classNames[i];
+                var regexp = new RegExp('\\b' + classString + '\\b');
+                if (!regexp.test(elem.className)) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+    global.hasClass = hasClass;
+
 /*
     Simple add/remove classname functions.
     Valuable as Boot.removeClass / Boot.addClass or jQuery's job?
@@ -2686,6 +2707,7 @@
         query: query,
         closest: closest,
 
+        hasClass: hasClass,
         addClass: addClass,
         removeClass: removeClass,
         getStyle: getStyle,
@@ -2906,7 +2928,7 @@
     host: location.hostname,
     live: true,
     cache: 30,
-    basePath: "http://mighty.aol.net/"
+    basePath: "@@basePath"
     //basePath: "/" // Development path
     //basePath: "http://mighty.aol.net/" // Production path
 }));

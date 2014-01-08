@@ -147,6 +147,16 @@
 .mighty-mini .card-meta-share {
 	font-size: 10px;
 	margin: 10px;
+    max-height: 0;
+    overflow: hidden;
+    -webkit-transition: max-height 0.3s;
+    transition: max-height 0.3s;
+}
+
+.mighty-mini .card-meta-share.visible {
+    max-height: 50px;
+    -webkit-transition: max-height 0.3s;
+    transition: max-height 0.3s;
 }
 
 .mighty-mini .share {
